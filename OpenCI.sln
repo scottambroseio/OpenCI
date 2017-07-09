@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Busin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Data.Tests", "OpenCI.Implementation.Data.Tests\OpenCI.Implementation.Data.Tests.csproj", "{B109A2F6-77AC-45E4-94BB-44463F23237F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.IOC", "OpenCI.IOC\OpenCI.IOC.csproj", "{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
