@@ -5,6 +5,16 @@ VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Contracts.Business", "OpenCI.Contracts.Business\OpenCI.Contracts.Business.csproj", "{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Contracts.Data", "OpenCI.Contracts.Data\OpenCI.Contracts.Data.csproj", "{4949C8EB-44B0-4503-A68A-471ABCC78740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Business", "OpenCI.Implementation.Business\OpenCI.Implementation.Business.csproj", "{04B7E7BB-95EE-454A-9541-DFEBAED59A55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Data", "OpenCI.Implementation.Data\OpenCI.Implementation.Data.csproj", "{48253EE0-D57F-41FF-8284-86F58AB3B5CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Business.Tests", "OpenCI.Implementation.Business.Tests\OpenCI.Implementation.Business.Tests.csproj", "{2D0F52CB-27BB-42CA-A692-99D14028087E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Data.Tests", "OpenCI.Implementation.Data.Tests\OpenCI.Implementation.Data.Tests.csproj", "{B109A2F6-77AC-45E4-94BB-44463F23237F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +25,26 @@ Global
 		{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4949C8EB-44B0-4503-A68A-471ABCC78740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4949C8EB-44B0-4503-A68A-471ABCC78740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4949C8EB-44B0-4503-A68A-471ABCC78740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4949C8EB-44B0-4503-A68A-471ABCC78740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B7E7BB-95EE-454A-9541-DFEBAED59A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B7E7BB-95EE-454A-9541-DFEBAED59A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B7E7BB-95EE-454A-9541-DFEBAED59A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B7E7BB-95EE-454A-9541-DFEBAED59A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48253EE0-D57F-41FF-8284-86F58AB3B5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48253EE0-D57F-41FF-8284-86F58AB3B5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48253EE0-D57F-41FF-8284-86F58AB3B5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48253EE0-D57F-41FF-8284-86F58AB3B5CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D0F52CB-27BB-42CA-A692-99D14028087E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D0F52CB-27BB-42CA-A692-99D14028087E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D0F52CB-27BB-42CA-A692-99D14028087E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D0F52CB-27BB-42CA-A692-99D14028087E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
