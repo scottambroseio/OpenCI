@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Data.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.IOC", "OpenCI.IOC\OpenCI.IOC.csproj", "{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Identity", "OpenCI.Identity\OpenCI.Identity.csproj", "{D07D9BFB-2E23-41C1-A143-0E9439066981}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D07D9BFB-2E23-41C1-A143-0E9439066981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07D9BFB-2E23-41C1-A143-0E9439066981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D07D9BFB-2E23-41C1-A143-0E9439066981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07D9BFB-2E23-41C1-A143-0E9439066981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
