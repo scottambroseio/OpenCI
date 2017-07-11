@@ -7,7 +7,7 @@ namespace OpenCI.API.Rest.Controllers
     {
         public IHttpActionResult Get()
         {
-            return Ok("Hello world");
+            return Ok(true);
         }
     }
 }

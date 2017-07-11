@@ -16,26 +16,26 @@ namespace OpenCI.IOC
 
         public object GetService(Type serviceType)
         {
-            //try
-            //{
+            try
+            {
                 return container.Resolve(serviceType);
-            //}
-            //catch (ResolutionFailedException)
-            //{
-            //    return null;
-            //}
+            }
+            catch (ResolutionFailedException ec)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            //try
-            //{
+            try
+            {
                 return container.ResolveAll(serviceType);
-            //}
-            //catch (ResolutionFailedException)
-            //{
-            //    return new List<object>();
-            //}
+            }
+            catch (ResolutionFailedException)
+            {
+                return new List<object>();
+            }
         }
 
         public IDependencyScope BeginScope()

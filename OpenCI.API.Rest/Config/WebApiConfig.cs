@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using OpenCI.IOC;
 using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Http;
 
 namespace OpenCI.API.Rest.Config
@@ -18,6 +15,8 @@ namespace OpenCI.API.Rest.Config
             );
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
+            config.DependencyResolver = UnityContainerFactory.CreateResolver();
         }
     }
 }

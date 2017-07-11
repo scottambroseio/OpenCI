@@ -4,7 +4,16 @@ namespace OpenCI.IOC
 {
     public static class UnityContainerFactory
     {
-        public static UnityContainer CreateContainer()
+        public static UnityResolver CreateResolver()
+        {
+            var container = CreateContainer();
+
+            var dependancyResolver = new UnityResolver(container);
+
+            return dependancyResolver;
+        }
+
+        private static UnityContainer CreateContainer()
         {
             var container = new UnityContainer();
 
