@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
-
 using System.Web.Http.Dependencies;
+
 namespace OpenCI.IOC
 {
     public class UnityResolver : IDependencyResolver
