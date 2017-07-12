@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using OpenCI.AutoMapper;
 using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
 using OpenCI.Data.Implementation;
@@ -15,6 +16,7 @@ namespace OpenCI.IOC
             container.RegisterType<IConnectionHelper, ConnectionHelper>();
             container.RegisterType<IProjectData, ProjectData>();
             container.RegisterType<IProjectOperations, ProjectOperations>();
+            container.RegisterInstance(AutoMapperFactory.CreateMapper());
 
             return container;
         }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.IOC", "OpenCI.IOC\OpenCI.IOC.csproj", "{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Data.Implementation", "OpenCI.Data.Implementation\OpenCI.Data.Implementation.csproj", "{48253EE0-D57F-41FF-8284-86F58AB3B5CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Data.Implementation.Tests", "OpenCI.Data.Implementation.Tests\OpenCI.Data.Implementation.Tests.csproj", "{B109A2F6-77AC-45E4-94BB-44463F23237F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.AutoMapper", "OpenCI.AutoMapper\OpenCI.AutoMapper.csproj", "{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B109A2F6-77AC-45E4-94BB-44463F23237F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

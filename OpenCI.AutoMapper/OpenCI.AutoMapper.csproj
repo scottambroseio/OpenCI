@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{04B7E7BB-95EE-454A-9541-DFEBAED59A55}</ProjectGuid>
+    <ProjectGuid>{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenCI.Implementation.Business</RootNamespace>
-    <AssemblyName>OpenCI.Implementation.Business</AssemblyName>
+    <RootNamespace>OpenCI.AutoMapper</RootNamespace>
+    <AssemblyName>OpenCI.AutoMapper</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,29 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProjectOperations.cs" />
+    <Compile Include="AutoMapperFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenCI.Business.Models\OpenCI.Business.Models.csproj">
       <Project>{0AC90901-5EB7-4541-B1A4-B5CE56B53043}</Project>
       <Name>OpenCI.Business.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenCI.Business.Contracts\OpenCI.Business.Contracts.csproj">
-      <Project>{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}</Project>
-      <Name>OpenCI.Business.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenCI.Data.Contracts\OpenCI.Data.Contracts.csproj">
-      <Project>{4949C8EB-44B0-4503-A68A-471ABCC78740}</Project>
-      <Name>OpenCI.Data.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OpenCI.Data.Entities\OpenCI.Data.Entities.csproj">
       <Project>{591908CA-42DC-455F-8B20-3F0D498D306F}</Project>
       <Name>OpenCI.Data.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

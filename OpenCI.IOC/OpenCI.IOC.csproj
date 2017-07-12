@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -71,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenCI.AutoMapper\OpenCI.AutoMapper.csproj">
+      <Project>{E21B0CAC-ACDB-4B0D-AB40-52BBC19ACE0D}</Project>
+      <Name>OpenCI.AutoMapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenCI.Business.Contracts\OpenCI.Business.Contracts.csproj">
       <Project>{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}</Project>
       <Name>OpenCI.Business.Contracts</Name>

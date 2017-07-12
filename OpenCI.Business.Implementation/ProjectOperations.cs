@@ -1,4 +1,5 @@
-﻿using OpenCI.Business.Models;
+﻿using AutoMapper;
+using OpenCI.Business.Models;
 using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
 
@@ -6,21 +7,19 @@ namespace OpenCI.Implementation.Business
 {
     public class ProjectOperations : IProjectOperations
     {
-        private IProjectData _projectData;
+        private readonly IProjectData _projectData;
+        private readonly IMapper _mapper;
 
-        public ProjectOperations(IProjectData projectData)
+        public ProjectOperations(IProjectData projectData, IMapper mapper)
         {
             _projectData = projectData;
+            _mapper = mapper;
         }
 
         public ProjectModel GetProjectById(int id)
         {
             var entity = _projectData.GetProjectById(id);
-            var model = new ProjectModel
-            {
-                Id = entity.Id,
-                Name = entity.Name
-            };
+            var model = _mapper.Map<ProjectModel>(entity);
 
             return model;
         }

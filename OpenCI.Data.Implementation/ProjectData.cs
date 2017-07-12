@@ -18,7 +18,7 @@ namespace OpenCI.Data.Implementation
             var entity = new Project()
             {
                 Id = id,
-                Name = "Spme Project"
+                Name = "Some Project"
             };
 
             return entity;
