@@ -63,11 +63,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnityContainerFactory.cs" />
+    <Compile Include="UnityResolverFactory.cs" />
     <Compile Include="UnityResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCI.Contracts.Business\OpenCI.Contracts.Business.csproj">
+      <Project>{4ce14616-6bc9-4430-9064-b8db0cc1c0f3}</Project>
+      <Name>OpenCI.Contracts.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenCI.Contracts.Data\OpenCI.Contracts.Data.csproj">
+      <Project>{4949c8eb-44b0-4503-a68a-471abcc78740}</Project>
+      <Name>OpenCI.Contracts.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenCI.Implementation.Business\OpenCI.Implementation.Business.csproj">
+      <Project>{04b7e7bb-95ee-454a-9541-dfebaed59a55}</Project>
+      <Name>OpenCI.Implementation.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenCI.Implementation.Data\OpenCI.Implementation.Data.csproj">
+      <Project>{48253ee0-d57f-41ff-8284-86f58ab3b5cf}</Project>
+      <Name>OpenCI.Implementation.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

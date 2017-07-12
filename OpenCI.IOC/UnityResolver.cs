@@ -20,7 +20,7 @@ namespace OpenCI.IOC
             {
                 return container.Resolve(serviceType);
             }
-            catch (ResolutionFailedException ec)
+            catch (ResolutionFailedException)
             {
                 return null;
             }

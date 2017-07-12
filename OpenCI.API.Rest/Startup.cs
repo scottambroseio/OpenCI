@@ -14,6 +14,7 @@ namespace OpenCI.API.Rest
             HttpConfiguration httpConfiguration = new HttpConfiguration();
 
             WebApiConfig.Register(httpConfiguration);
+            RouteConfig.Register(httpConfiguration.Routes);
 
             app.UseWebApi(httpConfiguration);
         }

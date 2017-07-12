@@ -1,21 +1,17 @@
 ﻿using Microsoft.Practices.Unity;
+using OpenCI.Contracts.Data;
+using OpenCI.Implementation.Data;
 
 namespace OpenCI.IOC
 {
     public static class UnityContainerFactory
     {
-        public static UnityResolver CreateResolver()
-        {
-            var container = CreateContainer();
-
-            var dependancyResolver = new UnityResolver(container);
-
-            return dependancyResolver;
-        }
-
-        private static UnityContainer CreateContainer()
+        public static UnityContainer CreateContainer()
         {
             var container = new UnityContainer();
+
+            container.RegisterType<IConnectionHelper, ConnectionHelper>();
+            container.RegisterType<IProjectData, ProjectData>();
 
             return container;
         }
