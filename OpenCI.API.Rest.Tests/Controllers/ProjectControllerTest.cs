@@ -2,8 +2,8 @@
 using OpenCI.API.Rest.Controllers;
 using System.Web.Http.Results;
 using Moq;
-using OpenCI.Contracts.Business;
 using OpenCI.Business.Models;
+using OpenCI.Contracts.Business;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
