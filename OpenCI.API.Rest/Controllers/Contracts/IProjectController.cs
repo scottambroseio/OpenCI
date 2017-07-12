@@ -4,6 +4,6 @@ namespace OpenCI.API.Rest.Controllers.Contracts
 {
     public interface IProjectController
     {
-        IHttpActionResult Get();
+        IHttpActionResult Get(int id);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace OpenCI.Contracts.Data
+namespace OpenCI.Data.Contracts
 {
     public interface IConnectionHelper
     {

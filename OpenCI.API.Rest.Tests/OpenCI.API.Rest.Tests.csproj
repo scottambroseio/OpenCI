@@ -32,8 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.1.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+    <Reference Include="Moq, Version=4.7.63.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.7.63\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -59,13 +65,21 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Controllers\ProjectControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenCI.API.Rest\OpenCI.API.Rest.csproj">
       <Project>{958177E3-AE76-4779-8579-C99F7106E8D9}</Project>
       <Name>OpenCI.API.Rest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenCI.Contracts.Business\OpenCI.Business.Contracts.csproj">
+      <Project>{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}</Project>
+      <Name>OpenCI.Business.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenCI.Data.Entities\OpenCI.Data.Entities.csproj">
+      <Project>{591908CA-42DC-455F-8B20-3F0D498D306F}</Project>
+      <Name>OpenCI.Data.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -11,14 +11,8 @@ namespace OpenCI.API.Rest.Config
         public static void Register(HttpRouteCollection routes)
         {
             routes.MapHttpRoute(
-                name: "home",
-                routeTemplate: "home",
-                defaults: new { controller = "home", action = "Get" }
-            );
-
-            routes.MapHttpRoute(
                 name: "project",
-                routeTemplate: "project",
+                routeTemplate: "project/{id}",
                 defaults: new { controller = "project", action = "Get" }
             );
         }

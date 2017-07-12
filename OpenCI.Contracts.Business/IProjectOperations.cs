@@ -1,7 +1,8 @@
 ﻿using OpenCI.Data.Entities;
 
-namespace OpenCI.Data.Contracts {
-    public interface IProjectData
+namespace OpenCI.Contracts.Business
+{
+    public interface IProjectOperations
     {
         Project GetProjectById(int id);
     }

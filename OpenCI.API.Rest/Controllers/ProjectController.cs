@@ -1,13 +1,23 @@
 ﻿using OpenCI.API.Rest.Controllers.Contracts;
+using OpenCI.Contracts.Business;
 using System.Web.Http;
 
 namespace OpenCI.API.Rest.Controllers
 {
     public class ProjectController : ApiController, IProjectController
     {
-        public IHttpActionResult Get()
+        private readonly IProjectOperations _projectOperations;
+
+        public ProjectController(IProjectOperations projectOperations)
         {
-            return Ok(true);
+            _projectOperations = projectOperations;
+        }
+
+        public IHttpActionResult Get(int id)
+        {
+            var model = _projectOperations.GetProjectById(id);
+
+            return Ok(model);
         }
     }
 }

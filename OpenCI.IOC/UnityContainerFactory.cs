@@ -1,6 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
-using OpenCI.Contracts.Data;
-using OpenCI.Implementation.Data;
+using OpenCI.Contracts.Business;
+using OpenCI.Data.Contracts;
+using OpenCI.Data.Implementation;
+using OpenCI.Implementation.Business;
 
 namespace OpenCI.IOC
 {
@@ -12,6 +14,7 @@ namespace OpenCI.IOC
 
             container.RegisterType<IConnectionHelper, ConnectionHelper>();
             container.RegisterType<IProjectData, ProjectData>();
+            container.RegisterType<IProjectOperations, ProjectOperations>();
 
             return container;
         }

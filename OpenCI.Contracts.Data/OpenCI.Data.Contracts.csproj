@@ -44,5 +44,11 @@
     <Compile Include="IProjectData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCI.Data.Entities\OpenCI.Data.Entities.csproj">
+      <Project>{591908CA-42DC-455F-8B20-3F0D498D306F}</Project>
+      <Name>OpenCI.Data.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

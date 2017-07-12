@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Contracts.Business", "OpenCI.Contracts.Business\OpenCI.Contracts.Business.csproj", "{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Business.Contracts", "OpenCI.Contracts.Business\OpenCI.Business.Contracts.csproj", "{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Contracts.Data", "OpenCI.Contracts.Data\OpenCI.Contracts.Data.csproj", "{4949C8EB-44B0-4503-A68A-471ABCC78740}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Data.Contracts", "OpenCI.Contracts.Data\OpenCI.Data.Contracts.csproj", "{4949C8EB-44B0-4503-A68A-471ABCC78740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Business", "OpenCI.Implementation.Business\OpenCI.Implementation.Business.csproj", "{04B7E7BB-95EE-454A-9541-DFEBAED59A55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Business.Implementation", "OpenCI.Implementation.Business\OpenCI.Business.Implementation.csproj", "{04B7E7BB-95EE-454A-9541-DFEBAED59A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Data", "OpenCI.Implementation.Data\OpenCI.Implementation.Data.csproj", "{48253EE0-D57F-41FF-8284-86F58AB3B5CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Data.Implementation", "OpenCI.Implementation.Data\OpenCI.Data.Implementation.csproj", "{48253EE0-D57F-41FF-8284-86F58AB3B5CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Business.Tests", "OpenCI.Implementation.Business.Tests\OpenCI.Implementation.Business.Tests.csproj", "{2D0F52CB-27BB-42CA-A692-99D14028087E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Business.Implementation.Tests", "OpenCI.Implementation.Business.Tests\OpenCI.Business.Implementation.Tests.csproj", "{2D0F52CB-27BB-42CA-A692-99D14028087E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Implementation.Data.Tests", "OpenCI.Implementation.Data.Tests\OpenCI.Implementation.Data.Tests.csproj", "{B109A2F6-77AC-45E4-94BB-44463F23237F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Data.Implementation.Tests", "OpenCI.Implementation.Data.Tests\OpenCI.Data.Implementation.Tests.csproj", "{B109A2F6-77AC-45E4-94BB-44463F23237F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.IOC", "OpenCI.IOC\OpenCI.IOC.csproj", "{5417ACC7-BFC6-49AD-AAF3-6E2B8399AF6A}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.API.Rest", "OpenCI.API.Rest\OpenCI.API.Rest.csproj", "{958177E3-AE76-4779-8579-C99F7106E8D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.API.Rest.Tests", "OpenCI.API.Rest.Tests\OpenCI.API.Rest.Tests.csproj", "{E3F21F84-575A-4FAB-9890-61CD6B6383AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.Data.Entities", "OpenCI.Data.Entities\OpenCI.Data.Entities.csproj", "{591908CA-42DC-455F-8B20-3F0D498D306F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{E3F21F84-575A-4FAB-9890-61CD6B6383AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3F21F84-575A-4FAB-9890-61CD6B6383AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3F21F84-575A-4FAB-9890-61CD6B6383AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{591908CA-42DC-455F-8B20-3F0D498D306F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{591908CA-42DC-455F-8B20-3F0D498D306F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{591908CA-42DC-455F-8B20-3F0D498D306F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{591908CA-42DC-455F-8B20-3F0D498D306F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

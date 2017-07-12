@@ -1,9 +1,9 @@
-﻿using OpenCI.Contracts.Data;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using OpenCI.Data.Contracts;
 
-namespace OpenCI.Implementation.Data
+namespace OpenCI.Data.Implementation
 {
     public class ConnectionHelper : IConnectionHelper
     {
