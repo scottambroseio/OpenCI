@@ -3,7 +3,7 @@ using OpenCI.API.Rest.Controllers;
 using System.Web.Http.Results;
 using Moq;
 using OpenCI.Contracts.Business;
-using OpenCI.Data.Entities;
+using OpenCI.Business.Models;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
@@ -14,7 +14,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
         public void Get_ShouldReturnTheCorrectProject()
         {
             var operations = new Mock<IProjectOperations>();
-            var expected = new Project
+            var expected = new ProjectModel
             {
                 Id = 1,
                 Name = "Test"
@@ -24,7 +24,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new ProjectController(operations.Object);
 
-            var result = controller.Get(1) as OkNegotiatedContentResult<Project>;
+            var result = controller.Get(1) as OkNegotiatedContentResult<ProjectModel>;
 
             Assert.AreEqual(expected, result.Content);
         }

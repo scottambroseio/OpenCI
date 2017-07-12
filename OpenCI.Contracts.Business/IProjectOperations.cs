@@ -1,9 +1,9 @@
-﻿using OpenCI.Data.Entities;
+﻿using OpenCI.Business.Models;
 
 namespace OpenCI.Contracts.Business
 {
     public interface IProjectOperations
     {
-        Project GetProjectById(int id);
+        ProjectModel GetProjectById(int id);
     }
 }

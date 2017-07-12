@@ -108,13 +108,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenCI.Business.Models\OpenCI.Business.Models.csproj">
+      <Project>{0AC90901-5EB7-4541-B1A4-B5CE56B53043}</Project>
+      <Name>OpenCI.Business.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenCI.Contracts.Business\OpenCI.Business.Contracts.csproj">
       <Project>{4CE14616-6BC9-4430-9064-B8DB0CC1C0F3}</Project>
       <Name>OpenCI.Business.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenCI.Data.Entities\OpenCI.Data.Entities.csproj">
-      <Project>{591908CA-42DC-455F-8B20-3F0D498D306F}</Project>
-      <Name>OpenCI.Data.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenCI.IOC\OpenCI.IOC.csproj">
       <Project>{5417acc7-bfc6-49ad-aaf3-6e2b8399af6a}</Project>

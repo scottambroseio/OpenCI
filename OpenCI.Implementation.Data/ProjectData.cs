@@ -1,6 +1,4 @@
-﻿using System;
-using Dapper;
-using OpenCI.Data.Contracts;
+﻿using OpenCI.Data.Contracts;
 using OpenCI.Data.Entities;
 
 namespace OpenCI.Data.Implementation

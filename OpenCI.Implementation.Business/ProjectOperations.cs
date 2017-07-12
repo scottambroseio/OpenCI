@@ -1,6 +1,6 @@
-﻿using OpenCI.Contracts.Business;
+﻿using OpenCI.Business.Models;
+using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
-using OpenCI.Data.Entities;
 
 namespace OpenCI.Implementation.Business
 {
@@ -13,9 +13,16 @@ namespace OpenCI.Implementation.Business
             _projectData = projectData;
         }
 
-        public Project GetProjectById(int id)
+        public ProjectModel GetProjectById(int id)
         {
-            return _projectData.GetProjectById(id);
+            var entity = _projectData.GetProjectById(id);
+            var model = new ProjectModel
+            {
+                Id = entity.Id,
+                Name = entity.Name
+            };
+
+            return model;
         }
     }
 }
