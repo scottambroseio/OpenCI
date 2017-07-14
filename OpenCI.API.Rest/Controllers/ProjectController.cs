@@ -18,7 +18,7 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpGet]
-        [Route("project/{guid:Guid}")]
+        [Route("{guid:Guid}")]
         public async Task<IHttpActionResult> GetProject([FromUri]Guid guid)
         {
             var result = await _projectOperations.GetProject(guid).ConfigureAwait(false);
