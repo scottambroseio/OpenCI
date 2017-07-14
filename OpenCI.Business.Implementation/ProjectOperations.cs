@@ -52,5 +52,14 @@ namespace OpenCI.Implementation.Business
 
             return mappedModel;
         }
+
+        public async Task<ProjectModel> UpdateProject(Guid guid, UpdateProjectModel model)
+        {
+            var entity = await _projectData.UpdateProject(guid, model).ConfigureAwait(false);
+
+            var mappedModel = _mapper.Map<ProjectModel>(entity);
+
+            return mappedModel;
+        }
     }
 }

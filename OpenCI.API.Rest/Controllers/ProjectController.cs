@@ -48,6 +48,16 @@ namespace OpenCI.API.Rest.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut]
+        [Route("{guid:Guid}")]
+        public async Task<IHttpActionResult> UpdateProject([FromUri]Guid guid, [FromBody]UpdateProjectModel model)
+        {
+            var result = await _projectOperations.UpdateProject(guid, model).ConfigureAwait(false);
+
+            return Ok(result);
+        }
+
         [HttpDelete]
         [Route("{guid:Guid}")]
         public async Task<IHttpActionResult> DeleteProject(Guid guid)

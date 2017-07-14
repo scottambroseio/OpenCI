@@ -58,5 +58,19 @@ namespace OpenCI.Data.Implementation
                 return result.SingleOrDefault();
             }
         }
+
+        public async Task<Project> UpdateProject(Guid guid, UpdateProjectModel model)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                await connection.ExecuteAsync("UPDATE PROJECT SET Name = @Name, Description = @Description WHERE Guid = @Guid",
+                    new { Guid = guid , Name = model.Name, Description = model.Description }
+                ).ConfigureAwait(false);
+
+                var result = await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
+
+                return result;
+            }
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace OpenCI.Contracts.Business
         Task<ProjectModel> GetProject(Guid guid);
         Task<ProjectModel> CreateProject(CreateProjectModel model);
         Task DeleteProject(Guid guid);
+        Task<ProjectModel> UpdateProject(Guid guid, UpdateProjectModel model);
     }
 }

@@ -12,5 +12,6 @@ namespace OpenCI.Data.Contracts
         Task<Project> GetProject(Guid guid);
         Task<Project> CreateProject(CreateProjectModel model);
         Task DeleteProject(Guid guid);
+        Task<Project> UpdateProject(Guid guid, UpdateProjectModel model);
     }
 }
