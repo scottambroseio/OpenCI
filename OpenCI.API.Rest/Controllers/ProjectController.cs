@@ -15,7 +15,9 @@ namespace OpenCI.API.Rest.Controllers
             _projectOperations = projectOperations;
         }
 
-        public async Task<IHttpActionResult> Get(Guid guid)
+        [HttpGet]
+        [Route("project/{guid}")]
+        public async Task<IHttpActionResult> GetProject(Guid guid)
         {
             var result = await _projectOperations.GetProject(guid);
 
@@ -25,6 +27,15 @@ namespace OpenCI.API.Rest.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("project")]
+        public async Task<IHttpActionResult> GetAllProjects()
+        {
+            var results = await _projectOperations.GetAllProjects();
+
+            return Ok(results);
         }
     }
 }

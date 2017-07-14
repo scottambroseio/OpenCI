@@ -4,6 +4,7 @@ using OpenCI.Data.Entities;
 using System.Threading.Tasks;
 using Dapper;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace OpenCI.Data.Implementation
 {
@@ -14,6 +15,16 @@ namespace OpenCI.Data.Implementation
         public ProjectData(IConnectionHelper connectionHelper)
         {
             _connectionHelper = connectionHelper;
+        }
+
+        public async Task<List<Project>> GetAllProjects()
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                var results = await connection.QueryAsync<Project>("SELECT * FROM PROJECT").ConfigureAwait(false);
+
+                return results.ToList();
+            }
         }
 
         public async Task<Project> GetProject(Guid guid)

@@ -4,6 +4,7 @@ using OpenCI.Business.Models;
 using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace OpenCI.Implementation.Business
 {
@@ -16,6 +17,15 @@ namespace OpenCI.Implementation.Business
         {
             _projectData = projectData;
             _mapper = mapper;
+        }
+
+        public async Task<List<ProjectModel>> GetAllProjects()
+        {
+            var entities = await _projectData.GetAllProjects().ConfigureAwait(false);
+
+            var models = _mapper.Map<List<ProjectModel>>(entities);
+
+            return models;
         }
 
         public async Task<ProjectModel> GetProject(Guid guid)

@@ -6,6 +6,7 @@ namespace OpenCI.API.Rest.Controllers.Contracts
 {
     public interface IProjectController
     {
-        Task<IHttpActionResult> Get(Guid guid);
+        Task<IHttpActionResult> GetProject(Guid guid);
+        Task<IHttpActionResult> GetAllProjects();
     }
 }

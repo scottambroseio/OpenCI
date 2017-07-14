@@ -8,6 +8,7 @@ namespace OpenCI.API.Rest.Config
     {
         public static void Register(HttpConfiguration config)
         {
+            config.MapHttpAttributeRoutes();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.DependencyResolver = UnityResolverFactory.CreateResolver();
         }
