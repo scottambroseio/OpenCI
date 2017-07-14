@@ -1,9 +1,11 @@
 ﻿using OpenCI.Business.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace OpenCI.Contracts.Business
 {
     public interface IProjectOperations
     {
-        ProjectModel GetProjectById(int id);
+        Task<ProjectModel> GetProject(Guid guid);
     }
 }

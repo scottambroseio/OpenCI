@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using OpenCI.Business.Models;
 using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
+using System.Threading.Tasks;
 
 namespace OpenCI.Implementation.Business
 {
@@ -16,9 +18,12 @@ namespace OpenCI.Implementation.Business
             _mapper = mapper;
         }
 
-        public ProjectModel GetProjectById(int id)
+        public async Task<ProjectModel> GetProject(Guid guid)
         {
-            var entity = _projectData.GetProjectById(id);
+            var entity = await _projectData.GetProject(guid).ConfigureAwait(false);
+
+            if (entity == null) return null;
+
             var model = _mapper.Map<ProjectModel>(entity);
 
             return model;

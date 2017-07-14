@@ -1,8 +1,11 @@
 ﻿using OpenCI.Data.Entities;
+using System;
+using System.Threading.Tasks;
 
-namespace OpenCI.Data.Contracts {
+namespace OpenCI.Data.Contracts
+{
     public interface IProjectData
     {
-        Project GetProjectById(int id);
+        Task<Project> GetProject(Guid guid);
     }
 }

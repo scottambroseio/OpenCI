@@ -1,14 +1,13 @@
 ﻿using OpenCI.API.Rest.Controllers.Contracts;
+using OpenCI.API.Rest.Models;
+using OpenCI.Business.Models;
 using OpenCI.Contracts.Business;
+using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace OpenCI.API.Rest.Controllers
 {
-    public class Model
-    {
-        public string Name { get; set; }
-    }
-
     public class ProjectController : ApiController, IProjectController
     {
         private readonly IProjectOperations _projectOperations;
@@ -18,36 +17,16 @@ namespace OpenCI.API.Rest.Controllers
             _projectOperations = projectOperations;
         }
 
-        public IHttpActionResult Get(int id)
+        public async Task<IHttpActionResult> Get(Guid guid)
         {
-            var model = _projectOperations.GetProjectById(id);
+            var result = await _projectOperations.GetProject(guid);
 
-            return Ok(model);
-        }
-
-        public IHttpActionResult Put(int id, [FromBody]Model model)
-        {
-            if (model == null)
+            if (result == null)
             {
                 return BadRequest();
             }
 
-            return Ok(nameof(Put));
-        }
-
-        public IHttpActionResult Post(int id, [FromBody]Model model)
-        {
-            if (model == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(nameof(Post));
-        }
-
-        public IHttpActionResult Delete(int id)
-        {
-            return Ok(nameof(Delete));
+            return Ok(result);
         }
     }
 }

@@ -1,5 +1,9 @@
-﻿using OpenCI.Data.Contracts;
+﻿using System;
+using OpenCI.Data.Contracts;
 using OpenCI.Data.Entities;
+using System.Threading.Tasks;
+using Dapper;
+using System.Linq;
 
 namespace OpenCI.Data.Implementation
 {
@@ -12,16 +16,14 @@ namespace OpenCI.Data.Implementation
             _connectionHelper = connectionHelper;
         }
 
-        public Project GetProjectById(int id)
+        public async Task<Project> GetProject(Guid guid)
         {
-            // db call
-            var entity = new Project()
+            using (var connection = _connectionHelper.GetConnection())
             {
-                Id = id,
-                Name = "Some Project"
-            };
+                var result = await connection.QueryAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
 
-            return entity;
+                return result.SingleOrDefault();
+            }
         }
     }
 }
