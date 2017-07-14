@@ -21,14 +21,16 @@ namespace OpenCI.API.Rest.Controllers
         [Route("{guid:Guid}")]
         public async Task<IHttpActionResult> GetProject([FromUri]Guid guid)
         {
-            var result = await _projectOperations.GetProject(guid).ConfigureAwait(false);
+            try
+            {
+                var result = await _projectOperations.GetProject(guid).ConfigureAwait(false);
 
-            if (result == null)
+                return Ok(result);
+            }
+            catch (InvalidOperationException)
             {
                 return BadRequest();
             }
-
-            return Ok(result);
         }
 
         [HttpGet]
@@ -53,18 +55,31 @@ namespace OpenCI.API.Rest.Controllers
         [Route("{guid:Guid}")]
         public async Task<IHttpActionResult> UpdateProject([FromUri]Guid guid, [FromBody]UpdateProjectModel model)
         {
-            var result = await _projectOperations.UpdateProject(guid, model).ConfigureAwait(false);
+            try
+            {
+                var result = await _projectOperations.UpdateProject(guid, model).ConfigureAwait(false);
 
-            return Ok(result);
+                return Ok(result);
+            } catch (ArgumentException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete]
         [Route("{guid:Guid}")]
         public async Task<IHttpActionResult> DeleteProject(Guid guid)
         {
-            await _projectOperations.DeleteProject(guid).ConfigureAwait(false);
+            var result = await _projectOperations.DeleteProject(guid).ConfigureAwait(false);
 
-            return Ok();
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            } 
         }
     }
 }

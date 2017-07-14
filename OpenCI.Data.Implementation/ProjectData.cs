@@ -22,20 +22,19 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-
                 var id = await connection.ExecuteScalarAsync<int>("INSERT INTO PROJECT (Name, Description) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()", model).ConfigureAwait(false);
-                var entity = await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Id = @Id", new { Id = id }).ConfigureAwait(false);
 
-                return entity;
+                return await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Id = @Id", new { Id = id }).ConfigureAwait(false);
             }
         }
 
-        public async Task DeleteProject(Guid guid)
+        public async Task<bool> DeleteProject(Guid guid)
         {
             using (var connection = _connectionHelper.GetConnection())
             {
+                var result = await connection.ExecuteAsync("DELETE FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
 
-                await connection.ExecuteAsync("DELETE FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
+                return result == 1;
             }
         }
 
@@ -53,9 +52,7 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result = await connection.QueryAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
-
-                return result.SingleOrDefault();
+                return await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
             }
         }
 
@@ -63,13 +60,16 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("UPDATE PROJECT SET Name = @Name, Description = @Description WHERE Guid = @Guid",
+                var result =  await connection.ExecuteAsync("UPDATE PROJECT SET Name = @Name, Description = @Description WHERE Guid = @Guid",
                     new { Guid = guid , Name = model.Name, Description = model.Description }
                 ).ConfigureAwait(false);
 
-                var result = await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
+                if (result == 0)
+                {
+                    throw new ArgumentException($"No project exists for the guid: {guid}");
+                }
 
-                return result;
+                return await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false); ;
             }
         }
     }
