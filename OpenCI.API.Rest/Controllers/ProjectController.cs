@@ -1,6 +1,4 @@
 ﻿using OpenCI.API.Rest.Controllers.Contracts;
-using OpenCI.API.Rest.Models;
-using OpenCI.Business.Models;
 using OpenCI.Contracts.Business;
 using System;
 using System.Threading.Tasks;

@@ -8,7 +8,7 @@ namespace OpenCI.API.Rest.Config
         {
             routes.MapHttpRoute(
                 name: "project",
-                routeTemplate: "project/{id}",
+                routeTemplate: "project/{guid}",
                 defaults: new { controller = "project" }
             );
         }
