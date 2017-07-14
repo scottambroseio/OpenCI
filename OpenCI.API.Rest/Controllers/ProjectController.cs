@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 using OpenCI.Business.Models;
+using System.Data.SqlClient;
 
 namespace OpenCI.API.Rest.Controllers
 {
@@ -31,24 +32,42 @@ namespace OpenCI.API.Rest.Controllers
             {
                 return BadRequest();
             }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
         }
 
         [HttpGet]
         [Route]
         public async Task<IHttpActionResult> GetAllProjects()
         {
-            var results = await _projectOperations.GetAllProjects().ConfigureAwait(false);
+            try
+            {
+                var results = await _projectOperations.GetAllProjects().ConfigureAwait(false);
 
-            return Ok(results);
+                return Ok(results);
+            }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
         }
 
         [HttpPost]
         [Route]
         public async Task<IHttpActionResult> CreateProject([FromBody]CreateProjectModel model)
         {
-            var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
+            try
+            {
+                var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
         }
 
         [HttpPut]
@@ -64,22 +83,33 @@ namespace OpenCI.API.Rest.Controllers
             {
                 return BadRequest();
             }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
         }
 
         [HttpDelete]
         [Route("{guid:Guid}")]
         public async Task<IHttpActionResult> DeleteProject(Guid guid)
         {
-            var result = await _projectOperations.DeleteProject(guid).ConfigureAwait(false);
+            try
+            {
+                var result = await _projectOperations.DeleteProject(guid).ConfigureAwait(false);
 
-            if (result)
-            {
-                return Ok();
+                if (result)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            else
+            catch (SqlException)
             {
-                return BadRequest();
-            } 
+                return InternalServerError();
+            }
         }
     }
 }
