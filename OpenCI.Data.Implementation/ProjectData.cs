@@ -30,6 +30,15 @@ namespace OpenCI.Data.Implementation
             }
         }
 
+        public async Task DeleteProject(Guid guid)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+
+                await connection.ExecuteAsync("DELETE FROM PROJECT WHERE Guid = @Guid", new { Guid = guid }).ConfigureAwait(false);
+            }
+        }
+
         public async Task<List<Project>> GetAllProjects()
         {
             using (var connection = _connectionHelper.GetConnection())

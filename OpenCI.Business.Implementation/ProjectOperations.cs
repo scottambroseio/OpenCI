@@ -28,6 +28,11 @@ namespace OpenCI.Implementation.Business
             return mappedModel;
         }
 
+        public async Task DeleteProject(Guid guid)
+        {
+            await _projectData.DeleteProject(guid).ConfigureAwait(false);
+        }
+
         public async Task<List<ProjectModel>> GetAllProjects()
         {
             var entities = await _projectData.GetAllProjects().ConfigureAwait(false);

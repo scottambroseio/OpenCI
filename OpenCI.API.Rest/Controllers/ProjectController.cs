@@ -48,5 +48,13 @@ namespace OpenCI.API.Rest.Controllers
 
             return Ok(result);
         }
+        [HttpDelete]
+        [Route("{guid:Guid}")]
+        public async Task<IHttpActionResult> DeleteProject(Guid guid)
+        {
+            await _projectOperations.DeleteProject(guid).ConfigureAwait(false);
+
+            return Ok();
+        }
     }
 }
