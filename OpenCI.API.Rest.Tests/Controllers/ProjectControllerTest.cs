@@ -34,21 +34,6 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task GetProject_ShouldReturnNullIfTheProjectDoesntExist()
-        {
-            var operations = new Mock<IProjectOperations>();
-            var guid = Guid.NewGuid();
-
-            operations.Setup(o => o.GetProject(guid)).Returns(Task.FromResult<ProjectModel>(null));
-
-            var controller = new ProjectController(operations.Object);
-
-            var result = await controller.GetProject(guid) as OkNegotiatedContentResult<ProjectModel>;
-
-            Assert.AreEqual(null, result);
-        }
-
-        [TestMethod]
         public async Task GetAllProjects_ShouldReturnTheCorrectListOfProject()
         {
             var operations = new Mock<IProjectOperations>();
