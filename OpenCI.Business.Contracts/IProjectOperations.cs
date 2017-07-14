@@ -9,5 +9,6 @@ namespace OpenCI.Contracts.Business
     {
         Task<List<ProjectModel>> GetAllProjects();
         Task<ProjectModel> GetProject(Guid guid);
+        Task<ProjectModel> CreateProject(CreateProjectModel model);
     }
 }

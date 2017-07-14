@@ -1,4 +1,5 @@
-﻿using OpenCI.Data.Entities;
+﻿using OpenCI.Business.Models;
+using OpenCI.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,5 +10,6 @@ namespace OpenCI.Data.Contracts
     {
         Task<List<Project>> GetAllProjects();
         Task<Project> GetProject(Guid guid);
+        Task<Project> CreateProject(CreateProjectModel model);
     }
 }

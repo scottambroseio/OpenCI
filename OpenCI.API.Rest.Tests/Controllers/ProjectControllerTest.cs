@@ -19,7 +19,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var operations = new Mock<IProjectOperations>();
             var expected = new ProjectModel
             {
-                Id = 1,
+                Guid = Guid.NewGuid(),
                 Name = "Test"
             };
             var guid = Guid.NewGuid();
@@ -53,7 +53,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
         {
             var operations = new Mock<IProjectOperations>();
             var guid = Guid.NewGuid();
-            var expected = new List<ProjectModel> { new ProjectModel {Id = 123 } };
+            var expected = new List<ProjectModel> { new ProjectModel { Guid = Guid.NewGuid() } };
 
             operations.Setup(o => o.GetAllProjects()).Returns(
                 Task.FromResult(expected)

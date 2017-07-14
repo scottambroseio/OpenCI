@@ -3,6 +3,7 @@ using OpenCI.Contracts.Business;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using OpenCI.Business.Models;
 
 namespace OpenCI.API.Rest.Controllers
 {
@@ -18,9 +19,9 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpGet]
         [Route("project/{guid:Guid}")]
-        public async Task<IHttpActionResult> GetProject(Guid guid)
+        public async Task<IHttpActionResult> GetProject([FromUri]Guid guid)
         {
-            var result = await _projectOperations.GetProject(guid);
+            var result = await _projectOperations.GetProject(guid).ConfigureAwait(false);
 
             if (result == null)
             {
@@ -34,9 +35,18 @@ namespace OpenCI.API.Rest.Controllers
         [Route]
         public async Task<IHttpActionResult> GetAllProjects()
         {
-            var results = await _projectOperations.GetAllProjects();
+            var results = await _projectOperations.GetAllProjects().ConfigureAwait(false);
 
             return Ok(results);
+        }
+
+        [HttpPost]
+        [Route]
+        public async Task<IHttpActionResult> CreateProject([FromBody]CreateProjectModel model)
+        {
+            var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
+
+            return Ok(result);
         }
     }
 }

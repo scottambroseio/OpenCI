@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenCI.Business.Models\OpenCI.Business.Models.csproj">
+      <Project>{0AC90901-5EB7-4541-B1A4-B5CE56B53043}</Project>
+      <Name>OpenCI.Business.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenCI.Data.Contracts\OpenCI.Data.Contracts.csproj">
       <Project>{4949C8EB-44B0-4503-A68A-471ABCC78740}</Project>
       <Name>OpenCI.Data.Contracts</Name>

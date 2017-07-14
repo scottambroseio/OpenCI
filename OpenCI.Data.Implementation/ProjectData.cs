@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Linq;
 using System.Collections.Generic;
+using OpenCI.Business.Models;
 
 namespace OpenCI.Data.Implementation
 {
@@ -15,6 +16,18 @@ namespace OpenCI.Data.Implementation
         public ProjectData(IConnectionHelper connectionHelper)
         {
             _connectionHelper = connectionHelper;
+        }
+
+        public async Task<Project> CreateProject(CreateProjectModel model)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+
+                var id = await connection.ExecuteScalarAsync<int>("INSERT INTO PROJECT (Name, Description) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()", model).ConfigureAwait(false);
+                var entity = await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Id = @Id", new { Id = id }).ConfigureAwait(false);
+
+                return entity;
+            }
         }
 
         public async Task<List<Project>> GetAllProjects()

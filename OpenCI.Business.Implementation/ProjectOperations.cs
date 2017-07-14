@@ -19,13 +19,22 @@ namespace OpenCI.Implementation.Business
             _mapper = mapper;
         }
 
+        public async Task<ProjectModel> CreateProject(CreateProjectModel model)
+        {
+            var entity = await _projectData.CreateProject(model).ConfigureAwait(false);
+
+            var mappedModel = _mapper.Map<ProjectModel>(entity);
+
+            return mappedModel;
+        }
+
         public async Task<List<ProjectModel>> GetAllProjects()
         {
             var entities = await _projectData.GetAllProjects().ConfigureAwait(false);
 
-            var models = _mapper.Map<List<ProjectModel>>(entities);
+            var mappedModels = _mapper.Map<List<ProjectModel>>(entities);
 
-            return models;
+            return mappedModels;
         }
 
         public async Task<ProjectModel> GetProject(Guid guid)
@@ -34,9 +43,9 @@ namespace OpenCI.Implementation.Business
 
             if (entity == null) return null;
 
-            var model = _mapper.Map<ProjectModel>(entity);
+            var mappedModel = _mapper.Map<ProjectModel>(entity);
 
-            return model;
+            return mappedModel;
         }
     }
 }
