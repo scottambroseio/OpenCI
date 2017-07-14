@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace OpenCI.API.Rest.Controllers
 {
+    [RoutePrefix("project")]
     public class ProjectController : ApiController, IProjectController
     {
         private readonly IProjectOperations _projectOperations;
@@ -16,7 +17,7 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpGet]
-        [Route("project/{guid}")]
+        [Route("project/{guid:Guid}")]
         public async Task<IHttpActionResult> GetProject(Guid guid)
         {
             var result = await _projectOperations.GetProject(guid);
@@ -30,7 +31,7 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpGet]
-        [Route("project")]
+        [Route]
         public async Task<IHttpActionResult> GetAllProjects()
         {
             var results = await _projectOperations.GetAllProjects();
