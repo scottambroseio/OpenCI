@@ -6,6 +6,7 @@ using Dapper;
 using System.Linq;
 using System.Collections.Generic;
 using OpenCI.Business.Models;
+using OpenCI.Exceptions;
 
 namespace OpenCI.Data.Implementation
 {
@@ -66,7 +67,7 @@ namespace OpenCI.Data.Implementation
 
                 if (result == 0)
                 {
-                    throw new ArgumentException($"No project exists for the guid: {projectGuid}");
+                    throw new EntityNotFoundException($"No project exists for the guid: {projectGuid}");
                 }
 
                 return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false); ;

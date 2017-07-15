@@ -69,7 +69,7 @@ namespace OpenCI.API.Rest.Controllers
                 var result = await _projectOperations.UpdateProject(guid, model).ConfigureAwait(false);
 
                 return Ok(result);
-            } catch (ArgumentException)
+            } catch (EntityNotFoundException)
             {
                 return BadRequest();
             }

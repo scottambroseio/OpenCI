@@ -122,6 +122,10 @@
       <Project>{7040da84-09d7-4370-9ea2-07a6491a6020}</Project>
       <Name>OpenCI.Capabilities.Powershell</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpenCI.Exceptions\OpenCI.Exceptions.csproj">
+      <Project>{103E204C-02AC-4985-9F20-A3A4F1135FC1}</Project>
+      <Name>OpenCI.Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenCI.IOC\OpenCI.IOC.csproj">
       <Project>{5417acc7-bfc6-49ad-aaf3-6e2b8399af6a}</Project>
       <Name>OpenCI.IOC</Name>

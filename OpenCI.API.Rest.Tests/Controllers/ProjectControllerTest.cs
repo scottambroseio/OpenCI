@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
 using OpenCI.Business.Contracts;
+using OpenCI.Exceptions;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
@@ -41,7 +42,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var guid = Guid.NewGuid();
 
-            operations.Setup(o => o.GetProject(guid)).Throws<InvalidOperationException>();
+            operations.Setup(o => o.GetProject(guid)).Throws<EntityNotFoundException>();
 
             var controller = new ProjectController(operations.Object);
 
@@ -141,7 +142,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var guid = Guid.NewGuid();
             var model = new UpdateProjectModel();
 
-            operations.Setup(o => o.UpdateProject(guid, model)).Throws<ArgumentException>();
+            operations.Setup(o => o.UpdateProject(guid, model)).Throws<EntityNotFoundException>();
 
             var controller = new ProjectController(operations.Object);
 
