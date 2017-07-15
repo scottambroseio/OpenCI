@@ -3,7 +3,6 @@ using System;
 using System.Web.Http;
 using System.Threading.Tasks;
 using OpenCI.Business.Contracts;
-using System.Data.SqlClient;
 using OpenCI.Exceptions;
 using OpenCI.Business.Models;
 
@@ -55,6 +54,22 @@ namespace OpenCI.API.Rest.Controllers
                 return Ok(result);
             }
             catch (EntityNotFoundException)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [Route("{planGuid:Guid}")]
+        public async Task<IHttpActionResult> DeletePlan([FromUri]Guid planGuid)
+        {
+            var result = await _planOperations.DeletePlan(planGuid).ConfigureAwait(false);
+
+            if (result)
+            {
+                return Ok();
+            }
+            else
             {
                 return BadRequest();
             }

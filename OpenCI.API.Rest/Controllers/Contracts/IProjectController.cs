@@ -7,11 +7,11 @@ namespace OpenCI.API.Rest.Controllers.Contracts
 {
     public interface IProjectController
     {
-        Task<IHttpActionResult> GetProject(Guid guid);
+        Task<IHttpActionResult> GetProject(Guid projectGuid);
         Task<IHttpActionResult> GetAllProjects();
         Task<IHttpActionResult> CreateProject(CreateProjectModel model);
-        Task<IHttpActionResult> DeleteProject(Guid guid);
-        Task<IHttpActionResult> UpdateProject([FromUri]Guid guid, [FromBody]UpdateProjectModel model);
+        Task<IHttpActionResult> DeleteProject(Guid projectGuid);
+        Task<IHttpActionResult> UpdateProject([FromUri]Guid projectGuid, [FromBody]UpdateProjectModel model);
         Task<IHttpActionResult> GetPlansForProject(Guid projectGuid);
     }
 }

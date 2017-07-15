@@ -12,8 +12,7 @@ namespace OpenCI.Data.Contracts
         Task<List<Plan>> GetPlansForProject(Guid projectGuid);
         Task<Plan> GetPlan(Guid planGuid);
         Task<Plan> CreatePlan(CreatePlanModel model);
-        //Task<Plan> CreatePlan(CreatePlanModel model);
-        //Task<bool> DeletePlan(Guid planGuid);
+        Task<bool> DeletePlan(Guid planGuid);
         //Task<Plan> UpdatePlan(Guid planGuid, UpdatePlanModel model);
     }
 }

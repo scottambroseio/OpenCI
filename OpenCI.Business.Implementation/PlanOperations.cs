@@ -57,5 +57,10 @@ namespace OpenCI.Business.Implementation
 
             return mappedModel;
         }
+
+        public async Task<bool> DeletePlan(Guid planGuid)
+        {
+            return await _planData.DeletePlan(planGuid).ConfigureAwait(false);
+        }
     }
 }

@@ -45,6 +45,16 @@ namespace OpenCI.Data.Implementation
             }
         }
 
+        public async Task<bool> DeletePlan(Guid planGuid)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                var result = await connection.ExecuteAsync("DELETE FROM [Plan] WHERE [Guid] = @Guid", new { Guid = planGuid }).ConfigureAwait(false);
+
+                return result == 1;
+            }
+        }
+
         public async Task<List<Plan>> GetAllPlans()
         {
             using (var connection = _connectionHelper.GetConnection())
