@@ -62,5 +62,14 @@ namespace OpenCI.Business.Implementation
         {
             return await _planData.DeletePlan(planGuid).ConfigureAwait(false);
         }
+
+        public async Task<PlanModel> UpdatePlan(Guid planGuid, UpdatePlanModel model)
+        {
+            var entity = await _planData.UpdatePlan(planGuid, model).ConfigureAwait(false);
+
+            var mappedModel = _mapper.Map<PlanModel>(entity);
+
+            return mappedModel;
+        }
     }
 }

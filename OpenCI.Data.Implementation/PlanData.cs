@@ -82,5 +82,22 @@ namespace OpenCI.Data.Implementation
                 return results.ToList();
             }
         }
+
+        public async Task<Plan> UpdatePlan(Guid planGuid, UpdatePlanModel model)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                var result = await connection.ExecuteAsync("UPDATE [PLAN] SET [Name] = @Name, [Description] = @Description, [Enabled] = @Enabled, [ModificationTime] = @ModificationTime WHERE [Guid] = @Guid",
+                    new { Guid = planGuid, Name = model.Name, Description = model.Description, Enabled = model.Enabled, ModificationTime = DateTime.Now }
+                ).ConfigureAwait(false);
+
+                if (result == 0)
+                {
+                    throw new EntityNotFoundException($"No plan exists for the guid: {planGuid}");
+                }
+
+                return await connection.QuerySingleOrDefaultAsync<Plan>("SELECT * FROM [PLAN] WHERE [Guid] = @Guid", new { Guid = planGuid }).ConfigureAwait(false); ;
+            }
+        }
     }
 }

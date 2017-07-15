@@ -45,6 +45,7 @@
     <Compile Include="PlanModel.cs" />
     <Compile Include="ProjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdatePlanModel.cs" />
     <Compile Include="UpdateProjectModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

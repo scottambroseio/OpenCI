@@ -11,7 +11,7 @@ namespace OpenCI.Business.Contracts
         Task<List<PlanModel>> GetAllPlansForProject(Guid projectGuid);
         Task<PlanModel> GetPlan(Guid planGuid);
         Task<PlanModel> CreatePlan(CreatePlanModel model);
+        Task<PlanModel> UpdatePlan(Guid projectGuid, UpdatePlanModel model);
         Task<bool> DeletePlan(Guid planGuid);
-        //Task<PlanModel> CreatePlan(CreatePlanModel model);
     }
 }

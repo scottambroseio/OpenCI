@@ -74,5 +74,22 @@ namespace OpenCI.API.Rest.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPut]
+        [Route("{planGuid:Guid}")]
+        public async Task<IHttpActionResult> UpdatePlan([FromUri] Guid planGuid, [FromBody] UpdatePlanModel model)
+        {
+            try
+            {
+                var result = await _planOperations.UpdatePlan(planGuid, model).ConfigureAwait(false);
+
+                return Ok(result);
+            }
+            catch (EntityNotFoundException)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

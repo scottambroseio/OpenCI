@@ -61,8 +61,8 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result =  await connection.ExecuteAsync("UPDATE [PROJECT] SET [Name] = @Name, [[Description] = @Description WHERE [Guid] = @Guid",
-                    new { Guid = projectGuid, Name = model.Name, Description = model.Description }
+                var result =  await connection.ExecuteAsync("UPDATE [PROJECT] SET [Name] = @Name, [Description] = @Description, [ModificationTime] = @ModificationTime WHERE [Guid] = @Guid",
+                    new { Guid = projectGuid, Name = model.Name, Description = model.Description, ModificationTime = DateTime.Now }
                 ).ConfigureAwait(false);
 
                 if (result == 0)
