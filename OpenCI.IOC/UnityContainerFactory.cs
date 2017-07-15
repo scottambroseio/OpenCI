@@ -16,7 +16,10 @@ namespace OpenCI.IOC
             container.RegisterType<IConnectionHelper, ConnectionHelper>();
             container.RegisterType<IProjectData, ProjectData>();
             container.RegisterType<IPlanData, PlanData>();
+
             container.RegisterType<IProjectOperations, ProjectOperations>();
+            container.RegisterType<IPlanOperations, PlanOperations>();
+
             container.RegisterInstance(AutoMapperFactory.CreateMapper());
 
             return container;

@@ -3,11 +3,11 @@ using OpenCI.API.Rest.Controllers;
 using System.Web.Http.Results;
 using Moq;
 using OpenCI.Business.Models;
-using OpenCI.Contracts.Business;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
+using OpenCI.Business.Contracts;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {

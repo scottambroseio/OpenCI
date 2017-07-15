@@ -8,9 +8,9 @@ namespace OpenCI.Business.Contracts
     public interface IProjectOperations
     {
         Task<List<ProjectModel>> GetAllProjects();
-        Task<ProjectModel> GetProject(Guid guid);
+        Task<ProjectModel> GetProject(Guid projectGuid);
         Task<ProjectModel> CreateProject(CreateProjectModel model);
-        Task<bool> DeleteProject(Guid guid);
-        Task<ProjectModel> UpdateProject(Guid guid, UpdateProjectModel model);
+        Task<bool> DeleteProject(Guid projectGuid);
+        Task<ProjectModel> UpdateProject(Guid projectGuid, UpdateProjectModel model);
     }
 }

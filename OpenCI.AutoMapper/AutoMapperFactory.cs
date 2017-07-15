@@ -10,7 +10,7 @@ namespace OpenCI.AutoMapper
         {
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Project, ProjectModel>();
-                cfg.CreateMap<ProjectModel, Project>();
+                cfg.CreateMap<Plan, PlanModel>();
             });
 
             return config.CreateMapper();

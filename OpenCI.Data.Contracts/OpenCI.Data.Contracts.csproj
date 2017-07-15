@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IConnectionHelper.cs" />
+    <Compile Include="IPlanData.cs" />
     <Compile Include="IProjectData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
