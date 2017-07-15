@@ -48,5 +48,14 @@ namespace OpenCI.Business.Implementation
 
             return mappedModels;
         }
+
+        public async Task<PlanModel> CreatePlan(CreatePlanModel model)
+        {
+            var entity = await _planData.CreatePlan(model).ConfigureAwait(false);
+
+            var mappedModel = _mapper.Map<PlanModel>(entity);
+
+            return mappedModel;
+        }
     }
 }

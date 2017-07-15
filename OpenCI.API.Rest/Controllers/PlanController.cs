@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using OpenCI.Business.Contracts;
 using System.Data.SqlClient;
 using OpenCI.Exceptions;
+using OpenCI.Business.Models;
 
 namespace OpenCI.API.Rest.Controllers
 {
@@ -34,6 +35,22 @@ namespace OpenCI.API.Rest.Controllers
             try
             {
                 var result = await _planOperations.GetPlan(guid).ConfigureAwait(false);
+
+                return Ok(result);
+            }
+            catch (EntityNotFoundException)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route]
+        public async Task<IHttpActionResult> CreatePlan([FromBody]CreatePlanModel model)
+        {
+            try
+            {
+                var result = await _planOperations.CreatePlan(model).ConfigureAwait(false);
 
                 return Ok(result);
             }

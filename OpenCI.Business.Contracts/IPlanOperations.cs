@@ -1,8 +1,6 @@
 ﻿using OpenCI.Business.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenCI.Business.Contracts
@@ -12,5 +10,6 @@ namespace OpenCI.Business.Contracts
         Task<List<PlanModel>> GetAllPlans();
         Task<List<PlanModel>> GetAllPlansForProject(Guid projectGuid);
         Task<PlanModel> GetPlan(Guid planGuid);
+        Task<PlanModel> CreatePlan(CreatePlanModel model);
     }
 }

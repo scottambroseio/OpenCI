@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreatePlanModel.cs" />
     <Compile Include="CreateProjectModel.cs" />
     <Compile Include="PlanModel.cs" />
     <Compile Include="ProjectModel.cs" />

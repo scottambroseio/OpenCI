@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using OpenCI.Business.Models;
 
 namespace OpenCI.Data.Contracts
 {
@@ -10,6 +11,7 @@ namespace OpenCI.Data.Contracts
         Task<List<Plan>> GetAllPlans();
         Task<List<Plan>> GetPlansForProject(Guid projectGuid);
         Task<Plan> GetPlan(Guid planGuid);
+        Task<Plan> CreatePlan(CreatePlanModel model);
         //Task<Plan> CreatePlan(CreatePlanModel model);
         //Task<bool> DeletePlan(Guid planGuid);
         //Task<Plan> UpdatePlan(Guid planGuid, UpdatePlanModel model);

@@ -53,16 +53,9 @@ namespace OpenCI.API.Rest.Controllers
         [Route]
         public async Task<IHttpActionResult> CreateProject([FromBody]CreateProjectModel model)
         {
-            try
-            {
-                var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
+            var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
 
-                return Ok(result);
-            }
-            catch (SqlException)
-            {
-                return InternalServerError();
-            }
+            return Ok(result);
         }
 
         [HttpPut]
@@ -78,38 +71,27 @@ namespace OpenCI.API.Rest.Controllers
             {
                 return BadRequest();
             }
-            catch (SqlException)
-            {
-                return InternalServerError();
-            }
         }
 
         [HttpDelete]
         [Route("{projectGuid:Guid}")]
-        public async Task<IHttpActionResult> DeleteProject(Guid projectGuid)
+        public async Task<IHttpActionResult> DeleteProject([FromUri]Guid projectGuid)
         {
-            try
-            {
-                var result = await _projectOperations.DeleteProject(projectGuid).ConfigureAwait(false);
+            var result = await _projectOperations.DeleteProject(projectGuid).ConfigureAwait(false);
 
-                if (result)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (SqlException)
+            if (result)
             {
-                return InternalServerError();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
         }
 
         [HttpGet]
         [Route("{projectGuid:Guid}/plans")]
-        public async Task<IHttpActionResult> GetPlansForProject(Guid projectGuid)
+        public async Task<IHttpActionResult> GetPlansForProject([FromUri]Guid projectGuid)
         {
             var results = await _planOperations.GetAllPlansForProject(projectGuid).ConfigureAwait(false);
 

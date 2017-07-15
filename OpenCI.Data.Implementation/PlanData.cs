@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using OpenCI.Data.Entities;
 using Dapper;
 using System.Linq;
+using OpenCI.Business.Models;
+using OpenCI.Exceptions;
 
 namespace OpenCI.Data.Implementation
 {
@@ -15,6 +17,32 @@ namespace OpenCI.Data.Implementation
         public PlanData(IConnectionHelper connectionHelper)
         {
             _connectionHelper = connectionHelper;
+        }
+
+        public async Task<Plan> CreatePlan(CreatePlanModel model)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                var projectId = await connection.ExecuteScalarAsync<int>("SELECT [ID] FROM [Project] WHERE [Guid] = @Guid", new { Guid = model.ProjectGuid }).ConfigureAwait(false);
+
+                if (projectId == default(int)) throw new EntityNotFoundException($"Unable to find the project with the guid: {model.ProjectGuid}");
+
+                var id = await connection.ExecuteScalarAsync<int>(@"
+                    INSERT INTO [Plan] ([Name], [Description], [ProjectId], [ProjectGuid], [Enabled])
+                    VALUES (@Name, @Description, @ProjectId, @ProjectGuid, @Enabled)
+                    SELECT SCOPE_IDENTITY()",
+                    new
+                    {
+                        ProjectId = projectId,
+                        Name = model.Name,
+                        Description = model.Description,
+                        ProjectGuid = model.ProjectGuid,
+                        Enabled = model.Enabled
+                    }
+                ).ConfigureAwait(false);
+
+                return await connection.QuerySingleOrDefaultAsync<Plan>(@"SELECT * FROM [Plan] WHERE [Id] = @Id", new { Id = id }).ConfigureAwait(false);
+            }
         }
 
         public async Task<List<Plan>> GetAllPlans()
