@@ -6,11 +6,11 @@ namespace OpenCI.API.Rest.Tests.Controllers.Contracts
     {
         Task GetPlan_ShouldReturnTheCorrectPlan();
         Task GetPlan_ShouldReturnBadRequestIfTheEntityDoesNotExist();
-        Task GetAllPlans_ShouldReturnTheCorrectListOfProject();
+        Task GetAllPlans_ShouldReturnTheCorrectListOfPlans();
         Task CreatePlan_ShouldReturnTheCreatedPlan();
         Task DeletePlan_ShouldReturnSuccessIfTheDeleteIsSuccessfull();
         Task DeletePlan_ShouldReturnBadRequestIfTheDeleteIsUnsuccessfull();
-        Task UpdatePlan_ShouldReturnTheUpdatedProject();
+        Task UpdatePlan_ShouldReturnTheUpdatedPlan();
         Task UpdatePlan_ShouldReturnBadRequestIfTheEntityDoesNotExist();
     }
 }

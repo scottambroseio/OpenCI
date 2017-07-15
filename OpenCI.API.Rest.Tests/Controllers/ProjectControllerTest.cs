@@ -166,7 +166,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task GetPlansForProject_ShouldRrturnTheCorrectPlans()
+        public async Task GetPlansForProject_ShouldReturnTheCorrectPlans()
         {
             var projectOperations = new Mock<IProjectOperations>();
             var planOperations = new Mock<IPlanOperations>();
