@@ -13,13 +13,16 @@ namespace OpenCI.IOC
         {
             var container = new UnityContainer();
 
+            // Data
             container.RegisterType<IConnectionHelper, ConnectionHelper>();
             container.RegisterType<IProjectData, ProjectData>();
             container.RegisterType<IPlanData, PlanData>();
 
+            // Business
             container.RegisterType<IProjectOperations, ProjectOperations>();
             container.RegisterType<IPlanOperations, PlanOperations>();
 
+            // Misc
             container.RegisterInstance(AutoMapperFactory.CreateMapper());
 
             return container;
