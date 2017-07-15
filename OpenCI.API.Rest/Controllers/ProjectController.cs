@@ -13,19 +13,24 @@ namespace OpenCI.API.Rest.Controllers
     public class ProjectController : ApiController, IProjectController
     {
         private readonly IProjectOperations _projectOperations;
+        private readonly IPlanOperations _planOperations;
 
-        public ProjectController(IProjectOperations projectOperations)
+        public ProjectController(
+            IProjectOperations projectOperations,
+            IPlanOperations planOperations
+        )
         {
             _projectOperations = projectOperations;
+            _planOperations = planOperations;
         }
 
         [HttpGet]
-        [Route("{guid:Guid}")]
-        public async Task<IHttpActionResult> GetProject([FromUri]Guid guid)
+        [Route("{projectGuid:Guid}")]
+        public async Task<IHttpActionResult> GetProject([FromUri]Guid projectGuid)
         {
             try
             {
-                var result = await _projectOperations.GetProject(guid).ConfigureAwait(false);
+                var result = await _projectOperations.GetProject(projectGuid).ConfigureAwait(false);
 
                 return Ok(result);
             }
@@ -61,12 +66,12 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPut]
-        [Route("{guid:Guid}")]
-        public async Task<IHttpActionResult> UpdateProject([FromUri]Guid guid, [FromBody]UpdateProjectModel model)
+        [Route("{projectGuid:Guid}")]
+        public async Task<IHttpActionResult> UpdateProject([FromUri]Guid projectGuid, [FromBody]UpdateProjectModel model)
         {
             try
             {
-                var result = await _projectOperations.UpdateProject(guid, model).ConfigureAwait(false);
+                var result = await _projectOperations.UpdateProject(projectGuid, model).ConfigureAwait(false);
 
                 return Ok(result);
             } catch (EntityNotFoundException)
@@ -80,12 +85,12 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpDelete]
-        [Route("{guid:Guid}")]
-        public async Task<IHttpActionResult> DeleteProject(Guid guid)
+        [Route("{projectGuid:Guid}")]
+        public async Task<IHttpActionResult> DeleteProject(Guid projectGuid)
         {
             try
             {
-                var result = await _projectOperations.DeleteProject(guid).ConfigureAwait(false);
+                var result = await _projectOperations.DeleteProject(projectGuid).ConfigureAwait(false);
 
                 if (result)
                 {
@@ -100,6 +105,15 @@ namespace OpenCI.API.Rest.Controllers
             {
                 return InternalServerError();
             }
+        }
+
+        [HttpGet]
+        [Route("{projectGuid:Guid}/plans")]
+        public async Task<IHttpActionResult> GetPlansForProject(Guid projectGuid)
+        {
+            var results = await _planOperations.GetAllPlansForProject(projectGuid).ConfigureAwait(false);
+
+            return Ok(results);
         }
     }
 }

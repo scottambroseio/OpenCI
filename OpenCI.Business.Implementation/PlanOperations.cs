@@ -40,7 +40,7 @@ namespace OpenCI.Business.Implementation
             return mappedModel;
         }
 
-        public async Task<List<PlanModel>> GetPlansForProject(Guid projectGuid)
+        public async Task<List<PlanModel>> GetAllPlansForProject(Guid projectGuid)
         {
             var entities = await _planData.GetPlansForProject(projectGuid).ConfigureAwait(false);
 

@@ -23,9 +23,9 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var id = await connection.ExecuteScalarAsync<int>("INSERT INTO PROJECT (Name, Description) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()", model).ConfigureAwait(false);
+                var id = await connection.ExecuteScalarAsync<int>("INSERT INTO [PROJECT] ([Name], [Description]) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()", model).ConfigureAwait(false);
 
-                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Id = @Id", new { Id = id }).ConfigureAwait(false);
+                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Id] = @Id", new { Id = id }).ConfigureAwait(false);
             }
         }
 
@@ -33,7 +33,7 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result = await connection.ExecuteAsync("DELETE FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
+                var result = await connection.ExecuteAsync("DELETE FROM [PROJECT] WHERE [Guid] = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
 
                 return result == 1;
             }
@@ -43,7 +43,7 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var results = await connection.QueryAsync<Project>("SELECT * FROM PROJECT").ConfigureAwait(false);
+                var results = await connection.QueryAsync<Project>("SELECT * FROM [PROJECT]").ConfigureAwait(false);
 
                 return results.ToList();
             }
@@ -53,7 +53,7 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
+                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Guid] = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
             }
         }
 
@@ -61,7 +61,7 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result =  await connection.ExecuteAsync("UPDATE PROJECT SET Name = @Name, Description = @Description WHERE Guid = @Guid",
+                var result =  await connection.ExecuteAsync("UPDATE [PROJECT] SET [Name] = @Name, [[Description] = @Description WHERE [Guid] = @Guid",
                     new { Guid = projectGuid, Name = model.Name, Description = model.Description }
                 ).ConfigureAwait(false);
 
@@ -70,7 +70,7 @@ namespace OpenCI.Data.Implementation
                     throw new EntityNotFoundException($"No project exists for the guid: {projectGuid}");
                 }
 
-                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false); ;
+                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Guid] = @Guid", new { Guid = projectGuid }).ConfigureAwait(false); ;
             }
         }
     }

@@ -10,7 +10,7 @@ namespace OpenCI.Business.Contracts
     public interface IPlanOperations
     {
         Task<List<PlanModel>> GetAllPlans();
-        Task<List<PlanModel>> GetPlansForProject(Guid projectGuid);
+        Task<List<PlanModel>> GetAllPlansForProject(Guid projectGuid);
         Task<PlanModel> GetPlan(Guid planGuid);
     }
 }

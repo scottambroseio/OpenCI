@@ -18,7 +18,9 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task GetProject_ShouldReturnTheCorrectProject()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+
             var expected = new ProjectModel
             {
                 Guid = Guid.NewGuid(),
@@ -26,11 +28,11 @@ namespace OpenCI.API.Rest.Tests.Controllers
             };
             var guid = Guid.NewGuid();
 
-            operations.Setup(o => o.GetProject(guid)).Returns(Task.FromResult(expected));
+            projectOperations.Setup(o => o.GetProject(guid)).Returns(Task.FromResult(expected));
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetProject(guid) as OkNegotiatedContentResult<ProjectModel>;
+            var result = await controller.GetProject(guid).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -38,15 +40,16 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task GetProject_ShouldReturnBadRequestIfTheEntityDoesNotExist()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
 
-            operations.Setup(o => o.GetProject(guid)).Throws<EntityNotFoundException>();
+            projectOperations.Setup(o => o.GetProject(guid)).Throws<EntityNotFoundException>();
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetProject(guid);
+            var result = await controller.GetProject(guid).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -54,17 +57,19 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task GetAllProjects_ShouldReturnTheCorrectListOfProject()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+
             var guid = Guid.NewGuid();
             var expected = new List<ProjectModel> { new ProjectModel { Guid = Guid.NewGuid() } };
 
-            operations.Setup(o => o.GetAllProjects()).Returns(
+            projectOperations.Setup(o => o.GetAllProjects()).Returns(
                 Task.FromResult(expected)
             );
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetAllProjects() as OkNegotiatedContentResult<List<ProjectModel>>;
+            var result = await controller.GetAllProjects().ConfigureAwait(false) as OkNegotiatedContentResult<List<ProjectModel>>;
 
             CollectionAssert.AreEquivalent(expected, result.Content);
         }
@@ -72,17 +77,19 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task CreateProject_ShouldReturnTheCreatedProject()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+
             var model = new CreateProjectModel();
             var expected = new ProjectModel();
 
-            operations.Setup(o => o.CreateProject(model)).Returns(
+            projectOperations.Setup(o => o.CreateProject(model)).Returns(
                 Task.FromResult(expected)
             );
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.CreateProject(model) as OkNegotiatedContentResult<ProjectModel>;
+            var result = await controller.CreateProject(model).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -90,14 +97,16 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task DeleteProject_ShouldReturnSuccessIfTheDeleteIsSuccessfull()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+
             var guid = Guid.NewGuid();
 
-            operations.Setup(o => o.DeleteProject(guid)).Returns(Task.FromResult(true));
+            projectOperations.Setup(o => o.DeleteProject(guid)).Returns(Task.FromResult(true));
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.DeleteProject(guid) as OkResult;
+            var result = await controller.DeleteProject(guid).ConfigureAwait(false) as OkResult;
 
             Assert.AreEqual(typeof(OkResult), result.GetType());
         }
@@ -105,14 +114,16 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task DeleteProject_ShouldReturnBadRequestIfTheDeleteIsUnsuccessfull()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+
             var guid = Guid.NewGuid();
 
-            operations.Setup(o => o.DeleteProject(guid)).Returns(Task.FromResult(false));
+            projectOperations.Setup(o => o.DeleteProject(guid)).Returns(Task.FromResult(false));
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.DeleteProject(guid) as BadRequestResult;
+            var result = await controller.DeleteProject(guid).ConfigureAwait(false) as BadRequestResult;
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -120,16 +131,18 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task UpdateProject_ShouldReturnTheUpdatedProject()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+
             var expected = new ProjectModel();
             var model = new UpdateProjectModel();
             var guid = Guid.NewGuid();
 
-            operations.Setup(o => o.UpdateProject(guid, model)).Returns(Task.FromResult(expected));
+            projectOperations.Setup(o => o.UpdateProject(guid, model)).Returns(Task.FromResult(expected));
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.UpdateProject(guid, model) as OkNegotiatedContentResult<ProjectModel>;
+            var result = await controller.UpdateProject(guid, model).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -137,16 +150,17 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task UpdateProject_ShouldReturnBadRequestIfTheEntityDoesNotExist()
         {
-            var operations = new Mock<IProjectOperations>();
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
             var model = new UpdateProjectModel();
 
-            operations.Setup(o => o.UpdateProject(guid, model)).Throws<EntityNotFoundException>();
+            projectOperations.Setup(o => o.UpdateProject(guid, model)).Throws<EntityNotFoundException>();
 
-            var controller = new ProjectController(operations.Object);
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.UpdateProject(guid, model);
+            var result = await controller.UpdateProject(guid, model).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
