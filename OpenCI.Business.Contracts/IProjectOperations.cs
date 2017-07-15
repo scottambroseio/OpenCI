@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OpenCI.Contracts.Business
+namespace OpenCI.Business.Contracts
 {
     public interface IProjectOperations
     {

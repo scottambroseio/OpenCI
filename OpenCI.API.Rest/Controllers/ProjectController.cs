@@ -1,10 +1,10 @@
 ﻿using OpenCI.API.Rest.Controllers.Contracts;
-using OpenCI.Contracts.Business;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 using OpenCI.Business.Models;
 using System.Data.SqlClient;
+using OpenCI.Business.Contracts;
 
 namespace OpenCI.API.Rest.Controllers
 {

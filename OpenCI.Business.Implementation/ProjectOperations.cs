@@ -1,12 +1,12 @@
 ﻿using System;
 using AutoMapper;
 using OpenCI.Business.Models;
-using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using OpenCI.Business.Contracts;
 
-namespace OpenCI.Implementation.Business
+namespace OpenCI.Business.Implementation
 {
     public class ProjectOperations : IProjectOperations
     {
