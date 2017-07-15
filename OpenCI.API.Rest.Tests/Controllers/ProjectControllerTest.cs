@@ -13,7 +13,7 @@ using OpenCI.Exceptions;
 namespace OpenCI.API.Rest.Tests.Controllers
 {
     [TestClass]
-    public class ProjectControllerTest : IProjectControllerTest
+    public class ProjectControllerTest : IProjectControllerTests
     {
         [TestMethod]
         public async Task GetProject_ShouldReturnTheCorrectProject()
@@ -163,6 +163,23 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var result = await controller.UpdateProject(guid, model).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
+        }
+
+        [TestMethod]
+        public async Task GetPlansForProject_ShouldRrturnTheCorrectPlans()
+        {
+            var projectOperations = new Mock<IProjectOperations>();
+            var planOperations = new Mock<IPlanOperations>();
+            var guid = Guid.NewGuid();
+            var expected = new List<PlanModel> { new PlanModel() };
+
+            planOperations.Setup(o => o.GetAllPlansForProject(guid)).Returns(Task.FromResult(expected));
+
+            var controller = new ProjectController(projectOperations.Object, planOperations.Object);
+
+            var result = await controller.GetPlansForProject(guid).ConfigureAwait(false) as OkNegotiatedContentResult<List<PlanModel>>;
+
+            CollectionAssert.AreEquivalent(expected, result.Content);
         }
     }
 }
