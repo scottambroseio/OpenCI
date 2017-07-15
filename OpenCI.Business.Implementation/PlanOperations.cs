@@ -5,6 +5,7 @@ using OpenCI.Business.Models;
 using OpenCI.Data.Contracts;
 using AutoMapper;
 using OpenCI.Business.Contracts;
+using OpenCI.Exceptions;
 
 namespace OpenCI.Business.Implementation
 {
@@ -31,6 +32,8 @@ namespace OpenCI.Business.Implementation
         public async Task<PlanModel> GetPlan(Guid planGuid)
         {
             var entity = await _planData.GetPlan(planGuid).ConfigureAwait(false);
+
+            if (entity == null) throw new EntityNotFoundException($"Unable to find the plan with the guid: {planGuid}");
 
             var mappedModel = _mapper.Map<PlanModel>(entity);
 

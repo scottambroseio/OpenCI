@@ -5,6 +5,7 @@ using System.Web.Http;
 using OpenCI.Business.Models;
 using System.Data.SqlClient;
 using OpenCI.Business.Contracts;
+using OpenCI.Exceptions;
 
 namespace OpenCI.API.Rest.Controllers
 {
@@ -28,13 +29,9 @@ namespace OpenCI.API.Rest.Controllers
 
                 return Ok(result);
             }
-            catch (InvalidOperationException)
+            catch (EntityNotFoundException)
             {
                 return BadRequest();
-            }
-            catch (SqlException)
-            {
-                return InternalServerError();
             }
         }
 
@@ -42,16 +39,9 @@ namespace OpenCI.API.Rest.Controllers
         [Route]
         public async Task<IHttpActionResult> GetAllProjects()
         {
-            try
-            {
-                var results = await _projectOperations.GetAllProjects().ConfigureAwait(false);
+            var results = await _projectOperations.GetAllProjects().ConfigureAwait(false);
 
-                return Ok(results);
-            }
-            catch (SqlException)
-            {
-                return InternalServerError();
-            }
+            return Ok(results);
         }
 
         [HttpPost]

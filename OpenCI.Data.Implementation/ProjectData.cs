@@ -24,7 +24,7 @@ namespace OpenCI.Data.Implementation
             {
                 var id = await connection.ExecuteScalarAsync<int>("INSERT INTO PROJECT (Name, Description) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()", model).ConfigureAwait(false);
 
-                return await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Id = @Id", new { Id = id }).ConfigureAwait(false);
+                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Id = @Id", new { Id = id }).ConfigureAwait(false);
             }
         }
 
@@ -52,7 +52,7 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
+                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
             }
         }
 
@@ -69,7 +69,7 @@ namespace OpenCI.Data.Implementation
                     throw new ArgumentException($"No project exists for the guid: {projectGuid}");
                 }
 
-                return await connection.QuerySingleAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false); ;
+                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM PROJECT WHERE Guid = @Guid", new { Guid = projectGuid }).ConfigureAwait(false); ;
             }
         }
     }

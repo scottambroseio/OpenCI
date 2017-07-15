@@ -5,6 +5,7 @@ using OpenCI.Data.Contracts;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using OpenCI.Business.Contracts;
+using OpenCI.Exceptions;
 
 namespace OpenCI.Business.Implementation
 {
@@ -45,6 +46,8 @@ namespace OpenCI.Business.Implementation
         public async Task<ProjectModel> GetProject(Guid projectGuid)
         {
             var entity = await _projectData.GetProject(projectGuid).ConfigureAwait(false);
+
+            if (entity == null) throw new EntityNotFoundException($"Unable to find the project with the guid: {projectGuid}");
 
             var mappedModel = _mapper.Map<ProjectModel>(entity);
 
