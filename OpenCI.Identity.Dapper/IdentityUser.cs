@@ -23,6 +23,7 @@ namespace OpenCI.Identity.Dapper
         public string UserName { get; set; }
         public string Email { get; set; }
 
+        internal bool TwoFactorEnabled { get; set; }
         internal DateTime LockoutEndDate { get; set; }
         internal bool LockoutEnabled { get; set; }
         internal int AccessFailedCount { get; set; }

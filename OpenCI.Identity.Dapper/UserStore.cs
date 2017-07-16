@@ -16,11 +16,8 @@ namespace OpenCI.Identity.Dapper
         IUserPasswordStore<IdentityUser, int>,
         IUserPhoneNumberStore<IdentityUser, int>,
         IUserRoleStore<IdentityUser, int>,
-        IUserSecurityStampStore<IdentityUser, int>
-        //token
-        //twofactpr
-        
-        
+        IUserSecurityStampStore<IdentityUser, int>,
+        IUserTwoFactorStore<IdentityUser, int>
     {
         private readonly IConnectionHelper _connectionHelper;
 
@@ -103,6 +100,7 @@ namespace OpenCI.Identity.Dapper
                     [EmailConfirmed] = @EmailConfirmed,
                     [PasswordHash] = @PasswordHash,
                     [SecurityStamp] = @SecurityStamp,
+                    [TwoFactorEnabled] = @TwoFactorEnabled
                     WHERE [Id] = @Id;", new
                 {
                     UserName = user.UserName,
@@ -115,6 +113,7 @@ namespace OpenCI.Identity.Dapper
                     EmailConfirmed = user.EmailConfirmed,
                     PasswordHash = user.PasswordHash,
                     SecurityStamp = user.SecurityStamp,
+                    TwoFactorEnabled = user.TwoFactorEnabled,
                     Id = user.Id
                 }).ConfigureAwait(false);
             }
@@ -368,6 +367,19 @@ namespace OpenCI.Identity.Dapper
             user.IsModified = true;
 
             return Task.FromResult(0);
+        }
+
+        public Task SetTwoFactorEnabledAsync(IdentityUser user, bool enabled)
+        {
+            user.TwoFactorEnabled = enabled;
+            user.IsModified = true;
+
+            return Task.FromResult(0);
+        }
+
+        public Task<bool> GetTwoFactorEnabledAsync(IdentityUser user)
+        {
+            return Task.FromResult(user.TwoFactorEnabled);
         }
     }
 }
