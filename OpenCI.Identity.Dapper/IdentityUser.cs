@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using System;
 
 namespace OpenCI.Identity.Dapper
 {
@@ -20,7 +21,14 @@ namespace OpenCI.Identity.Dapper
 
         public int Id { get; internal set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
 
+        internal DateTime LockoutEndDate { get; set; }
+        internal bool LockoutEnabled { get; set; }
+        internal int AccessFailedCount { get; set; }
+        internal string PhoneNumber { get; set; }
+        internal bool PhoneNumberConfirmed { get; set; }
+        internal bool EmailConfirmed { get; set; }
         internal string PasswordHash { get; set; }
         internal string SecurityStamp { get; set; }
         internal bool IsModified { get; set; }
