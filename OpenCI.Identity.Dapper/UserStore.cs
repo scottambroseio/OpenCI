@@ -17,7 +17,8 @@ namespace OpenCI.Identity.Dapper
         IUserPhoneNumberStore<IdentityUser, int>,
         IUserRoleStore<IdentityUser, int>,
         IUserSecurityStampStore<IdentityUser, int>,
-        IUserTwoFactorStore<IdentityUser, int>
+        IUserTwoFactorStore<IdentityUser, int>,
+        IUserLoginStore<IdentityUser, int>
     {
         private readonly IConnectionHelper _connectionHelper;
 
@@ -66,7 +67,11 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>("SELECT * FROM [USER] WHERE [Id] = @Id;", new {
+                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+                    SELECT * FROM [USER]
+                    WHERE [Id] = @Id;
+                ", new
+                {
                     Id = userId
                 }).ConfigureAwait(false);
             }
@@ -76,7 +81,11 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>("SELECT * FROM [USER] WHERE [UserName] = @UserName;", new {
+                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+                    SELECT * FROM [USER]
+                    WHERE [UserName] = @UserName;
+                ", new
+                {
                     UserName = userName
                 }).ConfigureAwait(false);
             }
@@ -123,7 +132,13 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var results = await connection.QueryAsync<Claim>("SELECT * FROM [Claim] WHERE [UserId] = @UserId;", new { UserId = user.Id }).ConfigureAwait(false);
+                var results = await connection.QueryAsync<Claim>(@"
+                    SELECT * FROM [Claim]
+                    WHERE [UserId] = @UserId;
+                ", new
+                {
+                    UserId = user.Id
+                }).ConfigureAwait(false);
 
                 return results.ToList();
             }
@@ -133,7 +148,9 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("INSERT INTO [Claim] (UserId, Type, Value) VALUES (@UserId, @Type, @Value);", new
+                await connection.ExecuteAsync(@"
+                    INSERT INTO [Claim] (UserId, Type, Value)
+                    VALUES (@UserId, @Type, @Value);", new
                 {
                     UserId = user.Id,
                     Type = claim.Type,
@@ -146,7 +163,10 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("DELETE FROM [Claim] WHERE [UserId] = @UserId;", new
+                await connection.ExecuteAsync(@"
+                    DELETE FROM [Claim]
+                    WHERE [UserId] = @UserId;
+                ", new
                 {
                     UserId = user.Id
                 }).ConfigureAwait(false);
@@ -214,7 +234,10 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>("SELECT * FROM [USER] WHERE [Email] = @Email;", new
+                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+                    SELECT * FROM [USER]
+                    WHERE [Email] = @Email;
+                ", new
                 {
                     Email = email
                 }).ConfigureAwait(false);
@@ -273,13 +296,17 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var roleId = await connection.ExecuteScalarAsync<int>(@"
-                    SELECT [Id] FROM [Role] WHERE [Name] = @Name
+                    SELECT [Id] FROM [Role]
+                    WHERE [Name] = @Name
                 ", new
                 {
                     Name = roleName
                 }).ConfigureAwait(false);
 
-                await connection.ExecuteAsync("INSERT INTO [UserRole] (UserId, RoleId) VALUES (@UserId, @RoleId);", new
+                await connection.ExecuteAsync(@"
+                    INSERT INTO [UserRole] (UserId, RoleId)
+                    VALUES (@UserId, @RoleId);
+                ", new
                 {
                     UserId = user.Id,
                     RoleId = roleId
@@ -296,8 +323,7 @@ namespace OpenCI.Identity.Dapper
                     INNER JOIN [Role] r
                     ON ur.[RoleId] = r.[Id]                    
                     WHERE r.[Name] = @Name
-                    AND ur.[UserId] = @UserId",
-                new
+                    AND ur.[UserId] = @UserId",  new
                 {
                     UserId = user.Id,
                     Name = roleName
@@ -380,6 +406,72 @@ namespace OpenCI.Identity.Dapper
         public Task<bool> GetTwoFactorEnabledAsync(IdentityUser user)
         {
             return Task.FromResult(user.TwoFactorEnabled);
+        }
+
+        public async Task AddLoginAsync(IdentityUser user, UserLoginInfo login)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                await connection.ExecuteAsync(@"
+                    INSERT INTO [UserLogin] (LoginProvider, ProviderKey, UserId)
+                    VALUES (@LoginProvider, @ProviderKey, @UserId);
+                ", new
+                {
+                    UserId = user.Id,
+                    ProviderKey = login.ProviderKey,
+                    LoginProvider = login.LoginProvider
+                }).ConfigureAwait(false);
+            }
+        }
+
+        public async Task RemoveLoginAsync(IdentityUser user, UserLoginInfo login)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                await connection.ExecuteAsync(@"
+                    DELETE FROM [UserLogin]
+                    WHERE [UserId] = @UserId;
+                ", new
+                {
+                    UserId = user.Id
+                }).ConfigureAwait(false);
+            }
+        }
+
+        public async Task<IList<UserLoginInfo>> GetLoginsAsync(IdentityUser user)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                var results = await connection.QueryAsync<UserLoginInfo>(@"
+                    SELECT [LoginProvider], [ProviderKey] FROM [UserLogin]
+                    WHERE [UserId] = @UserId
+                ", new
+                {
+                    UserId = user.Id
+                }).ConfigureAwait(false);
+
+                return results.ToList();
+            }
+        }
+
+        public async Task<IdentityUser> FindAsync(UserLoginInfo login)
+        {
+            using (var connection = _connectionHelper.GetConnection())
+            {
+                var result = await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+                    SELECT u.* FROM [UserLogin]
+                    INNER JOIN [User] u
+                    ON [UserLogin].[Id] = u.Id
+                    WHERE [UserLogin].LoginProvider = @LoginProvider
+                    AND [UserLogin].ProviderKey = @ProviderKey
+                ", new
+                {
+                    ProviderKey = login.ProviderKey,
+                    LoginProvider = login.LoginProvider
+                }).ConfigureAwait(false);
+
+                return result;
+            }
         }
     }
 }
