@@ -30,7 +30,7 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("DELETE FROM [Role] WHERE [Id] = @Id;", new { Id = role.Id }).ConfigureAwait(false);
+                await connection.ExecuteAsync("DELETE FROM [Role] WHERE [Name] = @Name;", new { Name = role.Name }).ConfigureAwait(false);
             }
         }
 
@@ -54,7 +54,7 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("UPDATE [Role] SET [Name] = @Name WHERE [Id] = @Id;", new { Id = role.Id }).ConfigureAwait(false);
+                await connection.ExecuteAsync("UPDATE [Role] SET [Name] = @Name WHERE [Id] = @Id;", new { Id = role.Id, Name = role.Name }).ConfigureAwait(false);
             }
         }
     }
