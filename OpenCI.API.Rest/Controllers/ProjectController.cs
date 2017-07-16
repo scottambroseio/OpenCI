@@ -42,6 +42,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpGet]
         [Route]
+        [Authorize]
         public async Task<IHttpActionResult> GetAllProjects()
         {
             var results = await _projectOperations.GetAllProjects().ConfigureAwait(false);

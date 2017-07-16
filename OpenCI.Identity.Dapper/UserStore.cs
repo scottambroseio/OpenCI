@@ -37,14 +37,13 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    INSERT INTO [USER] (UserName, SecurityStamp, Email, EmailConfirmed)
-                    VALUES (@UserName, @SecurityStamp, @Email, @EmailConfirmed);
+                    INSERT INTO [USER] (UserName, SecurityStamp, PasswordHash)
+                    VALUES (@UserName, @SecurityStamp, @PasswordHash);
                 ", new
                 {
                     UserName = user.UserName,
                     SecurityStamp = user.SecurityStamp,
-                    Email = user.Email,
-                    EmailConfirmed = user.EmailConfirmed
+                    PasswordHash = user.PasswordHash
                 }).ConfigureAwait(false);
             }
         }
@@ -81,13 +80,20 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+                try
+                {
+                    return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
                     SELECT * FROM [USER]
                     WHERE [UserName] = @UserName;
                 ", new
+                    {
+                        UserName = userName
+                    }).ConfigureAwait(false);
+                } catch (Exception e)
                 {
-                    UserName = userName
-                }).ConfigureAwait(false);
+                    return null;
+                }
+
             }
         }
 
@@ -110,7 +116,8 @@ namespace OpenCI.Identity.Dapper
                     [PasswordHash] = @PasswordHash,
                     [SecurityStamp] = @SecurityStamp,
                     [TwoFactorEnabled] = @TwoFactorEnabled
-                    WHERE [Id] = @Id;", new
+                    WHERE [Id] = @Id
+                ;", new
                 {
                     UserName = user.UserName,
                     Email = user.Email,
@@ -133,7 +140,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var results = await connection.QueryAsync<Claim>(@"
-                    SELECT * FROM [Claim]
+                    SELECT [Type], [Value] FROM [Claim]
                     WHERE [UserId] = @UserId;
                 ", new
                 {

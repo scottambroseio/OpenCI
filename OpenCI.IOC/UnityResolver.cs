@@ -20,7 +20,7 @@ namespace OpenCI.IOC
             {
                 return container.Resolve(serviceType);
             }
-            catch (ResolutionFailedException)
+            catch (ResolutionFailedException ex)
             {
                 return null;
             }
@@ -32,7 +32,7 @@ namespace OpenCI.IOC
             {
                 return container.ResolveAll(serviceType);
             }
-            catch (ResolutionFailedException)
+            catch (ResolutionFailedException ex)
             {
                 return new List<object>();
             }
