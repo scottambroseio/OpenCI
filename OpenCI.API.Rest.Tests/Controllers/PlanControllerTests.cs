@@ -1,14 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OpenCI.API.Rest.Controllers;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
 using OpenCI.Business.Contracts;
 using OpenCI.Business.Models;
 using OpenCI.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http.Results;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
@@ -27,7 +27,10 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.CreatePlan(model).ConfigureAwait(false) as OkNegotiatedContentResult<PlanModel>;
+            var result =
+                await controller.CreatePlan(model).ConfigureAwait(false) as OkNegotiatedContentResult<PlanModel>;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -45,6 +48,8 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var result = await controller.DeletePlan(guid).ConfigureAwait(false) as BadRequestResult;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
 
@@ -61,6 +66,8 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var result = await controller.DeletePlan(guid).ConfigureAwait(false) as OkResult;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreEqual(typeof(OkResult), result.GetType());
         }
 
@@ -69,14 +76,16 @@ namespace OpenCI.API.Rest.Tests.Controllers
         {
             var planOperations = new Mock<IPlanOperations>();
 
-            var guid = Guid.NewGuid();
-            var expected = new List<PlanModel> { new PlanModel { Guid = Guid.NewGuid() } };
+            var expected = new List<PlanModel> {new PlanModel {Guid = Guid.NewGuid()}};
 
             planOperations.Setup(o => o.GetAllPlans()).ReturnsAsync(expected);
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.GetAllPlans().ConfigureAwait(false) as OkNegotiatedContentResult<List<PlanModel>>;
+            var result =
+                await controller.GetAllPlans().ConfigureAwait(false) as OkNegotiatedContentResult<List<PlanModel>>;
+
+            if (result == null) Assert.Fail();
 
             CollectionAssert.AreEquivalent(expected, result.Content);
         }
@@ -92,7 +101,9 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.GetPlan(guid).ConfigureAwait(false);
+            var result = await controller.GetPlan(guid).ConfigureAwait(false) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -115,6 +126,8 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var result = await controller.GetPlan(guid).ConfigureAwait(false) as OkNegotiatedContentResult<PlanModel>;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreEqual(expected, result.Content);
         }
 
@@ -130,7 +143,9 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.UpdatePlan(guid, model).ConfigureAwait(false);
+            var result = await controller.UpdatePlan(guid, model).ConfigureAwait(false) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -144,11 +159,15 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var model = new UpdatePlanModel();
             var guid = Guid.NewGuid();
 
-            planOperations.Setup(o => o.UpdatePlan(guid, model)).ReturnsAsync(expected); ;
+            planOperations.Setup(o => o.UpdatePlan(guid, model)).ReturnsAsync(expected);
+            ;
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.UpdatePlan(guid, model).ConfigureAwait(false) as OkNegotiatedContentResult<PlanModel>;
+            var result =
+                await controller.UpdatePlan(guid, model).ConfigureAwait(false) as OkNegotiatedContentResult<PlanModel>;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(expected, result.Content);
         }

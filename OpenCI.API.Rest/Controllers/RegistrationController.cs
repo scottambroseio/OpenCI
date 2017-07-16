@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models;
 using OpenCI.Identity.Dapper;
-using OpenCI.API.Rest.Controllers.Contracts;
 
 namespace OpenCI.API.Rest.Controllers
 {

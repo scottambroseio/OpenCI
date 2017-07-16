@@ -1,18 +1,18 @@
 ﻿using System;
-using OpenCI.Data.Contracts;
-using OpenCI.Data.Entities;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using System.Linq;
-using System.Collections.Generic;
 using OpenCI.Business.Models;
+using OpenCI.Data.Contracts;
+using OpenCI.Data.Entities;
 using OpenCI.Exceptions;
 
 namespace OpenCI.Data.Implementation
 {
     public class ProjectData : IProjectData
     {
-        private IConnectionHelper _connectionHelper;
+        private readonly IConnectionHelper _connectionHelper;
 
         public ProjectData(IConnectionHelper connectionHelper)
         {
@@ -23,9 +23,14 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var id = await connection.ExecuteScalarAsync<int>("INSERT INTO [PROJECT] ([Name], [Description]) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()", model).ConfigureAwait(false);
+                var id = await connection
+                    .ExecuteScalarAsync<int>(
+                        "INSERT INTO [PROJECT] ([Name], [Description]) VALUES (@Name, @Description) SELECT SCOPE_IDENTITY()",
+                        model).ConfigureAwait(false);
 
-                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Id] = @Id", new { Id = id }).ConfigureAwait(false);
+                return await connection
+                    .QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Id] = @Id", new {Id = id})
+                    .ConfigureAwait(false);
             }
         }
 
@@ -33,7 +38,9 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result = await connection.ExecuteAsync("DELETE FROM [PROJECT] WHERE [Guid] = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
+                var result = await connection
+                    .ExecuteAsync("DELETE FROM [PROJECT] WHERE [Guid] = @Guid", new {Guid = projectGuid})
+                    .ConfigureAwait(false);
 
                 return result == 1;
             }
@@ -53,7 +60,9 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Guid] = @Guid", new { Guid = projectGuid }).ConfigureAwait(false);
+                return await connection
+                    .QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Guid] = @Guid",
+                        new {Guid = projectGuid}).ConfigureAwait(false);
             }
         }
 
@@ -61,16 +70,18 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result =  await connection.ExecuteAsync("UPDATE [PROJECT] SET [Name] = @Name, [Description] = @Description, [ModificationTime] = @ModificationTime WHERE [Guid] = @Guid",
-                    new { Guid = projectGuid, Name = model.Name, Description = model.Description, ModificationTime = DateTime.Now }
+                var result = await connection.ExecuteAsync(
+                    "UPDATE [PROJECT] SET [Name] = @Name, [Description] = @Description, [ModificationTime] = @ModificationTime WHERE [Guid] = @Guid",
+                    new {Guid = projectGuid, model.Name, model.Description, ModificationTime = DateTime.Now}
                 ).ConfigureAwait(false);
 
                 if (result == 0)
-                {
                     throw new EntityNotFoundException($"No project exists for the guid: {projectGuid}");
-                }
 
-                return await connection.QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Guid] = @Guid", new { Guid = projectGuid }).ConfigureAwait(false); ;
+                return await connection
+                    .QuerySingleOrDefaultAsync<Project>("SELECT * FROM [PROJECT] WHERE [Guid] = @Guid",
+                        new {Guid = projectGuid}).ConfigureAwait(false);
+                ;
             }
         }
     }

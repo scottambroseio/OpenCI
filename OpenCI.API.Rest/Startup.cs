@@ -1,11 +1,12 @@
-﻿using Microsoft.Owin;
-using Owin;
-using System.Web.Http;
-using OpenCI.API.Rest.Config;
-using Microsoft.Owin.Security.Cookies;
+﻿using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
+using OpenCI.API.Rest;
+using OpenCI.API.Rest.Config;
+using Owin;
 
-[assembly: OwinStartup(typeof(OpenCI.API.Rest.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace OpenCI.API.Rest
 {
@@ -13,12 +14,12 @@ namespace OpenCI.API.Rest
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration httpConfiguration = new HttpConfiguration();
+            var httpConfiguration = new HttpConfiguration();
 
             WebApiConfig.Register(httpConfiguration);
             RouteConfig.Register(httpConfiguration.Routes);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
             });

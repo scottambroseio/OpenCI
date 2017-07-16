@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OpenCI.Business.Models;
-using OpenCI.Data.Contracts;
 using AutoMapper;
 using OpenCI.Business.Contracts;
+using OpenCI.Business.Models;
+using OpenCI.Data.Contracts;
 using OpenCI.Exceptions;
 
 namespace OpenCI.Business.Implementation
 {
     public class PlanOperations : IPlanOperations
     {
-        private readonly IPlanData _planData;
         private readonly IMapper _mapper;
+        private readonly IPlanData _planData;
 
         public PlanOperations(IPlanData planData, IMapper mapper)
         {

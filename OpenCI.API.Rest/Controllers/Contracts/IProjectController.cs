@@ -11,7 +11,7 @@ namespace OpenCI.API.Rest.Controllers.Contracts
         Task<IHttpActionResult> GetAllProjects();
         Task<IHttpActionResult> GetPlansForProject(Guid projectGuid);
         Task<IHttpActionResult> CreateProject(CreateProjectModel model);
-        Task<IHttpActionResult> UpdateProject([FromUri]Guid projectGuid, [FromBody]UpdateProjectModel model);
+        Task<IHttpActionResult> UpdateProject(Guid projectGuid, UpdateProjectModel model);
         Task<IHttpActionResult> DeleteProject(Guid projectGuid);
     }
 }

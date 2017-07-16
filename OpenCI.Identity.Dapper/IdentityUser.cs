@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
+using Microsoft.AspNet.Identity;
 
 namespace OpenCI.Identity.Dapper
 {
     public class IdentityUser : IUser<int>
     {
         // Used by dapper
-        internal IdentityUser() {
+        internal IdentityUser()
+        {
             IsModified = false;
             IsTransient = false;
         }
@@ -19,8 +20,6 @@ namespace OpenCI.Identity.Dapper
             IsModified = false;
         }
 
-        public int Id { get; internal set; }
-        public string UserName { get; set; }
         public string Email { get; set; }
 
         internal bool TwoFactorEnabled { get; set; }
@@ -33,6 +32,9 @@ namespace OpenCI.Identity.Dapper
         internal string PasswordHash { get; set; }
         internal string SecurityStamp { get; set; }
         internal bool IsModified { get; set; }
-        internal bool IsTransient { get; private set; }
+        internal bool IsTransient { get; set; }
+
+        public int Id { get; internal set; }
+        public string UserName { get; set; }
     }
 }

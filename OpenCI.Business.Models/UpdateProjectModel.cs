@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OpenCI.Business.Models
+﻿namespace OpenCI.Business.Models
 {
     public class UpdateProjectModel
     {

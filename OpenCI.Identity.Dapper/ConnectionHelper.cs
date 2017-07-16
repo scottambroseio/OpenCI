@@ -12,6 +12,7 @@ namespace OpenCI.Identity.Dapper
         {
             _connectionString = ConfigurationManager.ConnectionStrings["IdentityDb"].ConnectionString;
         }
+
         public ConnectionHelper(string connectionString)
         {
             _connectionString = connectionString;

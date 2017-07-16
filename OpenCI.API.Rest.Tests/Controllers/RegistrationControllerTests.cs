@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Threading.Tasks;
+using System.Web.Http.Results;
+using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OpenCI.API.Rest.Controllers;
 using OpenCI.API.Rest.Models;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
 using OpenCI.Identity.Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http.Results;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
@@ -22,11 +18,14 @@ namespace OpenCI.API.Rest.Tests.Controllers
         {
             var userManager = GetMockedUserManager();
 
-            userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Failed());
+            userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Failed());
 
             var controller = new RegistrationController(userManager.Object);
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel()) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreSame(typeof(BadRequestResult), result.GetType());
         }
@@ -36,16 +35,19 @@ namespace OpenCI.API.Rest.Tests.Controllers
         {
             var userManager = GetMockedUserManager();
 
-            userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+            userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success);
 
             var controller = new RegistrationController(userManager.Object);
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel()) as OkResult;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreSame(typeof(OkResult), result.GetType());
         }
 
-        private Mock<UserManager<IdentityUser, int>> GetMockedUserManager()
+        private static Mock<UserManager<IdentityUser, int>> GetMockedUserManager()
         {
             var connectionHelper = new Mock<IConnectionHelper>();
             var userStore = new Mock<UserStore>(connectionHelper.Object);

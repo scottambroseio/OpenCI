@@ -6,7 +6,6 @@ namespace OpenCI.Identity.Dapper
     {
         internal IdentityRole()
         {
-
         }
 
         public IdentityRole(string name)

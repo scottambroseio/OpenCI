@@ -6,7 +6,6 @@ namespace OpenCI.API.Rest.Config
     {
         public static void Register(HttpRouteCollection routes)
         {
-
         }
     }
 }

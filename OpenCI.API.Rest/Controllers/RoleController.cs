@@ -1,14 +1,9 @@
-﻿using OpenCI.API.Rest.Controllers.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using OpenCI.Identity.Dapper;
+using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Roles;
+using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Controllers
 {

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNet.Identity.Owin;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models;
 using OpenCI.Identity.Dapper;
-using System;
-using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace OpenCI.API.Rest.Controllers
 {
@@ -24,9 +22,10 @@ namespace OpenCI.API.Rest.Controllers
         [Route("SignIn")]
         public async Task<IHttpActionResult> PasswordSignIn([FromBody] PasswordSignInModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true).ConfigureAwait(false);
- 
-            switch(result)
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true)
+                .ConfigureAwait(false);
+
+            switch (result)
             {
                 case SignInStatus.Failure: return BadRequest();
                 case SignInStatus.LockedOut: return BadRequest();

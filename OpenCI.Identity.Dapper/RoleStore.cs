@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNet.Identity;
 
 namespace OpenCI.Identity.Dapper
 {
@@ -15,14 +15,14 @@ namespace OpenCI.Identity.Dapper
 
         public void Dispose()
         {
-
         }
 
         public async Task CreateAsync(IdentityRole role)
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("INSERT INTO [Role] (Name) VALUES (@Name);", new { Name = role.Name }).ConfigureAwait(false);
+                await connection.ExecuteAsync("INSERT INTO [Role] (Name) VALUES (@Name);", new {role.Name})
+                    .ConfigureAwait(false);
             }
         }
 
@@ -30,7 +30,8 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("DELETE FROM [Role] WHERE [Name] = @Name;", new { Name = role.Name }).ConfigureAwait(false);
+                await connection.ExecuteAsync("DELETE FROM [Role] WHERE [Name] = @Name;", new {role.Name})
+                    .ConfigureAwait(false);
             }
         }
 
@@ -38,7 +39,9 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Role] WHERE [Id] = @Id;", new { Id = roleId }).ConfigureAwait(false);
+                return await connection
+                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Role] WHERE [Id] = @Id;",
+                        new {Id = roleId}).ConfigureAwait(false);
             }
         }
 
@@ -46,7 +49,9 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Role] WHERE [Name] = @Name;", new { Name = roleName }).ConfigureAwait(false);
+                return await connection
+                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Role] WHERE [Name] = @Name;",
+                        new {Name = roleName}).ConfigureAwait(false);
             }
         }
 
@@ -54,7 +59,8 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("UPDATE [Role] SET [Name] = @Name WHERE [Id] = @Id;", new { Id = role.Id, Name = role.Name }).ConfigureAwait(false);
+                await connection.ExecuteAsync("UPDATE [Role] SET [Name] = @Name WHERE [Id] = @Id;",
+                    new {role.Id, role.Name}).ConfigureAwait(false);
             }
         }
     }

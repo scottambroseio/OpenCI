@@ -1,7 +1,7 @@
-﻿using OpenCI.Business.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using OpenCI.Business.Models;
 
 namespace OpenCI.Business.Contracts
 {

@@ -1,10 +1,10 @@
-﻿using OpenCI.API.Rest.Controllers.Contracts;
-using System;
-using System.Web.Http;
+﻿using System;
 using System.Threading.Tasks;
+using System.Web.Http;
+using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.Business.Contracts;
-using OpenCI.Exceptions;
 using OpenCI.Business.Models;
+using OpenCI.Exceptions;
 
 namespace OpenCI.API.Rest.Controllers
 {
@@ -66,13 +66,9 @@ namespace OpenCI.API.Rest.Controllers
             var result = await _planOperations.DeletePlan(planGuid).ConfigureAwait(false);
 
             if (result)
-            {
                 return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+
+            return BadRequest();
         }
 
         [HttpPut]
@@ -90,6 +86,5 @@ namespace OpenCI.API.Rest.Controllers
                 return BadRequest();
             }
         }
-
     }
 }

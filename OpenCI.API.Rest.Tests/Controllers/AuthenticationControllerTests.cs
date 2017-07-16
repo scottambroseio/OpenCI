@@ -1,15 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenCI.API.Rest.Tests.Controllers.Contracts;
-using OpenCI.API.Rest.Controllers;
-using Moq;
-using OpenCI.Identity.Dapper;
-using Microsoft.AspNet.Identity.Owin;
-using OpenCI.API.Rest.Models;
+﻿using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using OpenCI.API.Rest.Controllers;
+using OpenCI.API.Rest.Models;
+using OpenCI.API.Rest.Tests.Controllers.Contracts;
+using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
@@ -26,11 +25,13 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).ReturnsAsync(SignInStatus.Success);
+            )).ReturnsAsync(SignInStatus.Success);
 
             var controller = new AuthenticationController(signInManager.Object);
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel()) as OkResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreSame(typeof(OkResult), result.GetType());
         }
@@ -45,11 +46,13 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).ReturnsAsync(SignInStatus.Failure);
+            )).ReturnsAsync(SignInStatus.Failure);
 
             var controller = new AuthenticationController(signInManager.Object);
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel()) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreSame(typeof(BadRequestResult), result.GetType());
         }
@@ -64,16 +67,18 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).ReturnsAsync(SignInStatus.LockedOut);
+            )).ReturnsAsync(SignInStatus.LockedOut);
 
             var controller = new AuthenticationController(signInManager.Object);
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel()) as BadRequestResult;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreSame(typeof(BadRequestResult), result.GetType());
         }
-        [TestMethod]
 
+        [TestMethod]
         public async Task PasswordSignIn_ShouldReturnSuccessResponseWhenTwoFactorVerificationIsRequired()
         {
             var signInManager = GetMockedSignInManager();
@@ -83,16 +88,18 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).ReturnsAsync(SignInStatus.RequiresVerification);
+            )).ReturnsAsync(SignInStatus.RequiresVerification);
 
             var controller = new AuthenticationController(signInManager.Object);
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel()) as OkResult;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreSame(typeof(OkResult), result.GetType());
         }
 
-        private Mock<SignInManager<IdentityUser, int>> GetMockedSignInManager()
+        private static Mock<SignInManager<IdentityUser, int>> GetMockedSignInManager()
         {
             var connectionHelper = new Mock<IConnectionHelper>();
             var userStore = new Mock<UserStore>(connectionHelper.Object);

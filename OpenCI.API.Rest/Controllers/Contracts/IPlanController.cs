@@ -1,7 +1,7 @@
-﻿using OpenCI.Business.Models;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using OpenCI.Business.Models;
 
 namespace OpenCI.API.Rest.Controllers.Contracts
 {
@@ -9,11 +9,8 @@ namespace OpenCI.API.Rest.Controllers.Contracts
     {
         Task<IHttpActionResult> GetPlan(Guid planGuid);
         Task<IHttpActionResult> GetAllPlans();
-
-        Task<IHttpActionResult> CreatePlan([FromBody]CreatePlanModel model);
-
-        Task<IHttpActionResult> UpdatePlan([FromUri]Guid planGuid, [FromBody]UpdatePlanModel model);
-
+        Task<IHttpActionResult> CreatePlan(CreatePlanModel model);
+        Task<IHttpActionResult> UpdatePlan(Guid planGuid, UpdatePlanModel model);
         Task<IHttpActionResult> DeletePlan(Guid planGuid);
     }
 }

@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenCI.API.Rest.Controllers;
-using System.Web.Http.Results;
-using Moq;
-using OpenCI.Business.Models;
-using System.Threading.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using OpenCI.API.Rest.Controllers;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
 using OpenCI.Business.Contracts;
+using OpenCI.Business.Models;
 using OpenCI.Exceptions;
 
 namespace OpenCI.API.Rest.Tests.Controllers
@@ -32,7 +32,10 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetProject(guid).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
+            var result =
+                await controller.GetProject(guid).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -49,7 +52,9 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetProject(guid).ConfigureAwait(false);
+            var result = await controller.GetProject(guid).ConfigureAwait(false) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -61,13 +66,17 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
-            var expected = new List<ProjectModel> { new ProjectModel { Guid = Guid.NewGuid() } };
+            var expected = new List<ProjectModel> {new ProjectModel {Guid = Guid.NewGuid()}};
 
             projectOperations.Setup(o => o.GetAllProjects()).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetAllProjects().ConfigureAwait(false) as OkNegotiatedContentResult<List<ProjectModel>>;
+            var result =
+                await controller.GetAllProjects()
+                    .ConfigureAwait(false) as OkNegotiatedContentResult<List<ProjectModel>>;
+
+            if (result == null) Assert.Fail();
 
             CollectionAssert.AreEquivalent(expected, result.Content);
         }
@@ -85,7 +94,10 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.CreateProject(model).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
+            var result =
+                await controller.CreateProject(model).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -104,6 +116,8 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var result = await controller.DeleteProject(guid).ConfigureAwait(false) as OkResult;
 
+            if (result == null) Assert.Fail();
+
             Assert.AreEqual(typeof(OkResult), result.GetType());
         }
 
@@ -120,6 +134,8 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
             var result = await controller.DeleteProject(guid).ConfigureAwait(false) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -138,7 +154,11 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.UpdateProject(guid, model).ConfigureAwait(false) as OkNegotiatedContentResult<ProjectModel>;
+            var result =
+                await controller.UpdateProject(guid, model).ConfigureAwait(false) as
+                    OkNegotiatedContentResult<ProjectModel>;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(expected, result.Content);
         }
@@ -156,7 +176,9 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.UpdateProject(guid, model).ConfigureAwait(false);
+            var result = await controller.UpdateProject(guid, model).ConfigureAwait(false) as BadRequestResult;
+
+            if (result == null) Assert.Fail();
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -167,13 +189,17 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var projectOperations = new Mock<IProjectOperations>();
             var planOperations = new Mock<IPlanOperations>();
             var guid = Guid.NewGuid();
-            var expected = new List<PlanModel> { new PlanModel() };
+            var expected = new List<PlanModel> {new PlanModel()};
 
             planOperations.Setup(o => o.GetAllPlansForProject(guid)).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
-            var result = await controller.GetPlansForProject(guid).ConfigureAwait(false) as OkNegotiatedContentResult<List<PlanModel>>;
+            var result =
+                await controller.GetPlansForProject(guid).ConfigureAwait(false) as
+                    OkNegotiatedContentResult<List<PlanModel>>;
+
+            if (result == null) Assert.Fail();
 
             CollectionAssert.AreEquivalent(expected, result.Content);
         }

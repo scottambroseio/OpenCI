@@ -8,7 +8,8 @@ namespace OpenCI.AutoMapper
     {
         public static IMapper CreateMapper()
         {
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Project, ProjectModel>();
                 cfg.CreateMap<Plan, PlanModel>();
             });

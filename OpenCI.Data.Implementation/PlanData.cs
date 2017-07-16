@@ -1,18 +1,18 @@
-﻿using OpenCI.Data.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using OpenCI.Data.Entities;
-using Dapper;
 using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
 using OpenCI.Business.Models;
+using OpenCI.Data.Contracts;
+using OpenCI.Data.Entities;
 using OpenCI.Exceptions;
 
 namespace OpenCI.Data.Implementation
 {
     public class PlanData : IPlanData
     {
-        private IConnectionHelper _connectionHelper;
+        private readonly IConnectionHelper _connectionHelper;
 
         public PlanData(IConnectionHelper connectionHelper)
         {
@@ -23,9 +23,12 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var projectId = await connection.ExecuteScalarAsync<int>("SELECT [ID] FROM [Project] WHERE [Guid] = @Guid", new { Guid = model.ProjectGuid }).ConfigureAwait(false);
+                var projectId = await connection
+                    .ExecuteScalarAsync<int>("SELECT [ID] FROM [Project] WHERE [Guid] = @Guid",
+                        new {Guid = model.ProjectGuid}).ConfigureAwait(false);
 
-                if (projectId == default(int)) throw new EntityNotFoundException($"Unable to find the project with the guid: {model.ProjectGuid}");
+                if (projectId == default(int))
+                    throw new EntityNotFoundException($"Unable to find the project with the guid: {model.ProjectGuid}");
 
                 var id = await connection.ExecuteScalarAsync<int>(@"
                     INSERT INTO [Plan] ([Name], [Description], [ProjectId], [ProjectGuid], [Enabled])
@@ -34,14 +37,16 @@ namespace OpenCI.Data.Implementation
                     new
                     {
                         ProjectId = projectId,
-                        Name = model.Name,
-                        Description = model.Description,
-                        ProjectGuid = model.ProjectGuid,
-                        Enabled = model.Enabled
+                        model.Name,
+                        model.Description,
+                        model.ProjectGuid,
+                        model.Enabled
                     }
                 ).ConfigureAwait(false);
 
-                return await connection.QuerySingleOrDefaultAsync<Plan>(@"SELECT * FROM [Plan] WHERE [Id] = @Id", new { Id = id }).ConfigureAwait(false);
+                return await connection
+                    .QuerySingleOrDefaultAsync<Plan>(@"SELECT * FROM [Plan] WHERE [Id] = @Id", new {Id = id})
+                    .ConfigureAwait(false);
             }
         }
 
@@ -49,7 +54,9 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result = await connection.ExecuteAsync("DELETE FROM [Plan] WHERE [Guid] = @Guid", new { Guid = planGuid }).ConfigureAwait(false);
+                var result = await connection
+                    .ExecuteAsync("DELETE FROM [Plan] WHERE [Guid] = @Guid", new {Guid = planGuid})
+                    .ConfigureAwait(false);
 
                 return result == 1;
             }
@@ -69,7 +76,9 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                return await connection.QuerySingleOrDefaultAsync<Plan>("SELECT * FROM [PLAN] WHERE [Guid] = @Guid", new { Guid = planGuid }).ConfigureAwait(false);
+                return await connection
+                    .QuerySingleOrDefaultAsync<Plan>("SELECT * FROM [PLAN] WHERE [Guid] = @Guid", new {Guid = planGuid})
+                    .ConfigureAwait(false);
             }
         }
 
@@ -77,7 +86,9 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var results = await connection.QueryAsync<Plan>("SELECT * FROM [PLAN] WHERE [ProjectGuid] = @ProjectGuid", new { ProjectGuid = projectGuid }).ConfigureAwait(false);
+                var results = await connection
+                    .QueryAsync<Plan>("SELECT * FROM [PLAN] WHERE [ProjectGuid] = @ProjectGuid",
+                        new {ProjectGuid = projectGuid}).ConfigureAwait(false);
 
                 return results.ToList();
             }
@@ -87,16 +98,18 @@ namespace OpenCI.Data.Implementation
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                var result = await connection.ExecuteAsync("UPDATE [PLAN] SET [Name] = @Name, [Description] = @Description, [Enabled] = @Enabled, [ModificationTime] = @ModificationTime WHERE [Guid] = @Guid",
-                    new { Guid = planGuid, Name = model.Name, Description = model.Description, Enabled = model.Enabled, ModificationTime = DateTime.Now }
+                var result = await connection.ExecuteAsync(
+                    "UPDATE [PLAN] SET [Name] = @Name, [Description] = @Description, [Enabled] = @Enabled, [ModificationTime] = @ModificationTime WHERE [Guid] = @Guid",
+                    new {Guid = planGuid, model.Name, model.Description, model.Enabled, ModificationTime = DateTime.Now}
                 ).ConfigureAwait(false);
 
                 if (result == 0)
-                {
                     throw new EntityNotFoundException($"No plan exists for the guid: {planGuid}");
-                }
 
-                return await connection.QuerySingleOrDefaultAsync<Plan>("SELECT * FROM [PLAN] WHERE [Guid] = @Guid", new { Guid = planGuid }).ConfigureAwait(false); ;
+                return await connection
+                    .QuerySingleOrDefaultAsync<Plan>("SELECT * FROM [PLAN] WHERE [Guid] = @Guid", new {Guid = planGuid})
+                    .ConfigureAwait(false);
+                ;
             }
         }
     }

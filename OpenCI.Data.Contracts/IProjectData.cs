@@ -1,8 +1,8 @@
-﻿using OpenCI.Business.Models;
-using OpenCI.Data.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using OpenCI.Business.Models;
+using OpenCI.Data.Entities;
 
 namespace OpenCI.Data.Contracts
 {

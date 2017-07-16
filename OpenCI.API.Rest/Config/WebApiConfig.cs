@@ -1,6 +1,6 @@
-﻿using OpenCI.IOC;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Web.Http;
+using OpenCI.IOC;
 
 namespace OpenCI.API.Rest.Config
 {

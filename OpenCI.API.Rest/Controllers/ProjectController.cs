@@ -1,10 +1,9 @@
-﻿using OpenCI.API.Rest.Controllers.Contracts;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using OpenCI.Business.Models;
-using System.Data.SqlClient;
+using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.Business.Contracts;
+using OpenCI.Business.Models;
 using OpenCI.Exceptions;
 
 namespace OpenCI.API.Rest.Controllers
@@ -12,8 +11,8 @@ namespace OpenCI.API.Rest.Controllers
     [RoutePrefix("project")]
     public class ProjectController : ApiController, IProjectController
     {
-        private readonly IProjectOperations _projectOperations;
         private readonly IPlanOperations _planOperations;
+        private readonly IProjectOperations _projectOperations;
 
         public ProjectController(
             IProjectOperations projectOperations,
@@ -61,14 +60,16 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPut]
         [Route("{projectGuid:Guid}")]
-        public async Task<IHttpActionResult> UpdateProject([FromUri] Guid projectGuid, [FromBody] UpdateProjectModel model)
+        public async Task<IHttpActionResult> UpdateProject([FromUri] Guid projectGuid,
+            [FromBody] UpdateProjectModel model)
         {
             try
             {
                 var result = await _projectOperations.UpdateProject(projectGuid, model).ConfigureAwait(false);
 
                 return Ok(result);
-            } catch (EntityNotFoundException)
+            }
+            catch (EntityNotFoundException)
             {
                 return BadRequest();
             }
@@ -81,18 +82,14 @@ namespace OpenCI.API.Rest.Controllers
             var result = await _projectOperations.DeleteProject(projectGuid).ConfigureAwait(false);
 
             if (result)
-            {
                 return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+
+            return BadRequest();
         }
 
         [HttpGet]
         [Route("{projectGuid:Guid}/plans")]
-        public async Task<IHttpActionResult> GetPlansForProject([FromUri]Guid projectGuid)
+        public async Task<IHttpActionResult> GetPlansForProject([FromUri] Guid projectGuid)
         {
             var results = await _planOperations.GetAllPlansForProject(projectGuid).ConfigureAwait(false);
 
