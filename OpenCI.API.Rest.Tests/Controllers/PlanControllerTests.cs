@@ -23,9 +23,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var model = new CreatePlanModel();
             var expected = new PlanModel();
 
-            planOperations.Setup(o => o.CreatePlan(model)).Returns(
-                Task.FromResult(expected)
-            );
+            planOperations.Setup(o => o.CreatePlan(model)).ReturnsAsync(expected);
 
             var controller = new PlanController(planOperations.Object);
 
@@ -35,13 +33,13 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task DeletePlan_ShouldReturnBadRequestIfTheDeleteIsUnsuccessfull()
+        public async Task DeletePlan_ShouldReturnBadRequestIfTheDeleteIsUnsuccessful()
         {
             var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
 
-            planOperations.Setup(o => o.DeletePlan(guid)).Returns(Task.FromResult(false));
+            planOperations.Setup(o => o.DeletePlan(guid)).ReturnsAsync(false);
 
             var controller = new PlanController(planOperations.Object);
 
@@ -51,13 +49,13 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task DeletePlan_ShouldReturnSuccessIfTheDeleteIsSuccessfull()
+        public async Task DeletePlan_ShouldReturnSuccessIfTheDeleteIsSuccessful()
         {
             var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
 
-            planOperations.Setup(o => o.DeletePlan(guid)).Returns(Task.FromResult(true));
+            planOperations.Setup(o => o.DeletePlan(guid)).ReturnsAsync(true);
 
             var controller = new PlanController(planOperations.Object);
 
@@ -74,9 +72,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var guid = Guid.NewGuid();
             var expected = new List<PlanModel> { new PlanModel { Guid = Guid.NewGuid() } };
 
-            planOperations.Setup(o => o.GetAllPlans()).Returns(
-                Task.FromResult(expected)
-            );
+            planOperations.Setup(o => o.GetAllPlans()).ReturnsAsync(expected);
 
             var controller = new PlanController(planOperations.Object);
 
@@ -113,7 +109,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             };
             var guid = Guid.NewGuid();
 
-            planOperations.Setup(o => o.GetPlan(guid)).Returns(Task.FromResult(expected));
+            planOperations.Setup(o => o.GetPlan(guid)).ReturnsAsync(expected);
 
             var controller = new PlanController(planOperations.Object);
 
@@ -148,7 +144,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var model = new UpdatePlanModel();
             var guid = Guid.NewGuid();
 
-            planOperations.Setup(o => o.UpdatePlan(guid, model)).Returns(Task.FromResult(expected));
+            planOperations.Setup(o => o.UpdatePlan(guid, model)).ReturnsAsync(expected); ;
 
             var controller = new PlanController(planOperations.Object);
 

@@ -17,16 +17,16 @@ namespace OpenCI.API.Rest.Tests.Controllers
     public class AuthenticationControllerTests : IAuthenticationControllerTests
     {
         [TestMethod]
-        public async Task PasswordSignIn_ShouldReturnSuccessResponseWhenSignInAttemptIsSuccessfull()
+        public async Task PasswordSignIn_ShouldReturnSuccessResponseWhenSignInAttemptIsSuccessful()
         {
-            var signInManager = GetMockedSigninManager();
+            var signInManager = GetMockedSignInManager();
 
             signInManager.Setup(s => s.PasswordSignInAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).Returns(Task.FromResult(SignInStatus.Success));
+           )).ReturnsAsync(SignInStatus.Success);
 
             var controller = new AuthenticationController(signInManager.Object);
 
@@ -36,16 +36,16 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task PasswordSignIn_ShouldReturnBadRequestWhenSignInAttemptIsUnsuccessfull()
+        public async Task PasswordSignIn_ShouldReturnBadRequestWhenSignInAttemptIsUnsuccessful()
         {
-            var signInManager = GetMockedSigninManager();
+            var signInManager = GetMockedSignInManager();
 
             signInManager.Setup(s => s.PasswordSignInAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).Returns(Task.FromResult(SignInStatus.Failure));
+           )).ReturnsAsync(SignInStatus.Failure);
 
             var controller = new AuthenticationController(signInManager.Object);
 
@@ -57,14 +57,14 @@ namespace OpenCI.API.Rest.Tests.Controllers
         [TestMethod]
         public async Task PasswordSignIn_ShouldReturnBadRequestWhenUserIsLockedOut()
         {
-            var signInManager = GetMockedSigninManager();
+            var signInManager = GetMockedSignInManager();
 
             signInManager.Setup(s => s.PasswordSignInAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).Returns(Task.FromResult(SignInStatus.LockedOut));
+           )).ReturnsAsync(SignInStatus.LockedOut);
 
             var controller = new AuthenticationController(signInManager.Object);
 
@@ -76,14 +76,14 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
         public async Task PasswordSignIn_ShouldReturnSuccessResponseWhenTwoFactorVerificationIsRequired()
         {
-            var signInManager = GetMockedSigninManager();
+            var signInManager = GetMockedSignInManager();
 
             signInManager.Setup(s => s.PasswordSignInAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>()
-           )).Returns(Task.FromResult(SignInStatus.RequiresVerification));
+           )).ReturnsAsync(SignInStatus.RequiresVerification);
 
             var controller = new AuthenticationController(signInManager.Object);
 
@@ -92,7 +92,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             Assert.AreSame(typeof(OkResult), result.GetType());
         }
 
-        private Mock<SignInManager<IdentityUser, int>> GetMockedSigninManager()
+        private Mock<SignInManager<IdentityUser, int>> GetMockedSignInManager()
         {
             var connectionHelper = new Mock<IConnectionHelper>();
             var userStore = new Mock<UserStore>(connectionHelper.Object);

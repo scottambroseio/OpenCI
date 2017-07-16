@@ -26,7 +26,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpGet]
         [Route("{projectGuid:Guid}")]
-        public async Task<IHttpActionResult> GetProject([FromUri]Guid projectGuid)
+        public async Task<IHttpActionResult> GetProject([FromUri] Guid projectGuid)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPost]
         [Route]
-        public async Task<IHttpActionResult> CreateProject([FromBody]CreateProjectModel model)
+        public async Task<IHttpActionResult> CreateProject([FromBody] CreateProjectModel model)
         {
             var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
 
@@ -61,7 +61,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPut]
         [Route("{projectGuid:Guid}")]
-        public async Task<IHttpActionResult> UpdateProject([FromUri]Guid projectGuid, [FromBody]UpdateProjectModel model)
+        public async Task<IHttpActionResult> UpdateProject([FromUri] Guid projectGuid, [FromBody] UpdateProjectModel model)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpDelete]
         [Route("{projectGuid:Guid}")]
-        public async Task<IHttpActionResult> DeleteProject([FromUri]Guid projectGuid)
+        public async Task<IHttpActionResult> DeleteProject([FromUri] Guid projectGuid)
         {
             var result = await _projectOperations.DeleteProject(projectGuid).ConfigureAwait(false);
 

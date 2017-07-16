@@ -9,24 +9,20 @@ using System.Web.Http;
 
 namespace OpenCI.API.Rest.Controllers
 {
-    [RoutePrefix("Authentication")]
     public class AuthenticationController : ApiController, IAuthenticationController
     {
         private readonly SignInManager<IdentityUser, int> _signInManager;
-        //private readonly UserManager<IdentityUser, int> _userManager;
 
         public AuthenticationController(
-            SignInManager<IdentityUser, int> signInManager//,
-            //UserManager<IdentityUser, int> userManager
+            SignInManager<IdentityUser, int> signInManager
         )
         {
             _signInManager = signInManager;
-            //_userManager = userManager;
         }
 
         [HttpPost]
         [Route("SignIn")]
-        public async Task<IHttpActionResult> PasswordSignIn([FromBody]PasswordSignInModel model)
+        public async Task<IHttpActionResult> PasswordSignIn([FromBody] PasswordSignInModel model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true).ConfigureAwait(false);
  
@@ -34,7 +30,7 @@ namespace OpenCI.API.Rest.Controllers
             {
                 case SignInStatus.Failure: return BadRequest();
                 case SignInStatus.LockedOut: return BadRequest();
-                //case SignInStatus.RequiresVerification: return BadRequest();
+                case SignInStatus.RequiresVerification: return Ok();
                 case SignInStatus.Success: return Ok();
                 default: return InternalServerError();
             }

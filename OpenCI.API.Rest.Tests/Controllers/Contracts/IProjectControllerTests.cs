@@ -9,8 +9,8 @@ namespace OpenCI.API.Rest.Tests.Controllers.Contracts
         Task GetPlansForProject_ShouldReturnTheCorrectPlans();
         Task GetAllProjects_ShouldReturnTheCorrectListOfProject();
         Task CreateProject_ShouldReturnTheCreatedProject();
-        Task DeleteProject_ShouldReturnSuccessIfTheDeleteIsSuccessfull();
-        Task DeleteProject_ShouldReturnBadRequestIfTheDeleteIsUnsuccessfull();
+        Task DeleteProject_ShouldReturnSuccessIfTheDeleteIsSuccessful();
+        Task DeleteProject_ShouldReturnBadRequestIfTheDeleteIsUnsuccessful();
         Task UpdateProject_ShouldReturnTheUpdatedProject();
         Task UpdateProject_ShouldReturnBadRequestIfTheEntityDoesNotExist();
     }

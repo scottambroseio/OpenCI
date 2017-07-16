@@ -28,7 +28,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             };
             var guid = Guid.NewGuid();
 
-            projectOperations.Setup(o => o.GetProject(guid)).Returns(Task.FromResult(expected));
+            projectOperations.Setup(o => o.GetProject(guid)).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
@@ -63,9 +63,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var guid = Guid.NewGuid();
             var expected = new List<ProjectModel> { new ProjectModel { Guid = Guid.NewGuid() } };
 
-            projectOperations.Setup(o => o.GetAllProjects()).Returns(
-                Task.FromResult(expected)
-            );
+            projectOperations.Setup(o => o.GetAllProjects()).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
@@ -83,9 +81,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var model = new CreateProjectModel();
             var expected = new ProjectModel();
 
-            projectOperations.Setup(o => o.CreateProject(model)).Returns(
-                Task.FromResult(expected)
-            );
+            projectOperations.Setup(o => o.CreateProject(model)).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
@@ -95,14 +91,14 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task DeleteProject_ShouldReturnSuccessIfTheDeleteIsSuccessfull()
+        public async Task DeleteProject_ShouldReturnSuccessIfTheDeleteIsSuccessful()
         {
             var projectOperations = new Mock<IProjectOperations>();
             var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
 
-            projectOperations.Setup(o => o.DeleteProject(guid)).Returns(Task.FromResult(true));
+            projectOperations.Setup(o => o.DeleteProject(guid)).ReturnsAsync(true);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
@@ -112,14 +108,14 @@ namespace OpenCI.API.Rest.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task DeleteProject_ShouldReturnBadRequestIfTheDeleteIsUnsuccessfull()
+        public async Task DeleteProject_ShouldReturnBadRequestIfTheDeleteIsUnsuccessful()
         {
             var projectOperations = new Mock<IProjectOperations>();
             var planOperations = new Mock<IPlanOperations>();
 
             var guid = Guid.NewGuid();
 
-            projectOperations.Setup(o => o.DeleteProject(guid)).Returns(Task.FromResult(false));
+            projectOperations.Setup(o => o.DeleteProject(guid)).ReturnsAsync(false);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
@@ -138,7 +134,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var model = new UpdateProjectModel();
             var guid = Guid.NewGuid();
 
-            projectOperations.Setup(o => o.UpdateProject(guid, model)).Returns(Task.FromResult(expected));
+            projectOperations.Setup(o => o.UpdateProject(guid, model)).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 
@@ -173,7 +169,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             var guid = Guid.NewGuid();
             var expected = new List<PlanModel> { new PlanModel() };
 
-            planOperations.Setup(o => o.GetAllPlansForProject(guid)).Returns(Task.FromResult(expected));
+            planOperations.Setup(o => o.GetAllPlansForProject(guid)).ReturnsAsync(expected);
 
             var controller = new ProjectController(projectOperations.Object, planOperations.Object);
 

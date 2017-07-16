@@ -29,7 +29,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpGet]
         [Route("{guid:Guid}")]
-        public async Task<IHttpActionResult> GetPlan([FromUri]Guid guid)
+        public async Task<IHttpActionResult> GetPlan([FromUri] Guid guid)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPost]
         [Route]
-        public async Task<IHttpActionResult> CreatePlan([FromBody]CreatePlanModel model)
+        public async Task<IHttpActionResult> CreatePlan([FromBody] CreatePlanModel model)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpDelete]
         [Route("{planGuid:Guid}")]
-        public async Task<IHttpActionResult> DeletePlan([FromUri]Guid planGuid)
+        public async Task<IHttpActionResult> DeletePlan([FromUri] Guid planGuid)
         {
             var result = await _planOperations.DeletePlan(planGuid).ConfigureAwait(false);
 
