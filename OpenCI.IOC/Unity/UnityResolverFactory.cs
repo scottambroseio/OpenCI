@@ -1,4 +1,4 @@
-﻿namespace OpenCI.IOC
+﻿namespace OpenCI.IOC.Unity
 {
     public static class UnityResolverFactory
     {

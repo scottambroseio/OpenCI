@@ -3,6 +3,7 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Roles;
+using OpenCI.Identity;
 using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Controllers

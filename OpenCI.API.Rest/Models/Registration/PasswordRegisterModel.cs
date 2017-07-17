@@ -1,4 +1,4 @@
-﻿namespace OpenCI.API.Rest.Models
+﻿namespace OpenCI.API.Rest.Models.Registration
 {
     public class PasswordRegisterModel
     {

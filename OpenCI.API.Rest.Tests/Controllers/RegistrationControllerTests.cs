@@ -5,7 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OpenCI.API.Rest.Controllers;
 using OpenCI.API.Rest.Models;
+using OpenCI.API.Rest.Models.Registration;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
+using OpenCI.Identity;
 using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Tests.Controllers

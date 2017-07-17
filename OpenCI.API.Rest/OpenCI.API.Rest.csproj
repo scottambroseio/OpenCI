@@ -127,8 +127,10 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Models\PasswordRegisterModel.cs" />
-    <Compile Include="Models\PasswordSignInModel.cs" />
+    <Compile Include="Models\Registration\PasswordRegisterModel.cs" />
+    <Compile Include="Models\Authentication\PasswordSignInModel.cs" />
+    <Compile Include="Models\Registration\ResetPasswordRequestModel.cs" />
+    <Compile Include="Models\Registration\ResetPasswordSubmissionModel.cs" />
     <Compile Include="Models\Roles\CreateRoleModel.cs" />
     <Compile Include="Models\Roles\UpdateRoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,7 +154,7 @@
       <Name>OpenCI.Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenCI.Identity.Dapper\OpenCI.Identity.Dapper.csproj">
-      <Project>{58AF3BB8-CA59-4BED-909D-6E71CBB6D100}</Project>
+      <Project>{58af3bb8-ca59-4bed-909d-6e71cbb6d100}</Project>
       <Name>OpenCI.Identity.Dapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenCI.IOC\OpenCI.IOC.csproj">
