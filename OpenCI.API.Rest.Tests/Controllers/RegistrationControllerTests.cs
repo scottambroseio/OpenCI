@@ -25,9 +25,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new RegistrationController(userManager.Object);
 
-            var result = await controller.PasswordRegister(new PasswordRegisterModel()) as BadRequestResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.PasswordRegister(new PasswordRegisterModel());
 
             Assert.AreSame(typeof(BadRequestResult), result.GetType());
         }
@@ -42,9 +40,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new RegistrationController(userManager.Object);
 
-            var result = await controller.PasswordRegister(new PasswordRegisterModel()) as OkResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.PasswordRegister(new PasswordRegisterModel());
 
             Assert.AreSame(typeof(OkResult), result.GetType());
         }

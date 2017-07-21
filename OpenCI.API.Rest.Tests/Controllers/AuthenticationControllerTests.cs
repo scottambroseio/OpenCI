@@ -29,9 +29,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new AuthenticationController(signInManager.Object);
 
-            var result = await controller.PasswordSignIn(new PasswordSignInModel()) as OkResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
             Assert.AreSame(typeof(OkResult), result.GetType());
         }
@@ -50,9 +48,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new AuthenticationController(signInManager.Object);
 
-            var result = await controller.PasswordSignIn(new PasswordSignInModel()) as BadRequestResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
             Assert.AreSame(typeof(BadRequestResult), result.GetType());
         }
@@ -71,9 +67,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new AuthenticationController(signInManager.Object);
 
-            var result = await controller.PasswordSignIn(new PasswordSignInModel()) as BadRequestResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
             Assert.AreSame(typeof(BadRequestResult), result.GetType());
         }
@@ -92,9 +86,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new AuthenticationController(signInManager.Object);
 
-            var result = await controller.PasswordSignIn(new PasswordSignInModel()) as OkResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
             Assert.AreSame(typeof(OkResult), result.GetType());
         }

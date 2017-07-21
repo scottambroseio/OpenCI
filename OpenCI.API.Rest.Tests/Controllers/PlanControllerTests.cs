@@ -46,9 +46,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.DeletePlan(guid).ConfigureAwait(false) as BadRequestResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.DeletePlan(guid).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -64,9 +62,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.DeletePlan(guid).ConfigureAwait(false) as OkResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.DeletePlan(guid).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(OkResult), result.GetType());
         }
@@ -101,9 +97,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.GetPlan(guid).ConfigureAwait(false) as BadRequestResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.GetPlan(guid).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }
@@ -143,9 +137,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             var controller = new PlanController(planOperations.Object);
 
-            var result = await controller.UpdatePlan(guid, model).ConfigureAwait(false) as BadRequestResult;
-
-            if (result == null) Assert.Fail();
+            var result = await controller.UpdatePlan(guid, model).ConfigureAwait(false);
 
             Assert.AreEqual(typeof(BadRequestResult), result.GetType());
         }

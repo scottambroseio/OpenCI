@@ -7,8 +7,8 @@
     <ProjectGuid>{48253EE0-D57F-41FF-8284-86F58AB3B5CF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenCI.Implementation.Data</RootNamespace>
-    <AssemblyName>OpenCI.Implementation.Data</AssemblyName>
+    <RootNamespace>OpenCI.Data.Implementation</RootNamespace>
+    <AssemblyName>OpenCI.Data.Implementation</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

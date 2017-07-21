@@ -90,10 +90,12 @@
     <Compile Include="Controllers\Contracts\IPlanControllerTests.cs" />
     <Compile Include="Controllers\Contracts\IProjectControllerTests.cs" />
     <Compile Include="Controllers\Contracts\IRegistrationControllerTests.cs" />
+    <Compile Include="Controllers\Contracts\IRoleControllerTests.cs" />
     <Compile Include="Controllers\PlanControllerTests.cs" />
     <Compile Include="Controllers\ProjectControllerTest.cs" />
     <Compile Include="Controllers\AuthenticationControllerTests.cs" />
     <Compile Include="Controllers\RegistrationControllerTests.cs" />
+    <Compile Include="Controllers\RoleControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
