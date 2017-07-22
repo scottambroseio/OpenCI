@@ -25,7 +25,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             roleManager.Setup(r => r.CreateAsync(It.IsAny<IdentityRole>())).ReturnsAsync(IdentityResult.Success);
 
-            var controller = new RoleController(roleManager.Object);
+            var controller = new RoleController {RoleManager = roleManager.Object};
 
             var result = await controller.CreateRole(new CreateRoleModel());
 
@@ -39,7 +39,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             roleManager.Setup(r => r.CreateAsync(It.IsAny<IdentityRole>())).ReturnsAsync(IdentityResult.Failed());
 
-            var controller = new RoleController(roleManager.Object);
+            var controller = new RoleController { RoleManager = roleManager.Object };
 
             var result = await controller.CreateRole(new CreateRoleModel());
 
@@ -54,7 +54,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             roleManager.Setup(r => r.UpdateAsync(It.IsAny<IdentityRole>())).ReturnsAsync(IdentityResult.Success);
             roleManager.Setup(r => r.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new IdentityRole(String.Empty));
 
-            var controller = new RoleController(roleManager.Object);
+            var controller = new RoleController { RoleManager = roleManager.Object };
 
             var result = await controller.UpdateRole(String.Empty, new UpdateRoleModel());
 
@@ -68,7 +68,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             roleManager.Setup(r => r.UpdateAsync(It.IsAny<IdentityRole>())).ReturnsAsync(IdentityResult.Failed());
 
-            var controller = new RoleController(roleManager.Object);
+            var controller = new RoleController { RoleManager = roleManager.Object };
 
             var result = await controller.UpdateRole(String.Empty, new UpdateRoleModel());
 
@@ -82,7 +82,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             roleManager.Setup(r => r.DeleteAsync(It.IsAny<IdentityRole>())).ReturnsAsync(IdentityResult.Success);
 
-            var controller = new RoleController(roleManager.Object);
+            var controller = new RoleController { RoleManager = roleManager.Object };
 
             var result = await controller.DeleteRole(String.Empty);
 
@@ -96,7 +96,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
             roleManager.Setup(r => r.DeleteAsync(It.IsAny<IdentityRole>())).ReturnsAsync(IdentityResult.Failed());
 
-            var controller = new RoleController(roleManager.Object);
+            var controller = new RoleController { RoleManager = roleManager.Object };
 
             var result = await controller.DeleteRole(String.Empty);
 

@@ -27,7 +27,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<bool>()
             )).ReturnsAsync(SignInStatus.Success);
 
-            var controller = new AuthenticationController(signInManager.Object);
+            var controller = new AuthenticationController {SignInManager = signInManager.Object};
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
@@ -46,7 +46,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<bool>()
             )).ReturnsAsync(SignInStatus.Failure);
 
-            var controller = new AuthenticationController(signInManager.Object);
+            var controller = new AuthenticationController { SignInManager = signInManager.Object };
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
@@ -65,7 +65,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<bool>()
             )).ReturnsAsync(SignInStatus.LockedOut);
 
-            var controller = new AuthenticationController(signInManager.Object);
+            var controller = new AuthenticationController { SignInManager = signInManager.Object };
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel());
 
@@ -84,7 +84,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
                 It.IsAny<bool>()
             )).ReturnsAsync(SignInStatus.RequiresVerification);
 
-            var controller = new AuthenticationController(signInManager.Object);
+            var controller = new AuthenticationController { SignInManager = signInManager.Object };
 
             var result = await controller.PasswordSignIn(new PasswordSignInModel());
 

@@ -23,7 +23,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed());
 
-            var controller = new RegistrationController(userManager.Object);
+            var controller = new RegistrationController {UserManager = userManager.Object};
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel());
 
@@ -38,7 +38,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            var controller = new RegistrationController(userManager.Object);
+            var controller = new RegistrationController { UserManager = userManager.Object };
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel());
 

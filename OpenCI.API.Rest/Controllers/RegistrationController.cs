@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Registration;
 using OpenCI.Identity.Dapper;
@@ -9,11 +11,12 @@ namespace OpenCI.API.Rest.Controllers
 {
     public class RegistrationController : ApiController, IRegistrationController
     {
-        private readonly UserManager<IdentityUser, int> _userManager;
+        private UserManager<IdentityUser, int> _userManager;
 
-        public RegistrationController(UserManager<IdentityUser, int> userManager)
+        public UserManager<IdentityUser, int> UserManager
         {
-            _userManager = userManager;
+            get { return _userManager ?? HttpContext.Current.GetOwinContext().Get<UserManager<IdentityUser, int>>(); }
+            set { _userManager = value; }
         }
 
         [HttpPost]
@@ -22,7 +25,7 @@ namespace OpenCI.API.Rest.Controllers
         {
             var identityUser = new IdentityUser(model.UserName);
 
-            var result = await _userManager.CreateAsync(identityUser, model.Password);
+            var result = await UserManager.CreateAsync(identityUser, model.Password);
 
             if (result.Succeeded) return Ok();
 
@@ -33,15 +36,15 @@ namespace OpenCI.API.Rest.Controllers
         [Route("ForgottenPassword")]
         public async Task<IHttpActionResult> ForgottenPassword(ResetPasswordRequestModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName).ConfigureAwait(false);
+            var user = await UserManager.FindByNameAsync(model.UserName).ConfigureAwait(false);
 
             if (user == null) return Ok();
 
-            var hasPassword = await _userManager.HasPasswordAsync(user.Id).ConfigureAwait(false);
+            var hasPassword = await UserManager.HasPasswordAsync(user.Id).ConfigureAwait(false);
 
             if (hasPassword)
             {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user.Id).ConfigureAwait(false);
+                var token = await UserManager.GeneratePasswordResetTokenAsync(user.Id).ConfigureAwait(false);
 
                 // send email
             }
@@ -52,7 +55,8 @@ namespace OpenCI.API.Rest.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> ResetPassword([FromBody] ResetPasswordSubmissionModel model)
         {
-            var result = await _userManager.ResetPasswordAsync(model.Id, model.Token, model.NewPassword).ConfigureAwait(false);
+            var result = await UserManager.ResetPasswordAsync(model.Id, model.Token, model.NewPassword)
+                .ConfigureAwait(false);
 
             if (result.Succeeded) return Ok();
 

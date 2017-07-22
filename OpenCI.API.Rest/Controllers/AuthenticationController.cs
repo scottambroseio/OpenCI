@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity.Owin;
 using OpenCI.API.Rest.Controllers.Contracts;
@@ -9,20 +10,19 @@ namespace OpenCI.API.Rest.Controllers
 {
     public class AuthenticationController : ApiController, IAuthenticationController
     {
-        private readonly SignInManager<IdentityUser, int> _signInManager;
+        private SignInManager<IdentityUser, int> _signInManager;
 
-        public AuthenticationController(
-            SignInManager<IdentityUser, int> signInManager
-        )
+        public SignInManager<IdentityUser, int> SignInManager
         {
-            _signInManager = signInManager;
+            get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<SignInManager<IdentityUser, int>>(); }
+            set { _signInManager = value; }
         }
 
         [HttpPost]
         [Route("SignIn")]
         public async Task<IHttpActionResult> PasswordSignIn([FromBody] PasswordSignInModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true)
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, true)
                 .ConfigureAwait(false);
 
             switch (result)

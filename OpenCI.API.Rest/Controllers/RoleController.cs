@@ -1,21 +1,24 @@
 ﻿using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Roles;
 using OpenCI.Identity;
 using OpenCI.Identity.Dapper;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace OpenCI.API.Rest.Controllers
 {
     [RoutePrefix("Role")]
     public class RoleController : ApiController, IRoleController
     {
-        private readonly RoleManager<IdentityRole, int> _roleManager;
+        private RoleManager<IdentityRole, int> _roleManager;
 
-        public RoleController(RoleManager<IdentityRole, int> roleManager)
+        public RoleManager<IdentityRole, int> RoleManager
         {
-            _roleManager = roleManager;
+            get { return _roleManager ?? HttpContext.Current.GetOwinContext().Get<RoleManager<IdentityRole, int>>(); }
+            set { _roleManager = value; }
         }
 
         [HttpPost]
@@ -23,7 +26,7 @@ namespace OpenCI.API.Rest.Controllers
         public async Task<IHttpActionResult> CreateRole([FromBody] CreateRoleModel model)
         {
             var role = new IdentityRole(model.RoleName);
-            var result = await _roleManager.CreateAsync(role).ConfigureAwait(false);
+            var result = await RoleManager.CreateAsync(role).ConfigureAwait(false);
 
             if (result.Succeeded) return Ok();
 
@@ -35,7 +38,7 @@ namespace OpenCI.API.Rest.Controllers
         public async Task<IHttpActionResult> DeleteRole([FromUri] string roleName)
         {
             var role = new IdentityRole(roleName);
-            var result = await _roleManager.DeleteAsync(role).ConfigureAwait(false);
+            var result = await RoleManager.DeleteAsync(role).ConfigureAwait(false);
 
             if (result.Succeeded) return Ok();
 
@@ -46,13 +49,13 @@ namespace OpenCI.API.Rest.Controllers
         [Route("{roleName}")]
         public async Task<IHttpActionResult> UpdateRole([FromUri] string roleName, [FromBody] UpdateRoleModel model)
         {
-            var role = await _roleManager.FindByNameAsync(roleName).ConfigureAwait(false);
+            var role = await RoleManager.FindByNameAsync(roleName).ConfigureAwait(false);
 
             if (role == null) return BadRequest();
 
             role.Name = model.UpdatedRoleName;
 
-            var result = await _roleManager.UpdateAsync(role).ConfigureAwait(false);
+            var result = await RoleManager.UpdateAsync(role).ConfigureAwait(false);
 
             if (result.Succeeded) return Ok();
 

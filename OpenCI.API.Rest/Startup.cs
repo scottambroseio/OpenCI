@@ -19,11 +19,7 @@ namespace OpenCI.API.Rest
 
             WebApiConfig.Register(httpConfiguration);
             RouteConfig.Register(httpConfiguration.Routes);
-
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
-            });
+            IdentityConfig.Register(app);
 
             app.UseWebApi(httpConfiguration);
         }
