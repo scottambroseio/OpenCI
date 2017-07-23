@@ -5,8 +5,6 @@ using OpenCI.Business.Contracts;
 using OpenCI.Business.Implementation;
 using OpenCI.Data.Contracts;
 using OpenCI.Data.Implementation;
-using ConnectionHelper = OpenCI.Data.Implementation.ConnectionHelper;
-using IConnectionHelper = OpenCI.Data.Contracts.IConnectionHelper;
 
 namespace OpenCI.IOC.Unity
 {

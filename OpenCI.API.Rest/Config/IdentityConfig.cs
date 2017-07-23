@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using OpenCI.Identity.Dapper;
+using OpenCI.Identity.ExtensionPoints.Services;
 using Owin;
 
 namespace OpenCI.API.Rest.Config
@@ -32,12 +33,15 @@ namespace OpenCI.API.Rest.Config
             var roleStore = ctx.Get<IRoleStore<IdentityRole, int>>();
             var roleManager = new RoleManager<IdentityRole, int>(roleStore);
 
+            roleManager.RoleValidator = new RoleValidator<IdentityRole, int>(roleManager);
+
             return roleManager;
         }
 
         private static UserManager<IdentityUser, int> CreateUserManager(IdentityFactoryOptions<UserManager<IdentityUser, int>> opts, IOwinContext ctx)
         {
             var userStore = ctx.Get<IUserStore<IdentityUser, int>>();
+
             var userManager = new UserManager<IdentityUser, int>(userStore)
             {
                 UserTokenProvider =
@@ -45,6 +49,8 @@ namespace OpenCI.API.Rest.Config
                         opts.DataProtectionProvider.Create("ASP.NET Identity"))
             };
 
+            userManager.UserValidator = new UserValidator<IdentityUser, int>(userManager);
+            userManager.EmailService = new IdentityEmailService();
 
             return userManager;
         }

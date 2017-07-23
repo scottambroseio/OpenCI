@@ -8,6 +8,6 @@ namespace OpenCI.API.Rest.Controllers.Contracts
     {
         Task<IHttpActionResult> PasswordSignIn(PasswordSignInModel model);
         //Task<IHttpActionResult> ExternalSignIn(PasswordSignInModel model);
-        //Task<IHttpActionResult> ResetPassword(PasswordSignInModel model);
+        IHttpActionResult SignOut();
     }
 }
