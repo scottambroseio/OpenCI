@@ -34,13 +34,14 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    INSERT INTO [USER] (UserName, SecurityStamp, PasswordHash)
-                    VALUES (@UserName, @SecurityStamp, @PasswordHash);
+                    INSERT INTO [USER] (UserName, SecurityStamp, PasswordHash, Email)
+                    VALUES (@UserName, @SecurityStamp, @PasswordHash, @Email);
                 ", new
                 {
                     user.UserName,
                     user.SecurityStamp,
-                    user.PasswordHash
+                    user.PasswordHash,
+                    user.Email
                 }).ConfigureAwait(false);
 
                 user.IsTransient = false;

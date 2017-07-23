@@ -130,6 +130,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Models\Registration\ConfirmEmailModel.cs" />
     <Compile Include="Models\Registration\PasswordRegisterModel.cs" />
     <Compile Include="Models\Authentication\PasswordSignInModel.cs" />
     <Compile Include="Models\Registration\ResetPasswordRequestModel.cs" />
