@@ -2,11 +2,10 @@
 using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Roles;
-using OpenCI.Identity;
 using OpenCI.Identity.Dapper;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace OpenCI.API.Rest.Controllers
 {

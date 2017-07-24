@@ -65,7 +65,7 @@ namespace OpenCI.API.Rest.Controllers
             var resetLink = Url.Link("ResetPassword", null);
 
             await UserManager.SendEmailAsync(user.Id, "OpenCI Password Reset Request",
-                $"\r\n\r\n" +
+                "\r\n\r\n" +
                 $"Link: {resetLink}\r\n" +
                 $"Id: {user.Id}\r\n" +
                 $"Token: {token}"
