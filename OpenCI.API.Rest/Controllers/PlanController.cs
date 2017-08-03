@@ -47,6 +47,9 @@ namespace OpenCI.API.Rest.Controllers
         [Route]
         public async Task<IHttpActionResult> CreatePlan([FromBody] CreatePlanModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             try
             {
                 var result = await _planOperations.CreatePlan(model).ConfigureAwait(false);
@@ -75,6 +78,9 @@ namespace OpenCI.API.Rest.Controllers
         [Route("{planGuid:Guid}")]
         public async Task<IHttpActionResult> UpdatePlan([FromUri] Guid planGuid, [FromBody] UpdatePlanModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             try
             {
                 var result = await _planOperations.UpdatePlan(planGuid, model).ConfigureAwait(false);

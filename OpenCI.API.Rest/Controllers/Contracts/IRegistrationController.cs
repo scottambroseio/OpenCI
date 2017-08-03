@@ -7,8 +7,5 @@ namespace OpenCI.API.Rest.Controllers.Contracts
     public interface IRegistrationController
     {
         Task<IHttpActionResult> PasswordRegister(PasswordRegisterModel model);
-        Task<IHttpActionResult> ForgottenPassword(ResetPasswordRequestModel model);
-        Task<IHttpActionResult> ResetPassword(ResetPasswordSubmissionModel model);
-        Task<IHttpActionResult> ConfirmEmail(ConfirmEmailModel model);
     }
 }

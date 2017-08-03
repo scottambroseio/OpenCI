@@ -4,10 +4,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OpenCI.API.Rest.Controllers;
-using OpenCI.API.Rest.Models;
 using OpenCI.API.Rest.Models.Registration;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
-using OpenCI.Identity;
 using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Tests.Controllers
@@ -38,7 +36,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            var controller = new RegistrationController { UserManager = userManager.Object };
+            var controller = new RegistrationController {UserManager = userManager.Object};
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel());
 

@@ -24,6 +24,9 @@ namespace OpenCI.API.Rest.Controllers
         [Route]
         public async Task<IHttpActionResult> CreateRole([FromBody] CreateRoleModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             var role = new IdentityRole(model.RoleName);
             var result = await RoleManager.CreateAsync(role).ConfigureAwait(false);
 
@@ -48,6 +51,9 @@ namespace OpenCI.API.Rest.Controllers
         [Route("{roleName}")]
         public async Task<IHttpActionResult> UpdateRole([FromUri] string roleName, [FromBody] UpdateRoleModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             var role = await RoleManager.FindByNameAsync(roleName).ConfigureAwait(false);
 
             if (role == null) return BadRequest();
