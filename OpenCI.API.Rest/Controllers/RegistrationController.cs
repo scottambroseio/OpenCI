@@ -21,7 +21,8 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPost]
-        [Route("Register", Name = "Register")]
+        [AllowAnonymous]
+        [Route("Register", Name = nameof(PasswordRegister))]
         public async Task<IHttpActionResult> PasswordRegister([FromBody] PasswordRegisterModel model)
 
         {

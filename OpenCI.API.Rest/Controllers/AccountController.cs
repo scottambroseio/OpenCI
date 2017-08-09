@@ -9,7 +9,6 @@ using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Controllers
 {
-    [Authorize]
     [RoutePrefix("Account")]
     public class AccountController : ApiController, IAccountController
     {
@@ -23,7 +22,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("ForgottenPassword", Name = "ForgottenPassword")]
+        [Route("ForgottenPassword", Name = nameof(ForgottenPassword))]
         public async Task<IHttpActionResult> ForgottenPassword([FromBody] ResetPasswordRequestModel model)
         {
             var user = await UserManager.FindByNameAsync(model.UserName);
@@ -50,7 +49,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("ResetPassword", Name = "ResetPassword")]
+        [Route("ResetPassword", Name = nameof(ResetPassword))]
         public async Task<IHttpActionResult> ResetPassword([FromBody] ResetPasswordSubmissionModel model)
         {
             var result = await UserManager.ResetPasswordAsync(model.Id, model.Token, model.NewPassword);
@@ -62,7 +61,7 @@ namespace OpenCI.API.Rest.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("ConfirmEmail", Name = "ConfirmEmail")]
+        [Route("ConfirmEmail", Name = nameof(ConfirmEmail))]
         public async Task<IHttpActionResult> ConfirmEmail([FromBody] ConfirmEmailModel model)
         {
             var result = await UserManager.ConfirmEmailAsync(model.Id, model.Token);
@@ -73,7 +72,7 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPost]
-        [Route("EnableTwoFactor", Name = "EnableTwoFactor")]
+        [Route("EnableTwoFactor", Name = nameof(EnableTwoFactor))]
         public async Task<IHttpActionResult> EnableTwoFactor()
         {
             var userId = User.Identity.GetUserId<int>();
@@ -86,7 +85,7 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPost]
-        [Route("DisableTwoFactor", Name = "DisableTwoFactor")]
+        [Route("DisableTwoFactor", Name = nameof(DisableTwoFactor))]
         public async Task<IHttpActionResult> DisableTwoFactor()
         {
             var userId = User.Identity.GetUserId<int>();

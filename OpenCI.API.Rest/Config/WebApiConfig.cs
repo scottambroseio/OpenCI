@@ -14,6 +14,7 @@ namespace OpenCI.API.Rest.Config
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.DependencyResolver = UnityResolverFactory.CreateResolver();
             config.Filters.Add(new ValidateModelAttribute());
+            config.Filters.Add(new AuthorizeAttribute());
         }
     }
 }

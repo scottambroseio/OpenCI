@@ -30,7 +30,8 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPost]
-        [Route("SignIn")]
+        [AllowAnonymous]
+        [Route("SignIn", Name = nameof(PasswordSignIn))]
         public async Task<IHttpActionResult> PasswordSignIn([FromBody] PasswordSignInModel model)
         {
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
@@ -46,7 +47,7 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPost]
-        [Route("SignOut")]
+        [Route("SignOut", Name = nameof(SignOut))]
         public IHttpActionResult SignOut()
         {
             AuthenticationManager.SignOut();
