@@ -33,9 +33,6 @@ namespace OpenCI.API.Rest.Controllers
         [Route("SignIn")]
         public async Task<IHttpActionResult> PasswordSignIn([FromBody] PasswordSignInModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
 
             switch (result)

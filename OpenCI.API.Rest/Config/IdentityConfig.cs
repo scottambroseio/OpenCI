@@ -67,7 +67,6 @@ namespace OpenCI.API.Rest.Config
 
             userManager.UserValidator = new UserValidator<IdentityUser, int>(userManager)
             {
-                AllowOnlyAlphanumericUserNames = true,
                 RequireUniqueEmail = true
             };
 

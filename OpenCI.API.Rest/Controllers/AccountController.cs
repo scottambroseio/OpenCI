@@ -26,11 +26,6 @@ namespace OpenCI.API.Rest.Controllers
         [Route("ForgottenPassword", Name = "ForgottenPassword")]
         public async Task<IHttpActionResult> ForgottenPassword([FromBody] ResetPasswordRequestModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var user = await UserManager.FindByNameAsync(model.UserName);
 
             if (user == null) return Ok();
@@ -58,11 +53,6 @@ namespace OpenCI.API.Rest.Controllers
         [Route("ResetPassword", Name = "ResetPassword")]
         public async Task<IHttpActionResult> ResetPassword([FromBody] ResetPasswordSubmissionModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var result = await UserManager.ResetPasswordAsync(model.Id, model.Token, model.NewPassword);
 
             if (result.Succeeded) return Ok();
@@ -75,11 +65,6 @@ namespace OpenCI.API.Rest.Controllers
         [Route("ConfirmEmail", Name = "ConfirmEmail")]
         public async Task<IHttpActionResult> ConfirmEmail([FromBody] ConfirmEmailModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var result = await UserManager.ConfirmEmailAsync(model.Id, model.Token);
 
             if (result.Succeeded) return Ok();

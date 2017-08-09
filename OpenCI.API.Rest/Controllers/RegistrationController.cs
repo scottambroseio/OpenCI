@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using OpenCI.API.Rest.Attributes;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Registration;
 using OpenCI.Identity.Dapper;
@@ -20,13 +21,10 @@ namespace OpenCI.API.Rest.Controllers
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("Register", Name = "Register")]
         public async Task<IHttpActionResult> PasswordRegister([FromBody] PasswordRegisterModel model)
 
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var newUser = new IdentityUser(model.UserName)
             {
                 Email = model.UserName

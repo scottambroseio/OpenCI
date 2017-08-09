@@ -53,9 +53,6 @@ namespace OpenCI.API.Rest.Controllers
         [Route]
         public async Task<IHttpActionResult> CreateProject([FromBody] CreateProjectModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var result = await _projectOperations.CreateProject(model).ConfigureAwait(false);
 
             return Ok(result);
@@ -66,9 +63,6 @@ namespace OpenCI.API.Rest.Controllers
         public async Task<IHttpActionResult> UpdateProject([FromUri] Guid projectGuid,
             [FromBody] UpdateProjectModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             try
             {
                 var result = await _projectOperations.UpdateProject(projectGuid, model).ConfigureAwait(false);
