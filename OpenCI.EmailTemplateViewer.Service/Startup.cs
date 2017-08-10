@@ -27,6 +27,8 @@ namespace OpenCI.EmailTemplateViewer.Service
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddEventLog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
