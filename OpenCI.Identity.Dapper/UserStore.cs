@@ -34,7 +34,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    INSERT INTO [USER] (UserName, SecurityStamp, PasswordHash, Email)
+                    INSERT INTO [Identity].[User] (UserName, SecurityStamp, PasswordHash, Email)
                     VALUES (@UserName, @SecurityStamp, @PasswordHash, @Email);
                 ", new
                 {
@@ -53,8 +53,8 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    DELETE FROM [Claim] WHERE [UserId] = @Id;
-                    DELETE FROM [USER] WHERE [Id] = @Id;
+                    DELETE FROM [Identity].[Claim] WHERE [UserId] = @Id;
+                    DELETE FROM [Identity].[User] WHERE [Id] = @Id;
                 ", new
                 {
                     user.Id
@@ -67,7 +67,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
-                    SELECT * FROM [USER]
+                    SELECT * FROM [Identity].[User]
                     WHERE [Id] = @Id;
                 ", new
                 {
@@ -81,7 +81,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
-                    SELECT * FROM [USER]
+                    SELECT * FROM [Identity].[User]
                     WHERE [UserName] = @UserName;
                 ", new
                 {
@@ -97,7 +97,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    UPDATE [USER] SET
+                    UPDATE [Identity].[User] SET
                     [UserName] = @UserName,
                     [Email] = @Email,
                     [LockoutEndDate] = @LockoutEndDate,
@@ -136,7 +136,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var results = await connection.QueryAsync<Claim>(@"
-                    SELECT [Type], [Value] FROM [Claim]
+                    SELECT [Type], [Value] FROM [Identity].[Claim]
                     WHERE [UserId] = @UserId;
                 ", new
                 {
@@ -152,7 +152,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    INSERT INTO [Claim] (UserId, Type, Value)
+                    INSERT INTO [Identity].[Claim] (UserId, Type, Value)
                     VALUES (@UserId, @Type, @Value);", new
                 {
                     UserId = user.Id,
@@ -167,7 +167,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    DELETE FROM [Claim]
+                    DELETE FROM [Identity].[Claim]
                     WHERE [UserId] = @UserId;
                 ", new
                 {
@@ -207,7 +207,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
-                    SELECT * FROM [USER]
+                    SELECT * FROM [Identity].[User]
                     WHERE [Email] = @Email;
                 ", new
                 {
@@ -268,7 +268,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    INSERT INTO [UserLogin] (LoginProvider, ProviderKey, UserId)
+                    INSERT INTO [Identity].[UserLogin] (LoginProvider, ProviderKey, UserId)
                     VALUES (@LoginProvider, @ProviderKey, @UserId);
                 ", new
                 {
@@ -284,7 +284,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    DELETE FROM [UserLogin]
+                    DELETE FROM [Identity].[UserLogin]
                     WHERE [UserId] = @UserId;
                 ", new
                 {
@@ -298,7 +298,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var results = await connection.QueryAsync<UserLoginInfo>(@"
-                    SELECT [LoginProvider], [ProviderKey] FROM [UserLogin]
+                    SELECT [LoginProvider], [ProviderKey] FROM [Identity].[UserLogin]
                     WHERE [UserId] = @UserId
                 ", new
                 {
@@ -314,9 +314,9 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var result = await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
-                    SELECT u.* FROM [UserLogin]
-                    INNER JOIN [User] u
-                    ON [UserLogin].[Id] = u.Id
+                    SELECT u.* FROM [Identity].[UserLogin]
+                    INNER JOIN [Identity].[User] u
+                    ON [Identity].[UserLogin].[Id] = u.Id
                     WHERE [UserLogin].LoginProvider = @LoginProvider
                     AND [UserLogin].ProviderKey = @ProviderKey
                 ", new
@@ -378,7 +378,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var roleId = await connection.ExecuteScalarAsync<int>(@"
-                    SELECT [Id] FROM [Role]
+                    SELECT [Id] FROM [Identity].[Role]
                     WHERE [Name] = @Name
                 ", new
                 {
@@ -386,7 +386,7 @@ namespace OpenCI.Identity.Dapper
                 }).ConfigureAwait(false);
 
                 await connection.ExecuteAsync(@"
-                    INSERT INTO [UserRole] (UserId, RoleId)
+                    INSERT INTO [Identity].[UserRole] (UserId, RoleId)
                     VALUES (@UserId, @RoleId);
                 ", new
                 {
@@ -401,8 +401,8 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 await connection.ExecuteAsync(@"
-                    DELETE ur FROM [UserRole] ur
-                    INNER JOIN [Role] r
+                    DELETE ur FROM [Identity].[UserRole] ur
+                    INNER JOIN [Identity].[Role] r
                     ON ur.[RoleId] = r.[Id]                    
                     WHERE r.[Name] = @Name
                     AND ur.[UserId] = @UserId", new
@@ -418,7 +418,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var results = await connection.QueryAsync<string>(@"
-                    SELECT [Role].[Name] FROM [Role]
+                    SELECT [Role].[Name] FROM [Identity].[Role]
                     INNER JOIN [UserRole]
                     ON [Role].[Id] = [UserRole].[RoleId]
                     WHERE [UserRole].[UserId] = @UserId
@@ -436,7 +436,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var result = await connection.ExecuteScalarAsync<int>(@"
-                    SELECT COUNT(*) FROM [UserRole]
+                    SELECT COUNT(*) FROM [Identity].[UserRole]
                     INNER JOIN [Role]
                     ON [Role].[Id] = [UserRole].[RoleId]
                     WHERE [UserRole].[UserId] = @UserId

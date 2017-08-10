@@ -21,7 +21,7 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("INSERT INTO [Role] (Name) VALUES (@Name);", new {role.Name})
+                await connection.ExecuteAsync("INSERT INTO [Identity].[Role] (Name) VALUES (@Name);", new {role.Name})
                     .ConfigureAwait(false);
             }
         }
@@ -30,7 +30,7 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("DELETE FROM [Role] WHERE [Name] = @Name;", new {role.Name})
+                await connection.ExecuteAsync("DELETE FROM [Identity].[Role] WHERE [Name] = @Name;", new {role.Name})
                     .ConfigureAwait(false);
             }
         }
@@ -40,7 +40,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection
-                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Role] WHERE [Id] = @Id;",
+                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Identity].[Role] WHERE [Id] = @Id;",
                         new {Id = roleId}).ConfigureAwait(false);
             }
         }
@@ -50,7 +50,7 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection
-                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Role] WHERE [Name] = @Name;",
+                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Identity].[Role] WHERE [Name] = @Name;",
                         new {Name = roleName}).ConfigureAwait(false);
             }
         }
@@ -59,7 +59,7 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("UPDATE [Role] SET [Name] = @Name WHERE [Id] = @Id;",
+                await connection.ExecuteAsync("UPDATE [Identity].[Role] SET [Name] = @Name WHERE [Id] = @Id;",
                     new {role.Id, role.Name}).ConfigureAwait(false);
             }
         }
