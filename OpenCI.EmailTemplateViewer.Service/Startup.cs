@@ -32,14 +32,9 @@ namespace OpenCI.EmailTemplateViewer.Service
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }

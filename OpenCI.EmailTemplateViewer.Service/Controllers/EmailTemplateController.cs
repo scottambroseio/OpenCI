@@ -1,14 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OpenCI.EmailTemplateViewer.Service.Controllers
 {
     public class EmailTemplateController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet("{guid:Guid}")]
+        public IActionResult Template([FromQuery] Guid guid)
         {
             return View();
         }

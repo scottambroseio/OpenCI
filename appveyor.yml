@@ -8,11 +8,19 @@ assembly_info:
   assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
 before_build:
 - ps: nuget restore
 build:
   publish_wap: true
   verbosity: normal
+artifacts:
+- path: OpenCI.EmailTemplateViewer.Service\bin\Release\net452\win7-x86
+  name: OpenCI.EmailTemplateViewer.Service
 deploy:
 - provider: Environment
   name: scottrangerio

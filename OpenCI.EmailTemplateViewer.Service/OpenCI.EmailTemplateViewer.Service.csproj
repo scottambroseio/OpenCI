@@ -5,9 +5,10 @@
     <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='EmailTemplateViewer|AnyCPU'" />
+
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Views\EmailTemplate\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
