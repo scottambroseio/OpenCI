@@ -418,10 +418,10 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var results = await connection.QueryAsync<string>(@"
-                    SELECT [Role].[Name] FROM [Identity].[Role]
-                    INNER JOIN [UserRole]
-                    ON [Role].[Id] = [UserRole].[RoleId]
-                    WHERE [UserRole].[UserId] = @UserId
+                    SELECT r.[Name] FROM [Identity].[Role] r
+                    INNER JOIN [Identity].[UserRole] ur
+                    ON r.[Id] = ur.[RoleId]
+                    WHERE ur.[UserId] = @UserId
                 ", new
                 {
                     UserId = user.Id
@@ -436,11 +436,11 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 var result = await connection.ExecuteScalarAsync<int>(@"
-                    SELECT COUNT(*) FROM [Identity].[UserRole]
-                    INNER JOIN [Role]
-                    ON [Role].[Id] = [UserRole].[RoleId]
-                    WHERE [UserRole].[UserId] = @UserId
-                    AND [Role].[Name] = @Name
+                    SELECT COUNT(*) FROM [Identity].[UserRole] ur
+                    INNER JOIN [Identity].[Role] r
+                    ON r.[Id] = ur.[RoleId]
+                    WHERE ur.[UserId] = @UserId
+                    AND r.[Name] = @Name
                 ", new
                 {
                     UserId = user.Id,
