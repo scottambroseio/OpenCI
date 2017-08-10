@@ -1,0 +1,2 @@
+sc.exe stop OpenCIEmailTemplateViewer
+sc.exe delete OpenCIEmailTemplateViewer
