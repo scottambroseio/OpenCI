@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OpenCI.EmailTemplateViewer.Service.Controllers
 {
+    [Route("/")]
     public class EmailTemplateController : Controller
     {
         [HttpGet]

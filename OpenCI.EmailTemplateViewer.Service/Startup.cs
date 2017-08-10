@@ -32,7 +32,7 @@ namespace OpenCI.EmailTemplateViewer.Service
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
 
             app.UseMvc();
         }
