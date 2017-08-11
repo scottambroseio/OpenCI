@@ -18,9 +18,6 @@ before_build:
 build:
   publish_wap: true
   verbosity: normal
-artifacts:
-- path: OpenCI.EmailTemplateViewer.Service\bin\Release\PublishOutput
-  name: OpenCI.EmailTemplateViewer.Service
 deploy:
 - provider: Environment
   name: scottrangerio

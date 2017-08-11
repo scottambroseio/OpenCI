@@ -6,10 +6,10 @@
     <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DeployOnBuild>True</DeployOnBuild>
     <PublishProfile>FolderProfile</PublishProfile>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <Folder Include="Controllers\" />
