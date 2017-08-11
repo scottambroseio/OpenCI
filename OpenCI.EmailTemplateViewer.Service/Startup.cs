@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OpenCI.EmailTemplates;
+using OpenCI.EmailTemplates.Contracts;
 
 namespace OpenCI.EmailTemplateViewer.Service
 {
@@ -23,6 +25,7 @@ namespace OpenCI.EmailTemplateViewer.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddScoped<IEmailTemplateService, EmailTemplateService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

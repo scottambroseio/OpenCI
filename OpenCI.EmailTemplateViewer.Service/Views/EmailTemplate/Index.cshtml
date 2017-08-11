@@ -1,6 +1,13 @@
-﻿@{
+﻿@model IEnumerable<string>
+
+@{
     ViewBag.Title = "Email Template Renderer";
     Layout = "_Layout";
 }
 
 <h2>Hello world</h2>
+
+@foreach (var url in Model)
+{
+    <a href="@url">Template</a>
+}
