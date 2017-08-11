@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using OpenCI.EmailTemplates.Contracts;
+using OpenCI.EmailTemplates.Models;
 
 namespace OpenCI.EmailTemplateViewer.Service.Controllers
 {
@@ -26,7 +28,9 @@ namespace OpenCI.EmailTemplateViewer.Service.Controllers
         [HttpGet("{guid:Guid}")]
         public IActionResult Template([FromRoute] Guid guid)
         {
-            return View(guid);
+            var html = _emailTemplateService.RenderTemplate(new ResetPasswordModel());
+
+            return Content(html, "text/html");
         }
     }
 }
