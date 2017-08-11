@@ -18,6 +18,13 @@ before_build:
 build:
   publish_wap: true
   verbosity: normal
+build_script:
+- ps: MSBuild.exe "/p:Configuration=Release" "/p:Platform=Any CPU" .\OpenCI.sln
+artifacts:
+- path: OpenCI.API.Rest\bin\WebDeploy\OpenCI.API.Rest.zip
+  name: OpenCI.API.Rest
+- path: OpenCI.EmailTemplateViewer.Service\bin\Release\PublishOutput
+  name: OpenCI.EmailTemplateViewer.Service
 deploy:
 - provider: Environment
   name: scottrangerio
