@@ -93,7 +93,6 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
         private static Mock<SignInManager<IdentityUser, int>> GetMockedSignInManager()
         {
-            var connectionHelper = new Mock<IConnectionHelper>();
             var userStore = new Mock<IUserStore<IdentityUser, int>>();
             var userManager = new Mock<UserManager<IdentityUser, int>>(userStore.Object);
             var authManager = new Mock<IAuthenticationManager>();

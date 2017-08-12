@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Data;
+using System.Threading.Tasks;
 using System.Web.Http.Results;
 using System.Web.Http.Routing;
 using Microsoft.AspNet.Identity;
@@ -52,8 +53,8 @@ namespace OpenCI.API.Rest.Tests.Controllers
 
         private static Mock<UserManager<IdentityUser, int>> GetMockedUserManager()
         {
-            var connectionHelper = new Mock<IConnectionHelper>();
-            var userStore = new Mock<UserStore>(connectionHelper.Object);
+            var dbConenection = new Mock<IDbConnection>();
+            var userStore = new Mock<UserStore>(dbConenection.Object);
             var userManager = new Mock<UserManager<IdentityUser, int>>(userStore.Object);
 
             return userManager;
