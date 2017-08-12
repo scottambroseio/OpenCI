@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,85 +19,72 @@ namespace OpenCI.Identity.Dapper
         IUserTwoFactorStore<IdentityUser, int>,
         IUserLoginStore<IdentityUser, int>
     {
-        private readonly IConnectionHelper _connectionHelper;
+        private readonly IDbConnection _connection;
 
-        public UserStore(IConnectionHelper connectionHelper)
+        public UserStore(IDbConnection connection)
         {
-            _connectionHelper = connectionHelper;
+            _connection = connection;
         }
 
         public void Dispose()
         {
+            _connection.Dispose();
         }
 
         public async Task CreateAsync(IdentityUser user)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     INSERT INTO [Identity].[User] (UserName, SecurityStamp, PasswordHash, Email)
                     VALUES (@UserName, @SecurityStamp, @PasswordHash, @Email);
                 ", new
-                {
-                    user.UserName,
-                    user.SecurityStamp,
-                    user.PasswordHash,
-                    user.Email
-                }).ConfigureAwait(false);
+            {
+                user.UserName,
+                user.SecurityStamp,
+                user.PasswordHash,
+                user.Email
+            }).ConfigureAwait(false);
 
-                user.IsTransient = false;
-            }
+            user.IsTransient = false;
         }
 
         public async Task DeleteAsync(IdentityUser user)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     DELETE FROM [Identity].[Claim] WHERE [UserId] = @Id;
                     DELETE FROM [Identity].[User] WHERE [Id] = @Id;
                 ", new
-                {
-                    user.Id
-                }).ConfigureAwait(false);
-            }
+            {
+                user.Id
+            }).ConfigureAwait(false);
         }
 
         public async Task<IdentityUser> FindByIdAsync(int userId)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+            return await _connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
                     SELECT * FROM [Identity].[User]
                     WHERE [Id] = @Id;
                 ", new
-                {
-                    Id = userId
-                }).ConfigureAwait(false);
-            }
+            {
+                Id = userId
+            }).ConfigureAwait(false);
         }
 
         public async Task<IdentityUser> FindByNameAsync(string userName)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+            return await _connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
                     SELECT * FROM [Identity].[User]
                     WHERE [UserName] = @UserName;
                 ", new
-                {
-                    UserName = userName
-                }).ConfigureAwait(false);
-            }
+            {
+                UserName = userName
+            }).ConfigureAwait(false);
         }
 
         public async Task UpdateAsync(IdentityUser user)
         {
             if (!user.IsTransient && !user.IsModified) return;
 
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     UPDATE [Identity].[User] SET
                     [UserName] = @UserName,
                     [Email] = @Email,
@@ -111,69 +99,59 @@ namespace OpenCI.Identity.Dapper
                     [TwoFactorEnabled] = @TwoFactorEnabled
                     WHERE [Id] = @Id
                 ;", new
-                {
-                    user.UserName,
-                    user.Email,
-                    user.LockoutEndDate,
-                    user.LockoutEnabled,
-                    user.AccessFailedCount,
-                    user.PhoneNumber,
-                    user.PhoneNumberConfirmed,
-                    user.EmailConfirmed,
-                    user.PasswordHash,
-                    user.SecurityStamp,
-                    user.TwoFactorEnabled,
-                    user.Id
-                }).ConfigureAwait(false);
+            {
+                user.UserName,
+                user.Email,
+                user.LockoutEndDate,
+                user.LockoutEnabled,
+                user.AccessFailedCount,
+                user.PhoneNumber,
+                user.PhoneNumberConfirmed,
+                user.EmailConfirmed,
+                user.PasswordHash,
+                user.SecurityStamp,
+                user.TwoFactorEnabled,
+                user.Id
+            }).ConfigureAwait(false);
 
-                user.IsTransient = false;
-                user.IsModified = false;
-            }
+            user.IsTransient = false;
+            user.IsModified = false;
         }
 
         public async Task<IList<Claim>> GetClaimsAsync(IdentityUser user)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                var results = await connection.QueryAsync<Claim>(@"
+            var results = await _connection.QueryAsync<Claim>(@"
                     SELECT [Type], [Value] FROM [Identity].[Claim]
                     WHERE [UserId] = @UserId;
                 ", new
-                {
-                    UserId = user.Id
-                }).ConfigureAwait(false);
+            {
+                UserId = user.Id
+            }).ConfigureAwait(false);
 
-                return results.ToList();
-            }
+            return results.ToList();
         }
 
         public async Task AddClaimAsync(IdentityUser user, Claim claim)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     INSERT INTO [Identity].[Claim] (UserId, Type, Value)
                     VALUES (@UserId, @Type, @Value);", new
-                {
-                    UserId = user.Id,
-                    claim.Type,
-                    claim.Value
-                }).ConfigureAwait(false);
-            }
+            {
+                UserId = user.Id,
+                claim.Type,
+                claim.Value
+            }).ConfigureAwait(false);
         }
 
         public async Task RemoveClaimAsync(IdentityUser user, Claim claim)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     DELETE FROM [Identity].[Claim]
                     WHERE [UserId] = @UserId;
                 ", new
-                {
-                    UserId = user.Id
-                }).ConfigureAwait(false);
-            }
+            {
+                UserId = user.Id
+            }).ConfigureAwait(false);
         }
 
         public Task SetEmailAsync(IdentityUser user, string email)
@@ -204,16 +182,13 @@ namespace OpenCI.Identity.Dapper
 
         public async Task<IdentityUser> FindByEmailAsync(string email)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                return await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+            return await _connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
                     SELECT * FROM [Identity].[User]
                     WHERE [Email] = @Email;
                 ", new
-                {
-                    Email = email
-                }).ConfigureAwait(false);
-            }
+            {
+                Email = email
+            }).ConfigureAwait(false);
         }
 
         public Task<DateTimeOffset> GetLockoutEndDateAsync(IdentityUser user)
@@ -265,68 +240,56 @@ namespace OpenCI.Identity.Dapper
 
         public async Task AddLoginAsync(IdentityUser user, UserLoginInfo login)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     INSERT INTO [Identity].[UserLogin] (LoginProvider, ProviderKey, UserId)
                     VALUES (@LoginProvider, @ProviderKey, @UserId);
                 ", new
-                {
-                    UserId = user.Id,
-                    login.ProviderKey,
-                    login.LoginProvider
-                }).ConfigureAwait(false);
-            }
+            {
+                UserId = user.Id,
+                login.ProviderKey,
+                login.LoginProvider
+            }).ConfigureAwait(false);
         }
 
         public async Task RemoveLoginAsync(IdentityUser user, UserLoginInfo login)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     DELETE FROM [Identity].[UserLogin]
                     WHERE [UserId] = @UserId;
                 ", new
-                {
-                    UserId = user.Id
-                }).ConfigureAwait(false);
-            }
+            {
+                UserId = user.Id
+            }).ConfigureAwait(false);
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(IdentityUser user)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                var results = await connection.QueryAsync<UserLoginInfo>(@"
+            var results = await _connection.QueryAsync<UserLoginInfo>(@"
                     SELECT [LoginProvider], [ProviderKey] FROM [Identity].[UserLogin]
                     WHERE [UserId] = @UserId
                 ", new
-                {
-                    UserId = user.Id
-                }).ConfigureAwait(false);
+            {
+                UserId = user.Id
+            }).ConfigureAwait(false);
 
-                return results.ToList();
-            }
+            return results.ToList();
         }
 
         public async Task<IdentityUser> FindAsync(UserLoginInfo login)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                var result = await connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
+            var result = await _connection.QuerySingleOrDefaultAsync<IdentityUser>(@"
                     SELECT u.* FROM [Identity].[UserLogin]
                     INNER JOIN [Identity].[User] u
                     ON [Identity].[UserLogin].[Id] = u.Id
                     WHERE [UserLogin].LoginProvider = @LoginProvider
                     AND [UserLogin].ProviderKey = @ProviderKey
                 ", new
-                {
-                    login.ProviderKey,
-                    login.LoginProvider
-                }).ConfigureAwait(false);
+            {
+                login.ProviderKey,
+                login.LoginProvider
+            }).ConfigureAwait(false);
 
-                return result;
-            }
+            return result;
         }
 
         public Task SetPasswordHashAsync(IdentityUser user, string passwordHash)
@@ -375,80 +338,68 @@ namespace OpenCI.Identity.Dapper
 
         public async Task AddToRoleAsync(IdentityUser user, string roleName)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                var roleId = await connection.ExecuteScalarAsync<int>(@"
+            var roleId = await _connection.ExecuteScalarAsync<int>(@"
                     SELECT [Id] FROM [Identity].[Role]
                     WHERE [Name] = @Name
                 ", new
-                {
-                    Name = roleName
-                }).ConfigureAwait(false);
+            {
+                Name = roleName
+            }).ConfigureAwait(false);
 
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     INSERT INTO [Identity].[UserRole] (UserId, RoleId)
                     VALUES (@UserId, @RoleId);
                 ", new
-                {
-                    UserId = user.Id,
-                    RoleId = roleId
-                }).ConfigureAwait(false);
-            }
+            {
+                UserId = user.Id,
+                RoleId = roleId
+            }).ConfigureAwait(false);
         }
 
         public async Task RemoveFromRoleAsync(IdentityUser user, string roleName)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                await connection.ExecuteAsync(@"
+            await _connection.ExecuteAsync(@"
                     DELETE ur FROM [Identity].[UserRole] ur
                     INNER JOIN [Identity].[Role] r
                     ON ur.[RoleId] = r.[Id]                    
                     WHERE r.[Name] = @Name
                     AND ur.[UserId] = @UserId", new
-                {
-                    UserId = user.Id,
-                    Name = roleName
-                }).ConfigureAwait(false);
-            }
+            {
+                UserId = user.Id,
+                Name = roleName
+            }).ConfigureAwait(false);
         }
 
         public async Task<IList<string>> GetRolesAsync(IdentityUser user)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                var results = await connection.QueryAsync<string>(@"
+            var results = await _connection.QueryAsync<string>(@"
                     SELECT r.[Name] FROM [Identity].[Role] r
                     INNER JOIN [Identity].[UserRole] ur
                     ON r.[Id] = ur.[RoleId]
                     WHERE ur.[UserId] = @UserId
                 ", new
-                {
-                    UserId = user.Id
-                }).ConfigureAwait(false);
+            {
+                UserId = user.Id
+            }).ConfigureAwait(false);
 
-                return results.ToList();
-            }
+            return results.ToList();
         }
 
         public async Task<bool> IsInRoleAsync(IdentityUser user, string roleName)
         {
-            using (var connection = _connectionHelper.GetConnection())
-            {
-                var result = await connection.ExecuteScalarAsync<int>(@"
+            var result = await _connection.ExecuteScalarAsync<int>(@"
                     SELECT COUNT(*) FROM [Identity].[UserRole] ur
                     INNER JOIN [Identity].[Role] r
                     ON r.[Id] = ur.[RoleId]
                     WHERE ur.[UserId] = @UserId
                     AND r.[Name] = @Name
                 ", new
-                {
-                    UserId = user.Id,
-                    Name = roleName
-                }).ConfigureAwait(false);
+            {
+                UserId = user.Id,
+                Name = roleName
+            }).ConfigureAwait(false);
 
-                return result == 1;
-            }
+            return result == 1;
         }
 
         public Task SetSecurityStampAsync(IdentityUser user, string stamp)

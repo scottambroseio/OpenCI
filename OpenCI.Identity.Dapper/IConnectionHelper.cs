@@ -4,6 +4,6 @@ namespace OpenCI.Identity.Dapper
 {
     public interface IConnectionHelper
     {
-        IDbConnection GetConnection();
+        IDbConnection Connection { get; }
     }
 }

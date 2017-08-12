@@ -7,6 +7,7 @@ namespace OpenCI.Identity.Dapper
     public class ConnectionHelper : IConnectionHelper
     {
         private readonly string _connectionString;
+        private IDbConnection _connection;
 
         public ConnectionHelper()
         {
@@ -18,9 +19,6 @@ namespace OpenCI.Identity.Dapper
             _connectionString = connectionString;
         }
 
-        public IDbConnection GetConnection()
-        {
-            return new SqlConnection(_connectionString);
-        }
+        public IDbConnection Connection => _connection ?? (_connection = new SqlConnection(_connectionString));
     }
 }

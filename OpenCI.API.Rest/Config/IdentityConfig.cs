@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -14,8 +15,9 @@ namespace OpenCI.API.Rest.Config
     {
         public static void Register(IAppBuilder app)
         {
-            app.CreatePerOwinContext(CreateUserStore);
-            app.CreatePerOwinContext(CreateRoleStore);
+            app.CreatePerOwinContext(CreateIdentityDbConnection);
+            app.CreatePerOwinContext<UserStore>(CreateUserStore);
+            app.CreatePerOwinContext<RoleStore>(CreateRoleStore);
             app.CreatePerOwinContext<UserManager<IdentityUser, int>>(CreateUserManager);
             app.CreatePerOwinContext<RoleManager<IdentityRole, int>>(CreateRoleManager);
             app.CreatePerOwinContext<SignInManager<IdentityUser, int>>(
@@ -28,20 +30,27 @@ namespace OpenCI.API.Rest.Config
             });
         }
 
-        private static IUserStore<IdentityUser, int> CreateUserStore()
+        private static IDbConnection CreateIdentityDbConnection()
         {
-            return new UserStore(new ConnectionHelper());
+            return new ConnectionHelper().Connection;
         }
 
-        private static IRoleStore<IdentityRole, int> CreateRoleStore()
+        private static UserStore CreateUserStore(
+            IdentityFactoryOptions<UserStore> opts, IOwinContext ctx)
         {
-            return new RoleStore(new ConnectionHelper());
+            return new UserStore(ctx.Get<IDbConnection>());
+        }
+
+        private static RoleStore CreateRoleStore(
+            IdentityFactoryOptions<RoleStore> opts, IOwinContext ctx)
+        {
+            return new RoleStore(ctx.Get<IDbConnection>());
         }
 
         private static RoleManager<IdentityRole, int> CreateRoleManager(
             IdentityFactoryOptions<RoleManager<IdentityRole, int>> opts, IOwinContext ctx)
         {
-            var roleStore = ctx.Get<IRoleStore<IdentityRole, int>>();
+            var roleStore = ctx.Get<RoleStore>();
             var roleManager = new RoleManager<IdentityRole, int>(roleStore);
 
             roleManager.RoleValidator = new RoleValidator<IdentityRole, int>(roleManager);
@@ -52,7 +61,7 @@ namespace OpenCI.API.Rest.Config
         private static UserManager<IdentityUser, int> CreateUserManager(
             IdentityFactoryOptions<UserManager<IdentityUser, int>> opts, IOwinContext ctx)
         {
-            var userStore = ctx.Get<IUserStore<IdentityUser, int>>();
+            var userStore = ctx.Get<UserStore>();
 
             var userManager = new UserManager<IdentityUser, int>(userStore)
             {
