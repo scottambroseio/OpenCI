@@ -19,6 +19,7 @@ namespace OpenCI.Identity.ExtensionPoints.Services
             var mailMessage = new MailMessage();
             mailMessage.To.Add(message.Destination);
             mailMessage.Subject = message.Subject;
+            mailMessage.IsBodyHtml = true;
             mailMessage.Body = message.Body;
             mailMessage.From = new MailAddress(fromAddress);
 

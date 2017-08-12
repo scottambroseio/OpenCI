@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Data;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNet.Identity;
 
@@ -21,7 +22,8 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("INSERT INTO [Identity].[Role] (Name) VALUES (@Name);", new {role.Name})
+                await connection.ExecuteAsync("[Identity].[spCreateRole]", new {role.Name},
+                        commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
             }
         }
@@ -30,7 +32,8 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("DELETE FROM [Identity].[Role] WHERE [Name] = @Name;", new {role.Name})
+                await connection.ExecuteAsync("[Identity].[spDeleteRole]", new {role.Name},
+                        commandType: CommandType.StoredProcedure)
                     .ConfigureAwait(false);
             }
         }
@@ -40,8 +43,8 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection
-                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Identity].[Role] WHERE [Id] = @Id;",
-                        new {Id = roleId}).ConfigureAwait(false);
+                    .QuerySingleOrDefaultAsync<IdentityRole>("[Identity].[spGetRoleById]",
+                        new {Id = roleId}, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
             }
         }
 
@@ -50,8 +53,8 @@ namespace OpenCI.Identity.Dapper
             using (var connection = _connectionHelper.GetConnection())
             {
                 return await connection
-                    .QuerySingleOrDefaultAsync<IdentityRole>("SELECT * FROM [Identity].[Role] WHERE [Name] = @Name;",
-                        new {Name = roleName}).ConfigureAwait(false);
+                    .QuerySingleOrDefaultAsync<IdentityRole>("[Identity].[spGetRoleByName]",
+                        new {Name = roleName}, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
             }
         }
 
@@ -59,8 +62,8 @@ namespace OpenCI.Identity.Dapper
         {
             using (var connection = _connectionHelper.GetConnection())
             {
-                await connection.ExecuteAsync("UPDATE [Identity].[Role] SET [Name] = @Name WHERE [Id] = @Id;",
-                    new {role.Id, role.Name}).ConfigureAwait(false);
+                await connection.ExecuteAsync("[Identity].[spUpdateRole]",
+                    new {role.Id, role.Name}, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
             }
         }
     }
