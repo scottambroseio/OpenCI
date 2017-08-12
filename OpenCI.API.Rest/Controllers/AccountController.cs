@@ -13,19 +13,18 @@ namespace OpenCI.API.Rest.Controllers
     [RoutePrefix("Account")]
     public class AccountController : ApiController, IAccountController
     {
-        private UserManager<IdentityUser, int> _userManager;
-
-        public UserManager<IdentityUser, int> UserManager
-        {
-            get { return _userManager ?? HttpContext.Current.GetOwinContext().Get<UserManager<IdentityUser, int>>(); }
-            set { _userManager = value; }
-        }
-
         private readonly IEmailRenderService _emailRenderService;
+        private UserManager<IdentityUser, int> _userManager;
 
         public AccountController(IEmailRenderService emailRenderService)
         {
             _emailRenderService = emailRenderService;
+        }
+
+        public UserManager<IdentityUser, int> UserManager
+        {
+            get => _userManager ?? HttpContext.Current.GetOwinContext().Get<UserManager<IdentityUser, int>>();
+            set => _userManager = value;
         }
 
         [HttpPost]

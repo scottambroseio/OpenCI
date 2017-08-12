@@ -1,18 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
+using OpenCI.Business.Contracts;
 using OpenCI.Business.Models;
 using OpenCI.Data.Contracts;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using OpenCI.Business.Contracts;
 using OpenCI.Exceptions;
 
 namespace OpenCI.Business.Implementation
 {
     public class ProjectOperations : IProjectOperations
     {
-        private readonly IProjectData _projectData;
         private readonly IMapper _mapper;
+        private readonly IProjectData _projectData;
 
         public ProjectOperations(IProjectData projectData, IMapper mapper)
         {
@@ -47,7 +47,8 @@ namespace OpenCI.Business.Implementation
         {
             var entity = await _projectData.GetProject(projectGuid).ConfigureAwait(false);
 
-            if (entity == null) throw new EntityNotFoundException($"Unable to find the project with the guid: {projectGuid}");
+            if (entity == null)
+                throw new EntityNotFoundException($"Unable to find the project with the guid: {projectGuid}");
 
             var mappedModel = _mapper.Map<ProjectModel>(entity);
 

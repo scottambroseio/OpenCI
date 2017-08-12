@@ -16,7 +16,6 @@ namespace OpenCI.API.Rest.Attributes
             else if (!actionContext.ModelState.IsValid)
                 actionContext.Response =
                     actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, actionContext.ModelState);
-            ;
         }
 
         public override Task OnActionExecutingAsync(HttpActionContext actionContext,

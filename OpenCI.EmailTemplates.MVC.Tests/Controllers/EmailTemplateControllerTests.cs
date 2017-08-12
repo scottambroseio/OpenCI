@@ -30,7 +30,7 @@ namespace OpenCI.EmailTemplates.MVC.Tests.Controllers
             var engine = new Mock<IViewRenderService>().Object;
             var controller = new EmailTemplateController(engine);
 
-            var result = await controller.Template("", new ResetPasswordModel() { Preview = true });
+            var result = await controller.Template("", new ResetPasswordModel {Preview = true});
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -39,15 +39,16 @@ namespace OpenCI.EmailTemplates.MVC.Tests.Controllers
         public async Task Template_ShouldSuccessfullyReturnStringContent()
         {
             var engine = new Mock<IViewRenderService>();
-            engine.Setup(e => e.RenderToString(It.IsAny<string>(), It.IsAny<EmailTemplateModel>())).ReturnsAsync("TEST");
+            engine.Setup(e => e.RenderToString(It.IsAny<string>(), It.IsAny<EmailTemplateModel>()))
+                .ReturnsAsync("TEST");
 
             var controller = new EmailTemplateController(engine.Object);
 
-            var result = await controller.Template("", new ResetPasswordModel() { Preview = false }) as OkObjectResult;
+            var result = await controller.Template("", new ResetPasswordModel {Preview = false}) as OkObjectResult;
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-            Assert.AreEqual(result.StatusCode, (int)HttpStatusCode.OK);
+            Assert.AreEqual(result.StatusCode, (int) HttpStatusCode.OK);
             Assert.AreEqual("TEST", result.Value);
         }
     }

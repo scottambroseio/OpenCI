@@ -1,8 +1,5 @@
-﻿using System;
-using System.Web.Http;
-using Microsoft.AspNet.Identity;
+﻿using System.Web.Http;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 using OpenCI.API.Rest;
 using OpenCI.API.Rest.Config;
 using Owin;

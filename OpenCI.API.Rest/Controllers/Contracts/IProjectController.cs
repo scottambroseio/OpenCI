@@ -1,7 +1,7 @@
-﻿using OpenCI.Business.Models;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using OpenCI.Business.Models;
 
 namespace OpenCI.API.Rest.Controllers.Contracts
 {

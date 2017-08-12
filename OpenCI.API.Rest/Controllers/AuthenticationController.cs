@@ -16,14 +16,14 @@ namespace OpenCI.API.Rest.Controllers
 
         public SignInManager<IdentityUser, int> SignInManager
         {
-            get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<SignInManager<IdentityUser, int>>(); }
-            set { _signInManager = value; }
+            get => _signInManager ?? HttpContext.Current.GetOwinContext().Get<SignInManager<IdentityUser, int>>();
+            set => _signInManager = value;
         }
 
         public IAuthenticationManager AuthenticationManager
         {
-            get { return _authenticationManager ?? HttpContext.Current.GetOwinContext().Authentication; }
-            set { _authenticationManager = value; }
+            get => _authenticationManager ?? HttpContext.Current.GetOwinContext().Authentication;
+            set => _authenticationManager = value;
         }
 
         [HttpPost]

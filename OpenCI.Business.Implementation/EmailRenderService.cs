@@ -17,11 +17,11 @@ namespace OpenCI.Implementation.Business
 
         public async Task<string> GetRenderedConfirmEmailTemplate(int id, string token, string link)
         {
-            var args = new Dictionary<string, string>()
+            var args = new Dictionary<string, string>
             {
-                {  nameof(id), id.ToString() },
-                {  nameof(token), token },
-                {  nameof(link), link }
+                {nameof(id), id.ToString()},
+                {nameof(token), token},
+                {nameof(link), link}
             };
 
             return await FetchResource(CreateUrl("ConfirmEmail", args));
@@ -29,11 +29,11 @@ namespace OpenCI.Implementation.Business
 
         public async Task<string> GetRenderedResetPasswordTemplate(int id, string token, string link)
         {
-            var args = new Dictionary<string, string>()
+            var args = new Dictionary<string, string>
             {
-                {  nameof(id), id.ToString() },
-                {  nameof(token), token },
-                {  nameof(link), link }
+                {nameof(id), id.ToString()},
+                {nameof(token), token},
+                {nameof(link), link}
             };
 
             return await FetchResource(CreateUrl("ResetPassword", args));
@@ -41,7 +41,8 @@ namespace OpenCI.Implementation.Business
 
         private static string CreateUrl(string template, IDictionary<string, string> args)
         {
-            return args.Aggregate(new StringBuilder($"{BaseUrl}/{template}?preview=false", args.Count + 1), (acc, arg) => acc.Append($"&{arg.Key}={arg.Value}")).ToString();
+            return args.Aggregate(new StringBuilder($"{BaseUrl}/{template}?preview=false", args.Count + 1),
+                (acc, arg) => acc.Append($"&{arg.Key}={arg.Value}")).ToString();
         }
 
         private static async Task<string> FetchResource(string url)

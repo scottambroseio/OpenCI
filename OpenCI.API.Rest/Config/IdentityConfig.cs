@@ -53,7 +53,7 @@ namespace OpenCI.API.Rest.Config
             IdentityFactoryOptions<UserManager<IdentityUser, int>> opts, IOwinContext ctx)
         {
             var userStore = ctx.Get<IUserStore<IdentityUser, int>>();
-            
+
             var userManager = new UserManager<IdentityUser, int>(userStore)
             {
                 UserTokenProvider =
@@ -61,7 +61,8 @@ namespace OpenCI.API.Rest.Config
                         opts.DataProtectionProvider.Create("ASP.NET Identity")),
                 EmailService = new IdentityEmailService(),
                 UserLockoutEnabledByDefault = bool.Parse(ConfigurationManager.AppSettings["lockout:enabled"]),
-                DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings["lockout:timespan"])),
+                DefaultAccountLockoutTimeSpan =
+                    TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings["lockout:timespan"])),
                 MaxFailedAccessAttemptsBeforeLockout = int.Parse(ConfigurationManager.AppSettings["lockout:attempts"])
             };
 

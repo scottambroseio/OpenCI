@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
 using OpenCI.API.Rest.Attributes;
-using OpenCI.IOC;
 using OpenCI.IOC.Unity;
 
 namespace OpenCI.API.Rest.Config

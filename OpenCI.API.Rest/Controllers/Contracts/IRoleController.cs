@@ -1,6 +1,6 @@
-﻿using OpenCI.API.Rest.Models.Roles;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
+using OpenCI.API.Rest.Models.Roles;
 
 namespace OpenCI.API.Rest.Controllers.Contracts
 {

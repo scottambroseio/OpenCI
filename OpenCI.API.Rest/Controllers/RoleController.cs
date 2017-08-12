@@ -16,8 +16,8 @@ namespace OpenCI.API.Rest.Controllers
 
         public RoleManager<IdentityRole, int> RoleManager
         {
-            get { return _roleManager ?? HttpContext.Current.GetOwinContext().Get<RoleManager<IdentityRole, int>>(); }
-            set { _roleManager = value; }
+            get => _roleManager ?? HttpContext.Current.GetOwinContext().Get<RoleManager<IdentityRole, int>>();
+            set => _roleManager = value;
         }
 
         [HttpPost]

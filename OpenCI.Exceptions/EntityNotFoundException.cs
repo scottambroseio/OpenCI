@@ -6,11 +6,10 @@ namespace OpenCI.Exceptions
     {
         public EntityNotFoundException()
         {
-
         }
+
         public EntityNotFoundException(string message) : base(message)
         {
-
         }
     }
 }

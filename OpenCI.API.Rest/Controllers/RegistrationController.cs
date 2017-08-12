@@ -12,19 +12,18 @@ namespace OpenCI.API.Rest.Controllers
 {
     public class RegistrationController : ApiController, IRegistrationController
     {
-        private UserManager<IdentityUser, int> _userManager;
-
-        public UserManager<IdentityUser, int> UserManager
-        {
-            get { return _userManager ?? HttpContext.Current.GetOwinContext().Get<UserManager<IdentityUser, int>>(); }
-            set { _userManager = value; }
-        }
-
         private readonly IEmailRenderService _emailRenderService;
+        private UserManager<IdentityUser, int> _userManager;
 
         public RegistrationController(IEmailRenderService emailRenderService)
         {
             _emailRenderService = emailRenderService;
+        }
+
+        public UserManager<IdentityUser, int> UserManager
+        {
+            get => _userManager ?? HttpContext.Current.GetOwinContext().Get<UserManager<IdentityUser, int>>();
+            set => _userManager = value;
         }
 
         [HttpPost]
@@ -46,7 +45,8 @@ namespace OpenCI.API.Rest.Controllers
 
             var confirmationLink = Url.Link("ConfirmEmail", null);
             var token = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            var renderedEmail = await _emailRenderService.GetRenderedResetPasswordTemplate(user.Id, token, confirmationLink);
+            var renderedEmail =
+                await _emailRenderService.GetRenderedResetPasswordTemplate(user.Id, token, confirmationLink);
 
             await UserManager.SendEmailAsync(user.Id, "OpenCI Email Confirmation Request", renderedEmail);
 
