@@ -1,0 +1,8 @@
+﻿@model IEnumerable<OpenCI.EmailTemplates.MVC.Models.EmailTemplateDescriptor>
+
+<h2>Hello world</h2>
+
+@foreach (var descriptor in Model)
+{
+    <a href="@descriptor.Guid">@descriptor.Name</a>
+}
