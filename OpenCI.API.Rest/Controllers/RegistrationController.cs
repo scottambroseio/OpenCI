@@ -3,9 +3,9 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using OpenCI.API.Rest.Attributes;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Registration;
+using OpenCI.Contracts.Business;
 using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Controllers
@@ -18,6 +18,13 @@ namespace OpenCI.API.Rest.Controllers
         {
             get { return _userManager ?? HttpContext.Current.GetOwinContext().Get<UserManager<IdentityUser, int>>(); }
             set { _userManager = value; }
+        }
+
+        private readonly IEmailRenderService _emailRenderService;
+
+        public RegistrationController(IEmailRenderService emailRenderService)
+        {
+            _emailRenderService = emailRenderService;
         }
 
         [HttpPost]
@@ -37,16 +44,11 @@ namespace OpenCI.API.Rest.Controllers
 
             var user = await UserManager.FindByNameAsync(model.UserName);
 
-            var token = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-
             var confirmationLink = Url.Link("ConfirmEmail", null);
+            var token = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var renderedEmail = await _emailRenderService.GetRenderedResetPasswordTemplate(user.Id, token, confirmationLink);
 
-            await UserManager.SendEmailAsync(user.Id, "OpenCI Email Confirmation Request",
-                $"\r\n\r\n" +
-                $"Link: {confirmationLink}\r\n" +
-                $"Id: {user.Id}\r\n" +
-                $"Token: {token}"
-            );
+            await UserManager.SendEmailAsync(user.Id, "OpenCI Email Confirmation Request", renderedEmail);
 
             return Ok();
         }

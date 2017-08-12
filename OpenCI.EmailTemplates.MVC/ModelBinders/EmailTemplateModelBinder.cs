@@ -33,7 +33,6 @@ namespace OpenCI.EmailTemplates.MVC.ModelBinders
                     return m;
                 });
 
-
             bindingContext.Result = ModelBindingResult.Success(model);
             return Task.CompletedTask;
         }

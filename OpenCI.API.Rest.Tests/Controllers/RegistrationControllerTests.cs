@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http.Results;
 using System.Web.Http.Routing;
 using Microsoft.AspNet.Identity;
@@ -9,6 +7,7 @@ using Moq;
 using OpenCI.API.Rest.Controllers;
 using OpenCI.API.Rest.Models.Registration;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
+using OpenCI.Contracts.Business;
 using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Tests.Controllers
@@ -20,11 +19,12 @@ namespace OpenCI.API.Rest.Tests.Controllers
         public async Task PasswordRegister_ShouldReturnBadRequestWhenUnsuccessful()
         {
             var userManager = GetMockedUserManager();
+            var emailService = new Mock<IEmailRenderService>().Object;
 
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed());
 
-            var controller = new RegistrationController {UserManager = userManager.Object};
+            var controller = new RegistrationController(emailService) {UserManager = userManager.Object};
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel());
 
@@ -36,13 +36,14 @@ namespace OpenCI.API.Rest.Tests.Controllers
         {
             var userManager = GetMockedUserManager();
             var url = new Mock<UrlHelper>().Object;
+            var emailService = new Mock<IEmailRenderService>().Object;
 
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
             userManager.Setup(u => u.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new IdentityUser(string.Empty));
 
-            var controller = new RegistrationController {UserManager = userManager.Object, Url = url };
+            var controller = new RegistrationController(emailService) { UserManager = userManager.Object, Url = url };
 
             var result = await controller.PasswordRegister(new PasswordRegisterModel());
 
