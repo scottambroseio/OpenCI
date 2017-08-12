@@ -21,7 +21,7 @@ namespace OpenCI.EmailTemplates.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var models = Assembly.GetEntryAssembly()
+            var models = typeof(EmailTemplateModel).GetTypeInfo().Assembly
                 .GetTypes()
                 .Where(t => t.GetTypeInfo().IsSubclassOf(typeof(EmailTemplateModel)))
                 .Select(t => new EmailTemplateDescriptor
@@ -33,7 +33,7 @@ namespace OpenCI.EmailTemplates.MVC.Controllers
         }
 
         [HttpGet("{name:alpha}")]
-        public async Task<ActionResult> Template([FromRoute] string name, [FromQuery] EmailTemplateModel model)
+        public async Task<IActionResult> Template([FromRoute] string name, [FromQuery] EmailTemplateModel model)
         {
             if (model.Preview)
                 return View(name, model);
