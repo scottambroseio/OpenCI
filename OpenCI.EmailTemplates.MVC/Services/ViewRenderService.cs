@@ -17,8 +17,8 @@ namespace OpenCI.EmailTemplates.MVC.Services
     public class ViewRenderService : IViewRenderService
     {
         private readonly IRazorViewEngine _razorViewEngine;
-        private readonly ITempDataProvider _tempDataProvider;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ITempDataProvider _tempDataProvider;
 
         public ViewRenderService(IRazorViewEngine razorViewEngine,
             ITempDataProvider tempDataProvider,
@@ -31,7 +31,7 @@ namespace OpenCI.EmailTemplates.MVC.Services
 
         public async Task<string> RenderToString(string viewName, EmailTemplateModel model)
         {
-            var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
+            var httpContext = new DefaultHttpContext {RequestServices = _serviceProvider};
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 
             using (var sw = new StringWriter())
@@ -39,11 +39,10 @@ namespace OpenCI.EmailTemplates.MVC.Services
                 var viewResult = _razorViewEngine.FindView(actionContext, viewName, false);
 
                 if (viewResult.View == null)
-                {
                     throw new ArgumentNullException($"{viewName} does not match any available view");
-                }
 
-                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(),
+                    new ModelStateDictionary())
                 {
                     Model = model
                 };

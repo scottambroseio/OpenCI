@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using OpenCI.EmailTemplates.MVC.Models;
 
 namespace OpenCI.EmailTemplates.MVC.Services.Contracts

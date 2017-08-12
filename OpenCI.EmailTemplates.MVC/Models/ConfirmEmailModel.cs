@@ -2,8 +2,8 @@
 
 namespace OpenCI.EmailTemplates.MVC.Models
 {
-    [TemplateName("ResetPassword")]
-    public class ResetPasswordModel : EmailTemplateModel
+    [TemplateName("ConfirmEmail")]
+    public class ConfirmEmailModel : EmailTemplateModel
     {
         public int Id { get; set; }
         public string Link { get; set; }

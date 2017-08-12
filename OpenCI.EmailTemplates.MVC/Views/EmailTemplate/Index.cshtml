@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<OpenCI.EmailTemplates.MVC.Models.EmailTemplateDescriptor>
 
-<h2>Availible Templates</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Availible Templates</h2>
 
-@foreach (var descriptor in Model)
-{
-    <a href="@descriptor.Guid?preview=true">@descriptor.Name</a>
-}
+        @foreach (var descriptor in Model)
+        {
+            <a href="@descriptor.Name?preview=true">@descriptor.Name</a>
+        }
+    </div>
+</div>

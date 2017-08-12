@@ -15,9 +15,6 @@ dotnet_csproj:
   package_version: '{version}'
 before_build:
 - ps: nuget restore
-build:
-  publish_wap: true
-  verbosity: normal
 build_script:
 - ps: MSBuild.exe "/p:Configuration=Release" "/p:Platform=Any CPU" .\OpenCI.sln
 

@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OpenCI.EmailTemplates.MVC.Attributes;
-using OpenCI.EmailTemplates.MVC.Exceptions;
 using OpenCI.EmailTemplates.MVC.Models;
 
 namespace OpenCI.EmailTemplates.MVC.ModelBinders
@@ -15,17 +14,12 @@ namespace OpenCI.EmailTemplates.MVC.ModelBinders
         {
             if (bindingContext == null)
                 throw new ArgumentNullException(nameof(bindingContext));
-
-            var stringGuid = (string) bindingContext.ActionContext.RouteData.Values["guid"];
-
-            var guid = Guid.Parse(stringGuid);
+            var name = bindingContext.ActionContext.RouteData.Values["name"] as string;
 
             var modelType = Assembly.GetEntryAssembly()
-                                .GetTypes()
-                                .FirstOrDefault(t => t.GetTypeInfo().IsSubclassOf(typeof(EmailTemplateModel)) &&
-                                                     t.GetTypeInfo().GetCustomAttribute<TemplateGuidAttribute>().Guid ==
-                                                     guid) ?? throw new InvalidTemplateModelException(
-                                $"Unable to find the model for guid {guid}");
+                .GetTypes()
+                .FirstOrDefault(t => t.GetTypeInfo().IsSubclassOf(typeof(EmailTemplateModel)) &&
+                                     t.GetTypeInfo().GetCustomAttribute<TemplateNameAttribute>().Name == name);
 
             var model = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.CanRead && p.CanWrite && p.SetMethod.IsPublic && p.GetMethod.IsPublic)
@@ -33,7 +27,8 @@ namespace OpenCI.EmailTemplates.MVC.ModelBinders
                 {
                     var routeValue = bindingContext.ValueProvider.GetValue(p.Name).FirstValue;
 
-                    p.SetValue(m, routeValue != null ? Convert.ChangeType(routeValue, p.PropertyType) : p.GetValue(m, null));
+                    p.SetValue(m,
+                        routeValue != null ? Convert.ChangeType(routeValue, p.PropertyType) : p.GetValue(m, null));
 
                     return m;
                 });
