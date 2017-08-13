@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Configuration;
+using AutoMapper;
 using Microsoft.Practices.Unity;
 using OpenCI.AutoMapper;
 using OpenCI.Business.Contracts;
 using OpenCI.Business.Implementation;
-using OpenCI.Contracts.Business;
 using OpenCI.Data.Contracts;
 using OpenCI.Data.Implementation;
-using OpenCI.Implementation.Business;
+using OpenCI.EmailTemplates.Client;
 
 namespace OpenCI.IOC.Unity
 {
@@ -24,7 +24,8 @@ namespace OpenCI.IOC.Unity
             // Business
             container.RegisterType<IProjectOperations, ProjectOperations>();
             container.RegisterType<IPlanOperations, PlanOperations>();
-            container.RegisterType<IEmailRenderService, EmailRenderService>();
+            container.RegisterType<IEmailTemplatesClient, EmailTemplatesClient>(new InjectionFactory(
+                c => new EmailTemplatesClient(ConfigurationManager.AppSettings["emailtemplateurl"])));
 
             // Misc
             container.RegisterType<IMapper>(new InjectionFactory(c => AutoMapperFactory.CreateMapper()));

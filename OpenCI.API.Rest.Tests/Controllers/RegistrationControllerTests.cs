@@ -8,8 +8,8 @@ using Moq;
 using OpenCI.API.Rest.Controllers;
 using OpenCI.API.Rest.Models.Registration;
 using OpenCI.API.Rest.Tests.Controllers.Contracts;
-using OpenCI.Contracts.Business;
 using OpenCI.Identity.Dapper;
+using OpenCI.EmailTemplates.Client;
 
 namespace OpenCI.API.Rest.Tests.Controllers
 {
@@ -20,7 +20,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
         public async Task PasswordRegister_ShouldReturnBadRequestWhenUnsuccessful()
         {
             var userManager = GetMockedUserManager();
-            var emailService = new Mock<IEmailRenderService>().Object;
+            var emailService = new Mock<IEmailTemplatesClient>().Object;
 
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed());
@@ -37,7 +37,7 @@ namespace OpenCI.API.Rest.Tests.Controllers
         {
             var userManager = GetMockedUserManager();
             var url = new Mock<UrlHelper>().Object;
-            var emailService = new Mock<IEmailRenderService>().Object;
+            var emailService = new Mock<IEmailTemplatesClient>().Object;
 
             userManager.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);

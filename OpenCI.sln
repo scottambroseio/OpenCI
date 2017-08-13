@@ -47,7 +47,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCI.EmailTemplates.MVC", "OpenCI.EmailTemplates.MVC\OpenCI.EmailTemplates.MVC.csproj", "{B689FBCF-5AD4-4374-9DD2-1EFB4D31890D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.EmailTemplates.MVC.Tests", "OpenCI.EmailTemplates.MVC.Tests\OpenCI.EmailTemplates.MVC.Tests.csproj", "{40EE31AA-A8FE-43B9-84CA-8F4287BCB057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCI.EmailTemplates.MVC.Tests", "OpenCI.EmailTemplates.MVC.Tests\OpenCI.EmailTemplates.MVC.Tests.csproj", "{40EE31AA-A8FE-43B9-84CA-8F4287BCB057}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCI.EmailTemplates.Client", "OpenCI.EmailTemplates.Client\OpenCI.EmailTemplates.Client.csproj", "{C86D8588-EDB5-4F1C-A38C-D24044E177FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -148,6 +150,12 @@ Global
 		{40EE31AA-A8FE-43B9-84CA-8F4287BCB057}.EmailTemplateViewer|Any CPU.Build.0 = Debug|Any CPU
 		{40EE31AA-A8FE-43B9-84CA-8F4287BCB057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40EE31AA-A8FE-43B9-84CA-8F4287BCB057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE}.EmailTemplateViewer|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE}.EmailTemplateViewer|Any CPU.Build.0 = Debug|Any CPU
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,5 +176,6 @@ Global
 		{20F7C2D9-DF57-4BE1-B8F4-F838B8CEE345} = {40B888E8-6859-4BC4-876B-F2AE37D53130}
 		{B689FBCF-5AD4-4374-9DD2-1EFB4D31890D} = {B5438E33-555A-46A2-9F98-AEF1C6276C78}
 		{40EE31AA-A8FE-43B9-84CA-8F4287BCB057} = {B5438E33-555A-46A2-9F98-AEF1C6276C78}
+		{C86D8588-EDB5-4F1C-A38C-D24044E177FE} = {B5438E33-555A-46A2-9F98-AEF1C6276C78}
 	EndGlobalSection
 EndGlobal

@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using OpenCI.API.Rest.Controllers.Contracts;
 using OpenCI.API.Rest.Models.Account;
-using OpenCI.Contracts.Business;
+using OpenCI.EmailTemplates.Client;
 using OpenCI.Identity.Dapper;
 
 namespace OpenCI.API.Rest.Controllers
@@ -13,12 +13,12 @@ namespace OpenCI.API.Rest.Controllers
     [RoutePrefix("Account")]
     public class AccountController : ApiController, IAccountController
     {
-        private readonly IEmailRenderService _emailRenderService;
+        private readonly IEmailTemplatesClient _emailTemplatesClient;
         private UserManager<IdentityUser, int> _userManager;
 
-        public AccountController(IEmailRenderService emailRenderService)
+        public AccountController(IEmailTemplatesClient emailTemplatesClient)
         {
-            _emailRenderService = emailRenderService;
+            _emailTemplatesClient = emailTemplatesClient;
         }
 
         public UserManager<IdentityUser, int> UserManager
@@ -42,7 +42,7 @@ namespace OpenCI.API.Rest.Controllers
 
             var resetLink = Url.Link("ResetPassword", null);
             var token = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-            var renderedEmail = await _emailRenderService.GetRenderedResetPasswordTemplate(user.Id, token, resetLink);
+            var renderedEmail = await _emailTemplatesClient.GetRenderedResetPasswordTemplate(user.Id, token, resetLink);
 
             await UserManager.SendEmailAsync(user.Id, "OpenCI Password Reset Request", renderedEmail);
 
