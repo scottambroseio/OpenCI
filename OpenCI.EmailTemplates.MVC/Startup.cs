@@ -15,30 +15,23 @@ namespace OpenCI.EmailTemplates.MVC
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration);
             services.AddMvc();
             services.AddScoped<IViewRenderService, ViewRenderService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            //loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //}
 
             app.UseStaticFiles();
             app.UseMvc();
